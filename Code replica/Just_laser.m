@@ -165,9 +165,9 @@ I_original = exp(-mua1);
 W(2) = 0.8;    %Water fraction
 L1(2) = 0.116;  %Lipid fraction
 B(2) = 0.012;  %Background non-wavelength-dependent absorption coefficient (mm-1)
-C_HbO(2) = C_HbO(1) + 0.9; %Concentration of HbO (uM)
-C_HbR(2) = C_HbR(1) - 0.6; %Concentration of HbR (uM)
-C_aa3(2) = C_aa3(1) + 1.3; %Concentration of aa3 (uM)
+C_HbO(2) = C_HbO(1) + 1.5; %Concentration of HbO (uM)
+C_HbR(2) = C_HbR(1) - 0.5; %Concentration of HbR (uM)
+C_aa3(2) = C_aa3(1) + 0.4; %Concentration of aa3 (uM)
 % mua2 = (E(:,1)*C_HbO(2)) + (E(:,2)*C_HbR(2)) + (E(:,3)*W(2)) + (E(:,4)*L1(2)) + (E(:,5)*C_aa3(2));
 mua2 = (E(:,1)*C_HbO(2)) + (E(:,2)*C_HbR(2)) + (E(:,3)*C_aa3(2));
 

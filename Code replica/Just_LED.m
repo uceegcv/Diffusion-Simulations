@@ -5,6 +5,36 @@
 % close all;
 % addpath(genpath('N:\Matlab code\homer2_v2_8_11022018')) 
 
+%% Find SNR of real AV3 data
+% Select AV3 data folder
+[file, path] = uigetfile('*.mat');
+AV3_conc = load([path file]);
+%
+prompt = 'Which source would you like? ';
+a = input(prompt);
+prompt = 'Which detector would you like? ';
+b = input(prompt);
+
+if  a ==1
+    channel = a*b;
+elseif a == 2
+    channel = b + 8;
+end
+
+for i = 1:80
+    snr_val_AV3_hard(i) = snr(AV3_conc.dod(:,i));
+end
+
+for i = 1:80
+    mean_AV3_sat_val(i) = mean(AV3_conc.dod(920:1111,i));
+    high_AV3_noise(i) = max(AV3_conc.dod(920:1111,i));
+    low_AV3_noise(i) = min(AV3_conc.dod(920:1111,i));
+end
+
+
+
+%%
+
 % Enter simulation data
 SD = 30; % Source-detector separation on same surface of slab (mm)
 slab = 50; % Slab thickness (mm)
@@ -165,9 +195,9 @@ I_original = exp(-mua1);
 W(2) = 0.8;    %Water fraction
 L1(2) = 0.116;  %Lipid fraction
 B(2) = 0.012;  %Background non-wavelength-dependent absorption coefficient (mm-1)
-C_HbO(2) = C_HbO(1) + 0.9; %Concentration of HbO (uM)
-C_HbR(2) = C_HbR(1) - 0.6; %Concentration of HbR (uM)
-C_aa3(2) = C_aa3(1) + 1.3; %Concentration of aa3 (uM)
+C_HbO(2) = C_HbO(1) + 1.5; %Concentration of HbO (uM)
+C_HbR(2) = C_HbR(1) - 0.5; %Concentration of HbR (uM)
+C_aa3(2) = C_aa3(1) + 0.4; %Concentration of aa3 (uM)
 % mua2 = (E(:,1)*C_HbO(2)) + (E(:,2)*C_HbR(2)) + (E(:,3)*W(2)) + (E(:,4)*L1(2)) + (E(:,5)*C_aa3(2));
 mua2 = (E(:,1)*C_HbO(2)) + (E(:,2)*C_HbR(2)) + (E(:,3)*C_aa3(2));
 
@@ -1083,28 +1113,28 @@ for l = 1:20
 
     R1_LED_SNR20 = awgn(R1_LED,20,'measured');
     R2_LED_SNR20 = awgn(R2_LED,20,'measured');
-    % change_I_LED_SNR20 = log(R2_LED_SNR20) - log(R1_LED_SNR20);
-    change_I_LED_SNR20 = log(R2_LED_SNR20) - log(R1_LED);
+    change_I_LED_SNR20 = log(R2_LED_SNR20) - log(R1_LED_SNR20);
+    % change_I_LED_SNR20 = log(R2_LED_SNR20) - log(R1_LED);
 
     R1_LED_SNR30 = awgn(R1_LED,30,'measured');
     R2_LED_SNR30 = awgn(R2_LED,30,'measured');
-    % change_I_LED_SNR30 = log(R2_LED_SNR30) - log(R1_LED_SNR30);
-    change_I_LED_SNR30 = log(R2_LED_SNR30) - log(R1_LED);
+    change_I_LED_SNR30 = log(R2_LED_SNR30) - log(R1_LED_SNR30);
+    % change_I_LED_SNR30 = log(R2_LED_SNR30) - log(R1_LED);
 
     R1_LED_SNR40 = awgn(R1_LED,40,'measured');
     R2_LED_SNR40 = awgn(R2_LED,40,'measured');
-    % change_I_LED_SNR40 = log(R2_LED_SNR40) - log(R1_LED_SNR40);
-    change_I_LED_SNR40 = log(R2_LED_SNR40) - log(R1_LED);
+    change_I_LED_SNR40 = log(R2_LED_SNR40) - log(R1_LED_SNR40);
+    % change_I_LED_SNR40 = log(R2_LED_SNR40) - log(R1_LED);
 
     R1_LED_SNR50 = awgn(R1_LED,50,'measured');
     R2_LED_SNR50 = awgn(R2_LED,50,'measured');
-    % change_I_LED_SNR50 = log(R2_LED_SNR50) - log(R1_LED_SNR50);
-    change_I_LED_SNR50 = log(R2_LED_SNR50) - log(R1_LED);
+    change_I_LED_SNR50 = log(R2_LED_SNR50) - log(R1_LED_SNR50);
+    % change_I_LED_SNR50 = log(R2_LED_SNR50) - log(R1_LED);
 
     R1_LED_SNR60 = awgn(R1_LED,60,'measured');
     R2_LED_SNR60 = awgn(R2_LED,60,'measured');
-    % change_I_LED_SNR60 = log(R2_LED_SNR60) - log(R1_LED_SNR60);
-    change_I_LED_SNR60 = log(R2_LED_SNR60) - log(R1_LED);
+    change_I_LED_SNR60 = log(R2_LED_SNR60) - log(R1_LED_SNR60);
+    % change_I_LED_SNR60 = log(R2_LED_SNR60) - log(R1_LED);
 
     ave_DPF_LED = (DPF1_LED + DPF2_LED)/2;
 

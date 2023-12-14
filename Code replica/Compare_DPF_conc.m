@@ -418,32 +418,62 @@ for l = 1:20 % Number of iterations to average for error bars
         perc_diff_BB_homer(t) = ((conc_homer_DPF_BB(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
     end
     
-    FigH = figure('Position', get(0, 'Screensize'));
-    F = getframe(FigH);
-    imwrite(F.cdata, 'Comparison of DPF values used in different toolboxes.png', 'png')
-    plot(wl,ave_DPF_BB_diff,'LineWidth',3)
-    hold on
-    plot(wl,DPF_assumed_cyril,'LineWidth',3)
-    plot(wl,DPF_homer,'LineWidth',3)
-    plot(wl,DPF_scholk_age1,'LineWidth',3)
-    plot(wl,DPF_scholk_age2,'LineWidth',3)
-    ax = gca;
-    ax.FontSize = 20;
-    %ylim([0 35]);
-    legend('Diffusion value','Broadband toolboxes','Constant value toolboxes','Equation-based, age 20','Equation-based, age 40','Location','Best');
-    xlabel('Wavelength (nm)');
-    ylabel('Differential Pathlength Factor (DPF)');
-    title('Comparison of DPF values used in different toolboxes');
-    saveas(gcf,'Comparison of DPF values used in different toolboxes.png')
+    if l == 1
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Comparison of DPF values used in different toolboxes.png', 'png')
+        plot(wl,ave_DPF_BB_diff,'LineWidth',3)
+        hold on
+        plot(wl,DPF_assumed_cyril,'LineWidth',3)
+        plot(wl,DPF_homer,'LineWidth',3)
+        plot(wl,DPF_scholk_age1,'LineWidth',3)
+        plot(wl,DPF_scholk_age2,'LineWidth',3)
+        ax = gca;
+        ax.FontSize = 20;
+        %ylim([0 35]);
+        legend('Diffusion value','Broadband toolboxes','Constant value toolboxes','Equation-based, age 20','Equation-based, age 40','Location','Best');
+        xlabel('Wavelength (nm)');
+        ylabel('Differential Pathlength Factor (DPF)');
+        title('Comparison of DPF values used in different toolboxes');
+        saveas(gcf,'Comparison of DPF values used in different toolboxes.png')
+        
+        
+        xvector = categorical(["Diffusion value" "Broadband toolboxes" "Constant value toolboxes" "Equation-based, age 20" "Equation-based, age 40"]);
+        yvector1 = [perc_diff_BB_diff(1) perc_diff_BB_cyrilDPF(1) perc_diff_BB_homer(1) perc_diff_BB_scholk1(1) perc_diff_BB_scholk2(1)];
+        yvector1 = abs(yvector1);
+        
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Comparison of errors in HbO quantification using different DPF values.png', 'png')
+        bar(xvector,yvector1)
+        ylabel('Percentage error in chromophore concentration');
+        title('Comparison of errors in HbO quantification using different DPF values');
+        saveas(gcf,'Comparison of errors in HbO quantification using different DPF values.png')
     
     
-    xvector = categorical(["Diffusion value" "Broadband toolboxes" "Constant value toolboxes" "Equation-based, age 20" "Equation-based, age 40"]);
-    yvector = [perc_diff_BB_diff(1) perc_diff_BB_cyrilDPF(1) perc_diff_BB_homer(1) perc_diff_BB_scholk1(1) perc_diff_BB_scholk2(1)];
-    yvector = abs(yvector);
+        yvector2 = [perc_diff_BB_diff(2) perc_diff_BB_cyrilDPF(2) perc_diff_BB_homer(2) perc_diff_BB_scholk1(2) perc_diff_BB_scholk2(2)];
+        yvector2 = abs(yvector2);
+        
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Comparison of errors in HbR quantification using different DPF values.png', 'png')
+        bar(xvector,yvector2)
+        ylabel('Percentage error in chromophore concentration');
+        title('Comparison of errors in HbR quantification using different DPF values');
+        saveas(gcf,'Comparison of errors in HbR quantification using different DPF values.png')
     
-    figure
-    bar(xvector,yvector)
+        yvector3 = [perc_diff_BB_diff(3) perc_diff_BB_cyrilDPF(3) perc_diff_BB_homer(3) perc_diff_BB_scholk1(3) perc_diff_BB_scholk2(3)];
+        yvector3 = abs(yvector3);
+        
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Comparison of errors in oxCCO quantification using different DPF values.png', 'png')
+        bar(xvector,yvector3)
+        ylabel('Percentage error in chromophore concentration');
+        title('Comparison of errors in oxCCO quantification using different DPF values');
+        saveas(gcf,'Comparison of errors in oxCCO quantification using different DPF values.png')
 
+    end
 %     % Introduce a 5% error in DPF
 %     percent_vector = [0.01; 5; 10; 15];
 % 
@@ -713,139 +743,142 @@ for l = 1:20 % Number of iterations to average for error bars
 
     %% Again for SNR 50
 
+% 
+%     conc_assDPF_Eadd10 = pinv(BB_E_add10) * (-change_I_BB_diff ./ (SD*DPF_assumed_cyril))';
+% 
+%     conc_assDPF_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
+% 
+%     conc_assDPF_Eadd10_SNR50 = pinv(BB_E_add10) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
+% 
+%     conc_assDPF_Eadd15_SNR50 = pinv(BB_E_add15) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
+% 
+%     conc_assDPF_Eadd15_SNR30 = pinv(BB_E_add15) * (-change_I_BB_SNR30 ./ (SD*DPF_assumed_cyril))';
+% 
+%     %
+%     conc_DPFadd5_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add5))';
+% 
+%     conc_DPFadd10_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add10))';
+% 
+%     conc_DPFadd15_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add15))';
+% 
+%     %
+%     conc_DPFadd10_Eadd10_SNR50 = pinv(BB_E_add10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add10))';
+% 
+%     conc_DPFadd15_Eadd15_SNR50 = pinv(BB_E_add15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add15))';
+% 
+%     %
+%     %------------------------------------------------------------
+%     conc_assDPF_Etake10 = pinv(BB_E_take10) * (-change_I_BB_diff ./ (SD*DPF_assumed_cyril))';
+% 
+%     conc_assDPF_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
+% 
+%     conc_assDPF_Etake10_SNR50 = pinv(BB_E_take10) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
+% 
+%     conc_assDPF_Etake15_SNR50 = pinv(BB_E_take15) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
+% 
+%     conc_assDPF_Etake15_SNR30 = pinv(BB_E_take15) * (-change_I_BB_SNR30 ./ (SD*DPF_assumed_cyril))';
+% 
+%     %
+%     conc_DPFtake5_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take5))';
+% 
+%     conc_DPFtake10_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take10))';
+% 
+%     conc_DPFtake15_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take15))';
+% 
+%     %
+%     conc_DPFtake10_Etake10_SNR50 = pinv(BB_E_take10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take10))';
+% 
+%     conc_DPFtake15_Etake15_SNR50 = pinv(BB_E_take15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take15))';
+% 
+%     %
+%     %--------------------------------------------------------------------
+%     %
+%     conc_DPFadd5_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add5))';
+% 
+%     conc_DPFadd10_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add10))';
+% 
+%     conc_DPFadd15_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add15))';
+% 
+%     %
+%     conc_DPFadd10_Etake10_SNR50 = pinv(BB_E_take10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add10))';
+% 
+%     conc_DPFadd15_Etake15_SNR50 = pinv(BB_E_take15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add15))';
+% 
+%     %-------------------------------------------------------------
+%     %
+%     conc_DPFtake5_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take5))';
+% 
+%     conc_DPFtake10_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take10))';
+% 
+%     conc_DPFtake15_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take15))';
+% 
+%     %
+%     conc_DPFtake10_Eadd10_SNR50 = pinv(BB_E_add10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take10))';
+% 
+%     conc_DPFtake15_Eadd15_SNR50 = pinv(BB_E_add15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take15))';
+% 
+%     conc_DPFtake15_Eadd10_SNR50 = pinv(BB_E_add10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take15))';
+% 
+%     conc_DPFtake10_Eadd15_SNR50 = pinv(BB_E_add15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take10))';
+% 
+%     conc_DPFadd5_Etake15_SNR50 = pinv(BB_E_take15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add5))';
+% 
+%     conc_DPFadd5_Etake10_SNR50 = pinv(BB_E_take10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add5))';
+% 
+%     conc_DPFtake5_Eadd15_SNR50 = pinv(BB_E_add15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take5))';
+% 
+%     conc_DPFtake5_Eadd10_SNR50 = pinv(BB_E_add10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take5))';
+% 
+%     conc_DPFadd10_Etake15_SNR50 = pinv(BB_E_take15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add10))';
+% 
+%     conc_DPFadd15_Etake10_SNR50 = pinv(BB_E_take10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add15))';
+% 
+%     for t = 1:length(ac_conc_change)
+%         perc_error_BB_DPFtake15_Eadd15_SNR50(t) = ((conc_DPFtake15_Eadd15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFtake10_Eadd10_SNR50(t) = ((conc_DPFtake10_Eadd10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFtake5_Eadd5_SNR50(t) = ((conc_DPFtake5_Eadd5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+% 
+%         perc_error_BB_DPFadd15_Etake15_SNR50(t) = ((conc_DPFadd15_Etake15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFadd10_Etake10_SNR50(t) = ((conc_DPFadd10_Etake10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFadd5_Etake5_SNR50(t) = ((conc_DPFadd5_Etake5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+% 
+%         perc_error_BB_DPFadd15_Eadd15_SNR50(t) = ((conc_DPFadd15_Eadd15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFadd10_Eadd10_SNR50(t) = ((conc_DPFadd10_Eadd10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFadd5_Eadd5_SNR50(t) = ((conc_DPFadd5_Eadd5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+% 
+%         perc_error_BB_DPFtake15_Etake15_SNR50(t) = ((conc_DPFtake15_Etake15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFtake10_Etake10_SNR50(t) = ((conc_DPFtake10_Etake10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFtake5_Etake5_SNR50(t) = ((conc_DPFtake5_Etake5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+% 
+%         perc_error_BB_DPFtake15_Eadd10_SNR50(t) = ((conc_DPFtake15_Eadd10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFtake15_Eadd5_SNR50(t) = ((conc_DPFtake15_Eadd5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+% 
+%         perc_error_BB_DPFtake10_Eadd15_SNR50(t) = ((conc_DPFtake10_Eadd15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFtake10_Eadd5_SNR50(t) = ((conc_DPFtake10_Eadd5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+% 
+%         perc_error_BB_DPFadd5_Etake15_SNR50(t) = ((conc_DPFadd5_Etake15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFadd5_Etake10_SNR50(t) = ((conc_DPFadd5_Etake10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+% 
+%         perc_error_BB_DPFtake5_Eadd15_SNR50(t) = ((conc_DPFtake5_Eadd15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFtake5_Eadd10_SNR50(t) = ((conc_DPFtake5_Eadd10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+% 
+%         perc_error_BB_DPFadd10_Etake15_SNR50(t) = ((conc_DPFadd10_Etake15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFadd10_Etake5_SNR50(t) = ((conc_DPFadd10_Etake5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+% 
+%         perc_error_BB_DPFadd15_Etake10_SNR50(t) = ((conc_DPFadd15_Etake10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+%         perc_error_BB_DPFadd15_Etake5_SNR50(t) = ((conc_DPFadd15_Etake5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+% 
+%         perc_error_BB_5s_SNR50(t) = max(abs([perc_error_BB_DPFtake5_Etake5_SNR50(t), perc_error_BB_DPFadd5_Eadd5_SNR50(t), perc_error_BB_DPFadd5_Etake5_SNR50(t), perc_error_BB_DPFtake5_Eadd5_SNR50(t)]));
+%         perc_error_BB_10s_SNR50(t) = max(abs([perc_error_BB_DPFtake10_Etake10_SNR50(t), perc_error_BB_DPFadd10_Eadd10_SNR50(t), perc_error_BB_DPFadd10_Etake10_SNR50(t), perc_error_BB_DPFtake10_Eadd10_SNR50(t)]));
+%         perc_error_BB_15s_SNR50(t) = max(abs([perc_error_BB_DPFtake15_Etake15_SNR50(t), perc_error_BB_DPFadd15_Eadd15_SNR50(t), perc_error_BB_DPFadd15_Etake15_SNR50(t), perc_error_BB_DPFtake15_Eadd15_SNR50(t)]));
+        
+        perc_error_DPFs = [perc_diff_BB_diff; perc_diff_BB_cyrilDPF; perc_diff_BB_homer; perc_diff_BB_scholk1; perc_diff_BB_scholk2];
 
-    conc_assDPF_Eadd10 = pinv(BB_E_add10) * (-change_I_BB_diff ./ (SD*DPF_assumed_cyril))';
+        perc_error_DPFs_saved{l} = perc_error_DPFs(:,:); %Save each iteration to cell array
 
-    conc_assDPF_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
-
-    conc_assDPF_Eadd10_SNR50 = pinv(BB_E_add10) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
-
-    conc_assDPF_Eadd15_SNR50 = pinv(BB_E_add15) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
-
-    conc_assDPF_Eadd15_SNR30 = pinv(BB_E_add15) * (-change_I_BB_SNR30 ./ (SD*DPF_assumed_cyril))';
-
-    %
-    conc_DPFadd5_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add5))';
-
-    conc_DPFadd10_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add10))';
-
-    conc_DPFadd15_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add15))';
-
-    %
-    conc_DPFadd10_Eadd10_SNR50 = pinv(BB_E_add10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add10))';
-
-    conc_DPFadd15_Eadd15_SNR50 = pinv(BB_E_add15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add15))';
-
-    %
-    %------------------------------------------------------------
-    conc_assDPF_Etake10 = pinv(BB_E_take10) * (-change_I_BB_diff ./ (SD*DPF_assumed_cyril))';
-
-    conc_assDPF_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
-
-    conc_assDPF_Etake10_SNR50 = pinv(BB_E_take10) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
-
-    conc_assDPF_Etake15_SNR50 = pinv(BB_E_take15) * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
-
-    conc_assDPF_Etake15_SNR30 = pinv(BB_E_take15) * (-change_I_BB_SNR30 ./ (SD*DPF_assumed_cyril))';
-
-    %
-    conc_DPFtake5_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take5))';
-
-    conc_DPFtake10_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take10))';
-
-    conc_DPFtake15_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take15))';
-
-    %
-    conc_DPFtake10_Etake10_SNR50 = pinv(BB_E_take10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take10))';
-
-    conc_DPFtake15_Etake15_SNR50 = pinv(BB_E_take15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take15))';
-
-    %
-    %--------------------------------------------------------------------
-    %
-    conc_DPFadd5_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add5))';
-
-    conc_DPFadd10_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add10))';
-
-    conc_DPFadd15_Etake5_SNR50 = pinv(BB_E_take5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add15))';
-
-    %
-    conc_DPFadd10_Etake10_SNR50 = pinv(BB_E_take10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add10))';
-
-    conc_DPFadd15_Etake15_SNR50 = pinv(BB_E_take15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add15))';
-
-    %-------------------------------------------------------------
-    %
-    conc_DPFtake5_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take5))';
-
-    conc_DPFtake10_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take10))';
-
-    conc_DPFtake15_Eadd5_SNR50 = pinv(BB_E_add5) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take15))';
-
-    %
-    conc_DPFtake10_Eadd10_SNR50 = pinv(BB_E_add10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take10))';
-
-    conc_DPFtake15_Eadd15_SNR50 = pinv(BB_E_add15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take15))';
-
-    conc_DPFtake15_Eadd10_SNR50 = pinv(BB_E_add10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take15))';
-
-    conc_DPFtake10_Eadd15_SNR50 = pinv(BB_E_add15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take10))';
-
-    conc_DPFadd5_Etake15_SNR50 = pinv(BB_E_take15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add5))';
-
-    conc_DPFadd5_Etake10_SNR50 = pinv(BB_E_take10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add5))';
-
-    conc_DPFtake5_Eadd15_SNR50 = pinv(BB_E_add15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take5))';
-
-    conc_DPFtake5_Eadd10_SNR50 = pinv(BB_E_add10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_take5))';
-
-    conc_DPFadd10_Etake15_SNR50 = pinv(BB_E_take15) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add10))';
-
-    conc_DPFadd15_Etake10_SNR50 = pinv(BB_E_take10) * (-change_I_BB_SNR50 ./ (SD*BB_DPF_add15))';
-
-    for t = 1:length(ac_conc_change)
-        perc_error_BB_DPFtake15_Eadd15_SNR50(t) = ((conc_DPFtake15_Eadd15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFtake10_Eadd10_SNR50(t) = ((conc_DPFtake10_Eadd10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFtake5_Eadd5_SNR50(t) = ((conc_DPFtake5_Eadd5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-
-        perc_error_BB_DPFadd15_Etake15_SNR50(t) = ((conc_DPFadd15_Etake15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFadd10_Etake10_SNR50(t) = ((conc_DPFadd10_Etake10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFadd5_Etake5_SNR50(t) = ((conc_DPFadd5_Etake5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-
-        perc_error_BB_DPFadd15_Eadd15_SNR50(t) = ((conc_DPFadd15_Eadd15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFadd10_Eadd10_SNR50(t) = ((conc_DPFadd10_Eadd10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFadd5_Eadd5_SNR50(t) = ((conc_DPFadd5_Eadd5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-
-        perc_error_BB_DPFtake15_Etake15_SNR50(t) = ((conc_DPFtake15_Etake15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFtake10_Etake10_SNR50(t) = ((conc_DPFtake10_Etake10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFtake5_Etake5_SNR50(t) = ((conc_DPFtake5_Etake5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-
-        perc_error_BB_DPFtake15_Eadd10_SNR50(t) = ((conc_DPFtake15_Eadd10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFtake15_Eadd5_SNR50(t) = ((conc_DPFtake15_Eadd5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-
-        perc_error_BB_DPFtake10_Eadd15_SNR50(t) = ((conc_DPFtake10_Eadd15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFtake10_Eadd5_SNR50(t) = ((conc_DPFtake10_Eadd5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-
-        perc_error_BB_DPFadd5_Etake15_SNR50(t) = ((conc_DPFadd5_Etake15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFadd5_Etake10_SNR50(t) = ((conc_DPFadd5_Etake10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-
-        perc_error_BB_DPFtake5_Eadd15_SNR50(t) = ((conc_DPFtake5_Eadd15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFtake5_Eadd10_SNR50(t) = ((conc_DPFtake5_Eadd10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-
-        perc_error_BB_DPFadd10_Etake15_SNR50(t) = ((conc_DPFadd10_Etake15_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFadd10_Etake5_SNR50(t) = ((conc_DPFadd10_Etake5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-
-        perc_error_BB_DPFadd15_Etake10_SNR50(t) = ((conc_DPFadd15_Etake10_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-        perc_error_BB_DPFadd15_Etake5_SNR50(t) = ((conc_DPFadd15_Etake5_SNR50(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-
-        perc_error_BB_5s_SNR50(t) = max(abs([perc_error_BB_DPFtake5_Etake5_SNR50(t), perc_error_BB_DPFadd5_Eadd5_SNR50(t), perc_error_BB_DPFadd5_Etake5_SNR50(t), perc_error_BB_DPFtake5_Eadd5_SNR50(t)]));
-        perc_error_BB_10s_SNR50(t) = max(abs([perc_error_BB_DPFtake10_Etake10_SNR50(t), perc_error_BB_DPFadd10_Eadd10_SNR50(t), perc_error_BB_DPFadd10_Etake10_SNR50(t), perc_error_BB_DPFtake10_Eadd10_SNR50(t)]));
-        perc_error_BB_15s_SNR50(t) = max(abs([perc_error_BB_DPFtake15_Etake15_SNR50(t), perc_error_BB_DPFadd15_Eadd15_SNR50(t), perc_error_BB_DPFadd15_Etake15_SNR50(t), perc_error_BB_DPFtake15_Eadd15_SNR50(t)]));
     end
     %%
-    perc_accum_errors_DPFE_BBSNR50 = [perc_diff_BB_diff; perc_error_BB_5s_SNR50; perc_error_BB_10s_SNR50; perc_error_BB_15s_SNR50];
 
-    perc_accum_errors_DPFE_BBSNR50_saved{l} = perc_accum_errors_DPFE_BBSNR50(:,:); %Save each iteration to cell array
 
     % FigH = figure('Position', get(0, 'Screensize'));
     % F = getframe(FigH);
@@ -863,18 +896,18 @@ for l = 1:20 % Number of iterations to average for error bars
     % title({'Comparison of percentage errors for increasing extinction coefficient', 'and DPF percentage changes for broadband system 1 (680-921nm), SNR = 50'});
     % saveas(gcf,'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 1 SNR 50.png')
 
-end
+
 
 %%
 
-for u = 1:4
+for u = 1:5
     for j = 1:3
-        for k = 1:10
-            vector_error_BBSNR50(k,j) = perc_accum_errors_DPFE_BBSNR50_saved{1,k}(u,j);
+        for k = 1:length(l)
+            vector_error_DPFs(k,j) = perc_error_DPFs_saved{1,k}(u,j);
         end
-        ave_vector_error_BBSNR50(u,j) = mean(vector_error_BBSNR50(:,j));
-        high_bar_vector_error_BBSNR50(u,j) = max(vector_error_BBSNR50(:,j));
-        low_bar_vector_error_BBSNR50(u,j) = min(vector_error_BBSNR50(:,j));
+        ave_vector_error_DPFs(u,j) = mean(vector_error_DPFs(:,j));
+        high_bar_vector_error_DPFs(u,j) = max(vector_error_DPFs(:,j));
+        low_bar_vector_error_DPFs(u,j) = min(vector_error_DPFs(:,j));
     end
 end
 
@@ -882,10 +915,10 @@ end
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
 imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient and DPF percentage changes for broadband system 1 SNR 50.png', 'png')
-errorbar(percent_vector,ave_vector_error_BBSNR50(:,1),low_bar_vector_error_BBSNR50(:,1),high_bar_vector_error_BBSNR50(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
+errorbar(percent_vector,ave_vector_error_DPFs(:,1),low_bar_vector_error_DPFs(:,1),high_bar_vector_error_DPFs(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
 hold on
-errorbar(percent_vector,ave_vector_error_BBSNR50(:,2),low_bar_vector_error_BBSNR50(:,2),high_bar_vector_error_BBSNR50(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
-errorbar(percent_vector,ave_vector_error_BBSNR50(:,3),low_bar_vector_error_BBSNR50(:,3),high_bar_vector_error_BBSNR50(:,3),'go-','MarkerSize',20,'LineWidth',1)
+errorbar(percent_vector,ave_vector_error_DPFs(:,2),low_bar_vector_error_DPFs(:,2),high_bar_vector_error_DPFs(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
+errorbar(percent_vector,ave_vector_error_DPFs(:,3),low_bar_vector_error_DPFs(:,3),high_bar_vector_error_DPFs(:,3),'go-','MarkerSize',20,'LineWidth',1)
 grid on
 ax = gca;
 ax.FontSize = 20;

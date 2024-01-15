@@ -276,22 +276,24 @@ for t = 1:length(x)
 end
 
 for t = 1:length(x)
-    perc_diff_I(t) = 100 - ((calc_I_BB(t)/change_I_BB_diff(t))*100);
+    perc_diff_I_perfect(t) = 100 - ((calc_I_BB(t)/change_I_BB_diff(t))*100);
 end
 
 E_prime_invert_BB = pinv(E);
 
 % This is the value to pay attention to!! From diffusion
-conc_BB_diff =  E_prime_invert_BB * (-change_I_BB_diff ./ (SD*ave_DPF_BB_diff))'; % From diffusion
+conc_BB_diff_perfect =  E_prime_invert_BB * (-change_I_BB_diff ./ (SD*ave_DPF_BB_diff))'; % From diffusion
 
 %%
 for t = 1:length(ac_conc_change)
-    perc_diff_BB_diff(t) = ((conc_BB_diff(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+    perc_diff_BB_diff_perfect(t) = ((conc_BB_diff_perfect(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 end
 
 SNR_vector = [20; 30; 40; 50; 60];
 
-for l = 1:20 % Number of iterations to average for error bars
+iterations = 20;
+
+for l = 1:iterations % Number of iterations to average for error bars
 
     R1_BB_SNR20 = awgn(R1_BB,20,'measured');
     R2_BB_SNR20 = awgn(R2_BB,20,'measured');
@@ -357,6 +359,12 @@ for l = 1:20 % Number of iterations to average for error bars
 
     %% Introduce different DPF datasets
     
+    conc_BB_diff =  E_prime_invert_BB * (-change_I_BB_SNR50 ./ (SD*ave_DPF_BB_diff))'; % From diffusion
+
+    for t = 1:length(ac_conc_change)
+        perc_diff_BB(t) = ((conc_BB_diff(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+    end
+    
     % CYRIL dataset
     DPF_dep_cyril = stretch_DPF_Lambda_Dependency_680to915; 
 
@@ -370,7 +378,7 @@ for l = 1:20 % Number of iterations to average for error bars
 
     DPF_assumed_cyril = DPF_vals_BB * set_DPF_cyril;
 
-    conc_cyril_DPF_BB = E_prime_invert_BB * (-change_I_BB_diff ./ (SD*DPF_assumed_cyril))';
+    conc_cyril_DPF_BB = E_prime_invert_BB * (-change_I_BB_SNR50 ./ (SD*DPF_assumed_cyril))';
     
     for t = 1:length(ac_conc_change)
         perc_diff_BB_cyrilDPF(t) = ((conc_cyril_DPF_BB(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
@@ -395,8 +403,8 @@ for l = 1:20 % Number of iterations to average for error bars
         DPF_scholk_age2(i) = alpha + (beta*(age2^gamma)) + (sigma*(wl(i)^3)) + (epsilon*(wl(i)^2)) + (zeta*wl(i));
     end
     
-    conc_scholk1_DPF_BB = E_prime_invert_BB * (-change_I_BB_diff ./ (SD*DPF_scholk_age1))';
-    conc_scholk2_DPF_BB = E_prime_invert_BB * (-change_I_BB_diff ./ (SD*DPF_scholk_age2))';
+    conc_scholk1_DPF_BB = E_prime_invert_BB * (-change_I_BB_SNR50 ./ (SD*DPF_scholk_age1))';
+    conc_scholk2_DPF_BB = E_prime_invert_BB * (-change_I_BB_SNR50 ./ (SD*DPF_scholk_age2))';
 
     for t = 1:length(ac_conc_change)
         perc_diff_BB_scholk1(t) = ((conc_scholk1_DPF_BB(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
@@ -412,7 +420,7 @@ for l = 1:20 % Number of iterations to average for error bars
         DPF_homer(i) = 6;
     end
     
-    conc_homer_DPF_BB = E_prime_invert_BB * (-change_I_BB_diff ./ (SD*DPF_homer))';
+    conc_homer_DPF_BB = E_prime_invert_BB * (-change_I_BB_SNR50 ./ (SD*DPF_homer))';
     
     for t = 1:length(ac_conc_change)
         perc_diff_BB_homer(t) = ((conc_homer_DPF_BB(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
@@ -439,7 +447,7 @@ for l = 1:20 % Number of iterations to average for error bars
         
         
         xvector = categorical(["Diffusion value" "Broadband toolboxes" "Constant value toolboxes" "Equation-based, age 20" "Equation-based, age 40"]);
-        yvector1 = [perc_diff_BB_diff(1) perc_diff_BB_cyrilDPF(1) perc_diff_BB_homer(1) perc_diff_BB_scholk1(1) perc_diff_BB_scholk2(1)];
+        yvector1 = [perc_diff_BB_diff_perfect(1) perc_diff_BB_cyrilDPF(1) perc_diff_BB_homer(1) perc_diff_BB_scholk1(1) perc_diff_BB_scholk2(1)];
         yvector1 = abs(yvector1);
         
         FigH = figure('Position', get(0, 'Screensize'));
@@ -451,7 +459,7 @@ for l = 1:20 % Number of iterations to average for error bars
         saveas(gcf,'Comparison of errors in HbO quantification using different DPF values.png')
     
     
-        yvector2 = [perc_diff_BB_diff(2) perc_diff_BB_cyrilDPF(2) perc_diff_BB_homer(2) perc_diff_BB_scholk1(2) perc_diff_BB_scholk2(2)];
+        yvector2 = [perc_diff_BB_diff_perfect(2) perc_diff_BB_cyrilDPF(2) perc_diff_BB_homer(2) perc_diff_BB_scholk1(2) perc_diff_BB_scholk2(2)];
         yvector2 = abs(yvector2);
         
         FigH = figure('Position', get(0, 'Screensize'));
@@ -462,7 +470,7 @@ for l = 1:20 % Number of iterations to average for error bars
         title('Comparison of errors in HbR quantification using different DPF values');
         saveas(gcf,'Comparison of errors in HbR quantification using different DPF values.png')
     
-        yvector3 = [perc_diff_BB_diff(3) perc_diff_BB_cyrilDPF(3) perc_diff_BB_homer(3) perc_diff_BB_scholk1(3) perc_diff_BB_scholk2(3)];
+        yvector3 = [perc_diff_BB_diff_perfect(3) perc_diff_BB_cyrilDPF(3) perc_diff_BB_homer(3) perc_diff_BB_scholk1(3) perc_diff_BB_scholk2(3)];
         yvector3 = abs(yvector3);
         
         FigH = figure('Position', get(0, 'Screensize'));
@@ -872,11 +880,11 @@ for l = 1:20 % Number of iterations to average for error bars
 %         perc_error_BB_10s_SNR50(t) = max(abs([perc_error_BB_DPFtake10_Etake10_SNR50(t), perc_error_BB_DPFadd10_Eadd10_SNR50(t), perc_error_BB_DPFadd10_Etake10_SNR50(t), perc_error_BB_DPFtake10_Eadd10_SNR50(t)]));
 %         perc_error_BB_15s_SNR50(t) = max(abs([perc_error_BB_DPFtake15_Etake15_SNR50(t), perc_error_BB_DPFadd15_Eadd15_SNR50(t), perc_error_BB_DPFadd15_Etake15_SNR50(t), perc_error_BB_DPFtake15_Eadd15_SNR50(t)]));
         
-        perc_error_DPFs = [perc_diff_BB_diff; perc_diff_BB_cyrilDPF; perc_diff_BB_homer; perc_diff_BB_scholk1; perc_diff_BB_scholk2];
+        perc_error_DPFs = [perc_diff_BB; perc_diff_BB_cyrilDPF; perc_diff_BB_homer; perc_diff_BB_scholk1; perc_diff_BB_scholk2];
 
         perc_error_DPFs_saved{l} = perc_error_DPFs(:,:); %Save each iteration to cell array
 
-    end
+end
     %%
 
 
@@ -900,17 +908,55 @@ for l = 1:20 % Number of iterations to average for error bars
 
 %%
 
-for u = 1:5
-    for j = 1:3
-        for k = 1:length(l)
+for u = 1:5 % datasets
+    for j = 1:3 % chromophores
+        for k = 1:iterations % iterations
             vector_error_DPFs(k,j) = perc_error_DPFs_saved{1,k}(u,j);
         end
         ave_vector_error_DPFs(u,j) = mean(vector_error_DPFs(:,j));
         high_bar_vector_error_DPFs(u,j) = max(vector_error_DPFs(:,j));
         low_bar_vector_error_DPFs(u,j) = min(vector_error_DPFs(:,j));
+        interquart_DPFs(u,j) = iqr(vector_error_DPFs(:,j));
     end
 end
-
+%%
+for j = 1:3 % chromophores
+    for u = 1:5 % datasets
+        for k = 1:iterations % iterations
+            vector_error_DPFs_bp(k,u) = perc_error_DPFs_saved{1,k}(u,j);
+        end
+    end
+    if j == 1
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Percentage difference in HbO quantification using different DPF datasets.png', 'png')
+        boxplot(abs(vector_error_DPFs_bp),'Labels',{'Diffusion value','Broadband toolboxes','Constant value toolboxes','Equation-based, age 20','Equation-based, age 40'})
+        ylabel('Percentage difference in chromophore concentration')
+        title('Percentage difference in HbO quantification using different DPF datasets')
+        grid on
+        saveas(gcf,'Percentage difference in HbO quantification using different DPF datasets.png')
+    end
+    if j == 2
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Percentage difference in HbR quantification using different DPF datasets.png', 'png')
+        boxplot(abs(vector_error_DPFs_bp),'Labels',{'Diffusion value','Broadband toolboxes','Constant value toolboxes','Equation-based, age 20','Equation-based, age 40'})
+        ylabel('Percentage difference in chromophore concentration')
+        title('Percentage difference in HbR quantification using different DPF datasets')
+        grid on
+        saveas(gcf,'Percentage difference in HbR quantification using different DPF datasets.png')
+    end
+    if j == 3
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Percentage difference in oxCCO quantification using different DPF datasets.png', 'png')
+        boxplot(abs(vector_error_DPFs_bp),'Labels',{'Diffusion value','Broadband toolboxes','Constant value toolboxes','Equation-based, age 20','Equation-based, age 40'})
+        ylabel('Percentage difference in chromophore concentration')
+        title('Percentage difference in oxCCO quantification using different DPF datasets')
+        grid on
+        saveas(gcf,'Percentage difference in oxCCO quantification using different DPF datasets.png')
+    end
+end
 %%
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);

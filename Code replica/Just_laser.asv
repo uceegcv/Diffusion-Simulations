@@ -838,10 +838,10 @@ tolerance = 10; % +-5nm
 % For laser
 for u = 1:length(concs1) 
     for r = 1:length(x)
-        if x(1) == 680 && r == 1
+        if x(1) == 680
             [val, idx] = min(abs(E_new((681-wl(1)):(681-wl(1))+tolerance,u) - E_prime_laser(r,u)));
             new_ext_wavs_init(r,u) = idx;
-            new_ext_wavs_laser(r,u) = new_ext_wavs_init(r,u) + 680;
+            new_ext_wavs_laser(r,u) = new_ext_wavs_init(r,u) + (681-tolerance);
         else
             [val, idx] = min(abs(E_new((x(r)-wl(1))-tolerance:(x(r)-wl(1))+tolerance,u) - E_prime_laser(r,u)));
             new_ext_wavs_init(r,u) = idx;

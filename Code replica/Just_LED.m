@@ -5,32 +5,32 @@
 % close all;
 % addpath(genpath('N:\Matlab code\homer2_v2_8_11022018')) 
 
-%% Find SNR of real AV3 data
-% Select AV3 data folder
-[file, path] = uigetfile('*.mat');
-AV3_conc = load([path file]);
-%
-prompt = 'Which source would you like? ';
-a = input(prompt);
-prompt = 'Which detector would you like? ';
-b = input(prompt);
-
-if  a ==1
-    channel = a*b;
-elseif a == 2
-    channel = b + 8;
-end
-
-for i = 1:80
-    snr_val_AV3_hard(i) = snr(AV3_conc.dod(:,i));
-end
-
-for i = 1:80
-    mean_AV3_sat_val(i) = mean(AV3_conc.dod(920:1111,i));
-    high_AV3_noise(i) = max(AV3_conc.dod(920:1111,i));
-    low_AV3_noise(i) = min(AV3_conc.dod(920:1111,i));
-end
-
+% %% Find SNR of real AV3 data
+% % Select AV3 data folder
+% [file, path] = uigetfile('*.mat');
+% AV3_conc = load([path file]);
+% %
+% prompt = 'Which source would you like? ';
+% a = input(prompt);
+% prompt = 'Which detector would you like? ';
+% b = input(prompt);
+% 
+% if  a ==1
+%     channel = a*b;
+% elseif a == 2
+%     channel = b + 8;
+% end
+% 
+% for i = 1:80
+%     snr_val_AV3_hard(i) = snr(AV3_conc.dod(:,i));
+% end
+% 
+% for i = 1:80
+%     mean_AV3_sat_val(i) = mean(AV3_conc.dod(920:1111,i));
+%     high_AV3_noise(i) = max(AV3_conc.dod(920:1111,i));
+%     low_AV3_noise(i) = min(AV3_conc.dod(920:1111,i));
+% end
+% 
 
 
 %%

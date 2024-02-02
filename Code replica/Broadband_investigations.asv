@@ -196,20 +196,20 @@ for pert_number = 1:20
     
         % Typical chromophone concentration
     
-%         FigH = figure('Position', get(0, 'Screensize'));
-%         F = getframe(FigH);
-%         imwrite(F.cdata, 'Change in absorption coefficient broadband.png', 'png')
-%         plot(x,mua1,'ro-');
-%         hold on
-%         plot(x,mua2,'ko-');
-%         ax = gca;
-%         ax.FontSize = 20;
-%         xlim([min(x) max(x)])
-%         xlabel('Wavelength (nm)');
-%         ylabel('Absorption coefficient mm^{-1})');
-%         title('Change in absorption coefficient');
-%         legend('mua1','mua2','Location','Best');
-%         saveas(gcf,'Change in absorption coefficient broadband.png')
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Change in absorption coefficient broadband.png', 'png')
+        plot(x,mua1,'ro-');
+        hold on
+        plot(x,mua2,'ko-');
+        ax = gca;
+        ax.FontSize = 20;
+        xlim([min(x) max(x)])
+        xlabel('Wavelength (nm)');
+        ylabel('Absorption coefficient mm^{-1})');
+        title('Change in absorption coefficient');
+        legend('mua1','mua2','Location','Best');
+        saveas(gcf,'Change in absorption coefficient broadband.png')
     
     %     % Define and plot transport scatter coefficient
         power = -1.2;
@@ -1019,18 +1019,18 @@ for pert_number = 1:20
     %ext_CYRIL = ext_CYRIL/(2*2.3);
     % %% Chromophore spectra
     %Plot constituent spectra
-%     FigH = figure('Position', get(0, 'Screensize'));
-%     F = getframe(FigH);
-%     imwrite(F.cdata, 'Constituent spectra (and polynomial fits) from Homer2 for broadband system 2.png', 'png')
-%     plot(x,E(:,1),'ro-');hold on;
-%     plot(x,E(:,2),'bo-');
-%     plot(x,E(:,3),'mo-');
-%     xlim([min(x) max(x)])
-%     legend('HbO','HbR','aa3');
-%     xlabel('Wavelength (nm)');
-%     ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
-%     title('Constituent spectra from Homer2 for broadband system 2 (740-900nm)');
-%     saveas(gcf,'Constituent spectra (and polynomial fits) from Homer2 for broadband system 2.png')
+    FigH = figure('Position', get(0, 'Screensize'));
+    F = getframe(FigH);
+    imwrite(F.cdata, 'Constituent spectra (and polynomial fits) from Homer2 for broadband system 2.png', 'png')
+    plot(x,E(:,1),'ro-');hold on;
+    plot(x,E(:,2),'bo-');
+    plot(x,E(:,3),'mo-');
+    xlim([min(x) max(x)])
+    legend('HbO','HbR','aa3');
+    xlabel('Wavelength (nm)');
+    ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
+    title('Constituent spectra from Homer2 for broadband system 2 (740-900nm)');
+    saveas(gcf,'Constituent spectra (and polynomial fits) from Homer2 for broadband system 2.png')
     % 
     % figure;
     % plot(x,ext_CYRIL(:,1),'ro-');hold on;
@@ -1437,21 +1437,21 @@ for pert_number = 1:20
         perc_error_DPF_vector = abs(perc_error_DPF_vector);
         
         if l == 1 % Print one example
-%             FigH = figure('Position', get(0, 'Screensize'));
-%             F = getframe(FigH);
-%             imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for Broadband System 2.png', 'png')
-%             plot(percent_vector,perc_error_DPF_vector(:,1),'r*-','MarkerSize',20)
-%             hold on
-%             plot(percent_vector,perc_error_DPF_vector(:,2),'bs-','MarkerSize',10)
-%             plot(percent_vector,perc_error_DPF_vector(:,3),'go-','MarkerSize',10)
-%             ax = gca;
-%             ax.FontSize = 20;
-%             ylim([0 35]);
-%             legend('HbO','HbR','oxCCO','Location','Best');
-%             xlabel('Percentage change in DPF value');
-%             ylabel('Percentage error in chromophore concentration values');
-%             title({'Comparison of percentage errors for increasing DPF percentage changes','for Broadband System 2 (740-900nm)'});
-%             saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for Broadband System 2.png')
+            FigH = figure('Position', get(0, 'Screensize'));
+            F = getframe(FigH);
+            imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for Broadband System 2.png', 'png')
+            plot(percent_vector,perc_error_DPF_vector(:,1),'r*-','MarkerSize',20)
+            hold on
+            plot(percent_vector,perc_error_DPF_vector(:,2),'bs-','MarkerSize',10)
+            plot(percent_vector,perc_error_DPF_vector(:,3),'go-','MarkerSize',10)
+            ax = gca;
+            ax.FontSize = 20;
+            ylim([0 35]);
+            legend('HbO','HbR','oxCCO','Location','Best');
+            xlabel('Percentage change in DPF value');
+            ylabel('Percentage error in chromophore concentration values');
+            title({'Comparison of percentage errors for increasing DPF percentage changes','for Broadband System 2 (740-900nm)'});
+            saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for Broadband System 2.png')
         
         for r = 1:length(E)
             for q = 1:length(ac_conc_change)
@@ -1764,20 +1764,20 @@ for pert_number = 1:20
     %ext_CYRIL = ext_CYRIL/(2*2.3);
     % %% Chromophore spectra
     %Plot constituent spectra
-%     FigH = figure('Position', get(0, 'Screensize'));
-%     F = getframe(FigH);
-%     imwrite(F.cdata, 'Constituent spectra (and polynomial fits) from Homer2 for broadband system 3.png', 'png')
-%     plot(x,E(:,1),'ro-');hold on;
-%     plot(x,E(:,2),'bo-');
-%     % plot(x,(E(:,3)/10),'go-'); %Divide by 10 to improve display
-%     % plot(x,(E(:,4)/10),'ko-'); %Divide by 10 to improve display
-%     plot(x,E(:,3),'mo-');
-%     xlim([min(x) max(x)])
-%     legend('HbO','HbR','aa3');
-%     xlabel('Wavelength (nm)');
-%     ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
-%     title('Constituent spectra from Homer2 for broadband system 3 (780-900nm)');
-%     saveas(gcf,'Constituent spectra (and polynomial fits) from Homer2 for broadband system 3.png')
+    FigH = figure('Position', get(0, 'Screensize'));
+    F = getframe(FigH);
+    imwrite(F.cdata, 'Constituent spectra (and polynomial fits) from Homer2 for broadband system 3.png', 'png')
+    plot(x,E(:,1),'ro-');hold on;
+    plot(x,E(:,2),'bo-');
+    % plot(x,(E(:,3)/10),'go-'); %Divide by 10 to improve display
+    % plot(x,(E(:,4)/10),'ko-'); %Divide by 10 to improve display
+    plot(x,E(:,3),'mo-');
+    xlim([min(x) max(x)])
+    legend('HbO','HbR','aa3');
+    xlabel('Wavelength (nm)');
+    ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
+    title('Constituent spectra from Homer2 for broadband system 3 (780-900nm)');
+    saveas(gcf,'Constituent spectra (and polynomial fits) from Homer2 for broadband system 3.png')
     % 
     % figure;
     % plot(x,ext_CYRIL(:,1),'ro-');hold on;
@@ -2187,21 +2187,21 @@ for pert_number = 1:20
         
         if l == 1
     
-%         FigH = figure('Position', get(0, 'Screensize'));
-%         F = getframe(FigH);
-%         imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for broadband system 3.png', 'png')
-%         plot(percent_vector,perc_error_DPF_vector(:,1),'r*-','MarkerSize',20)
-%         hold on
-%         plot(percent_vector,perc_error_DPF_vector(:,2),'bs-','MarkerSize',10)
-%         plot(percent_vector,perc_error_DPF_vector(:,3),'go-','MarkerSize',10)
-%         ax = gca;
-%         ax.FontSize = 20;
-%         ylim([0 35]);
-%         legend('HbO','HbR','oxCCO','Location','Best');
-%         xlabel('Percentage change in DPF value');
-%         ylabel('Percentage error in chromophore concentration values');
-%         title({'Comparison of percentage errors for increasing DPF percentage changes', 'for broadband system 3 (780-900nm)'});
-%         saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for broadband system 3.png')
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for broadband system 3.png', 'png')
+        plot(percent_vector,perc_error_DPF_vector(:,1),'r*-','MarkerSize',20)
+        hold on
+        plot(percent_vector,perc_error_DPF_vector(:,2),'bs-','MarkerSize',10)
+        plot(percent_vector,perc_error_DPF_vector(:,3),'go-','MarkerSize',10)
+        ax = gca;
+        ax.FontSize = 20;
+        ylim([0 35]);
+        legend('HbO','HbR','oxCCO','Location','Best');
+        xlabel('Percentage change in DPF value');
+        ylabel('Percentage error in chromophore concentration values');
+        title({'Comparison of percentage errors for increasing DPF percentage changes', 'for broadband system 3 (780-900nm)'});
+        saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for broadband system 3.png')
     
         for r = 1:length(E)
             for q = 1:length(ac_conc_change)
@@ -2242,21 +2242,21 @@ for pert_number = 1:20
         perc_error_E_vector_BB3 = [perc_diff_BB3; perc_error_BB3_E5; perc_error_BB3_E10; perc_error_BB3_E15];
         perc_error_E_vector_BB3 = abs(perc_error_E_vector_BB3);
     
-%         FigH = figure('Position', get(0, 'Screensize'));
-%         F = getframe(FigH);
-%         imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 3.png', 'png')
-%         plot(percent_vector,perc_error_E_vector_BB3(:,1),'r*-','MarkerSize',20)
-%         hold on
-%         plot(percent_vector,perc_error_E_vector_BB3(:,2),'bs-','MarkerSize',10)
-%         plot(percent_vector,perc_error_E_vector_BB3(:,3),'go-','MarkerSize',10)
-%         ax = gca;
-%         ax.FontSize = 20;
-%         ylim([0 35]);
-%         legend('HbO','HbR','oxCCO','Location','Best');
-%         xlabel('Percentage change in extinction coefficient value');
-%         ylabel('Percentage error in chromophore concentration values');
-%         title({'Comparison of percentage errors for increasing extinction coefficient' ,'percentage changes for broadband system 3 (780-900nm)'});
-%         saveas(gcf,'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 3.png')
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 3.png', 'png')
+        plot(percent_vector,perc_error_E_vector_BB3(:,1),'r*-','MarkerSize',20)
+        hold on
+        plot(percent_vector,perc_error_E_vector_BB3(:,2),'bs-','MarkerSize',10)
+        plot(percent_vector,perc_error_E_vector_BB3(:,3),'go-','MarkerSize',10)
+        ax = gca;
+        ax.FontSize = 20;
+        ylim([0 35]);
+        legend('HbO','HbR','oxCCO','Location','Best');
+        xlabel('Percentage change in extinction coefficient value');
+        ylabel('Percentage error in chromophore concentration values');
+        title({'Comparison of percentage errors for increasing extinction coefficient' ,'percentage changes for broadband system 3 (780-900nm)'});
+        saveas(gcf,'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 3.png')
     
         end
     
@@ -2406,9 +2406,9 @@ for pert_number = 1:20
         end
     end
     
-    pert_ave_error_BB3SNR50{pert_number} = ave_vector_error_BB3SNR50(:,:);
-    pert_high_bar_error_BB3SNR50{pert_number} = high_bar_vector_error_BB3SNR50;
-    pert_cllow_bar_error_BB3SNR50{pert_number} = low_bar_vector_error_BB3SNR50;
+    ave_vector_error_BB3SNR50{pert_number} = ave_vector_error_BB3SNR50;
+    high_bar_vector_error_BB3SNR50{pert_number} = high_bar_vector_error_BB3SNR50;
+    low_bar_vector_error_BB3SNR50{pert_number} = low_bar_vector_error_BB3SNR50;
     
     %%
     
@@ -2508,20 +2508,20 @@ for pert_number = 1:20
     %ext_CYRIL = ext_CYRIL/(2*2.3);
     % %% Chromophore spectra
     %Plot constituent spectra
-%     FigH = figure('Position', get(0, 'Screensize'));
-%     F = getframe(FigH);
-%     imwrite(F.cdata, 'Constituent spectra (and polynomial fits) from Homer2 for broadband system 4.png', 'png')
-%     plot(x,E(:,1),'ro-');hold on;
-%     plot(x,E(:,2),'bo-');
-%     % plot(x,(E(:,3)/10),'go-'); %Divide by 10 to improve display
-%     % plot(x,(E(:,4)/10),'ko-'); %Divide by 10 to improve display
-%     plot(x,E(:,3),'mo-');
-%     xlim([min(x) max(x)])
-%     legend('HbO','HbR','aa3');
-%     xlabel('Wavelength (nm)');
-%     ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
-%     title('Constituent spectra from Homer2 for broadband system 4 (720-900nm)');
-%     saveas(gcf,'Constituent spectra (and polynomial fits) from Homer2 for broadband system 4.png')
+    FigH = figure('Position', get(0, 'Screensize'));
+    F = getframe(FigH);
+    imwrite(F.cdata, 'Constituent spectra (and polynomial fits) from Homer2 for broadband system 4.png', 'png')
+    plot(x,E(:,1),'ro-');hold on;
+    plot(x,E(:,2),'bo-');
+    % plot(x,(E(:,3)/10),'go-'); %Divide by 10 to improve display
+    % plot(x,(E(:,4)/10),'ko-'); %Divide by 10 to improve display
+    plot(x,E(:,3),'mo-');
+    xlim([min(x) max(x)])
+    legend('HbO','HbR','aa3');
+    xlabel('Wavelength (nm)');
+    ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
+    title('Constituent spectra from Homer2 for broadband system 4 (720-900nm)');
+    saveas(gcf,'Constituent spectra (and polynomial fits) from Homer2 for broadband system 4.png')
     
     % 
     % figure;
@@ -2877,20 +2877,20 @@ for pert_number = 1:20
     
         if l == 1
             
-%         FigH = figure('Position', get(0, 'Screensize'));
-%         F = getframe(FigH);
-%         imwrite(F.cdata, 'Comparison of percentage errors for increasing SNR of broadband system 4.png', 'png')
-%         plot(perc_vector_SNR,perc_diff_SNR_vector(:,1),'r*-','MarkerSize',20)
-%         hold on
-%         plot(perc_vector_SNR,perc_diff_SNR_vector(:,2),'bs-','MarkerSize',10)
-%         plot(perc_vector_SNR,perc_diff_SNR_vector(:,3),'go-','MarkerSize',10)
-%         ax = gca;
-%         ax.FontSize = 20;
-%         legend('HbO','HbR','oxCCO','Location','Best');
-%         xlabel('Absolute SNR value');
-%         ylabel('Percentage error in chromophore concentration values');
-%         title({'Comparison of percentage errors for increasing SNR', 'of broadband system 4 (720-900nm)'});
-%         saveas(gcf,'Comparison of percentage errors for increasing SNR of broadband system 4.png')
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Comparison of percentage errors for increasing SNR of broadband system 4.png', 'png')
+        plot(perc_vector_SNR,perc_diff_SNR_vector(:,1),'r*-','MarkerSize',20)
+        hold on
+        plot(perc_vector_SNR,perc_diff_SNR_vector(:,2),'bs-','MarkerSize',10)
+        plot(perc_vector_SNR,perc_diff_SNR_vector(:,3),'go-','MarkerSize',10)
+        ax = gca;
+        ax.FontSize = 20;
+        legend('HbO','HbR','oxCCO','Location','Best');
+        xlabel('Absolute SNR value');
+        ylabel('Percentage error in chromophore concentration values');
+        title({'Comparison of percentage errors for increasing SNR', 'of broadband system 4 (720-900nm)'});
+        saveas(gcf,'Comparison of percentage errors for increasing SNR of broadband system 4.png')
     
         %% Introduce errors in BB4 measurements due to DPF changes
     
@@ -2934,20 +2934,20 @@ for pert_number = 1:20
         perc_error_DPF_vector = [perc_diff_BB4; perc_error_BB4_DPF5; perc_error_BB4_DPF10; perc_error_BB4_DPF15];
         perc_error_DPF_vector = abs(perc_error_DPF_vector);
     
-%         FigH = figure('Position', get(0, 'Screensize'));
-%         F = getframe(FigH);
-%         imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for broadband system 4.png', 'png')
-%         plot(percent_vector,perc_error_DPF_vector(:,1),'r*-','MarkerSize',20)
-%         hold on
-%         plot(percent_vector,perc_error_DPF_vector(:,2),'bs-','MarkerSize',10)
-%         plot(percent_vector,perc_error_DPF_vector(:,3),'go-','MarkerSize',10)
-%         ax = gca;
-%         ax.FontSize = 20;
-%         legend('HbO','HbR','oxCCO','Location','Best');
-%         xlabel('Percentage change in DPF value');
-%         ylabel('Percentage error in chromophore concentration values');
-%         title({'Comparison of percentage errors for increasing DPF percentage changes', 'for broadband system 4 (720-900nm)'});
-%         saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for broadband system 4.png')
+        FigH = figure('Position', get(0, 'Screensize'));
+        F = getframe(FigH);
+        imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for broadband system 4.png', 'png')
+        plot(percent_vector,perc_error_DPF_vector(:,1),'r*-','MarkerSize',20)
+        hold on
+        plot(percent_vector,perc_error_DPF_vector(:,2),'bs-','MarkerSize',10)
+        plot(percent_vector,perc_error_DPF_vector(:,3),'go-','MarkerSize',10)
+        ax = gca;
+        ax.FontSize = 20;
+        legend('HbO','HbR','oxCCO','Location','Best');
+        xlabel('Percentage change in DPF value');
+        ylabel('Percentage error in chromophore concentration values');
+        title({'Comparison of percentage errors for increasing DPF percentage changes', 'for broadband system 4 (720-900nm)'});
+        saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for broadband system 4.png')
         end 
         for r = 1:length(E)
             for q = 1:length(ac_conc_change)
@@ -3151,9 +3151,9 @@ for pert_number = 1:20
         end
     end
     
-    pert_ave_error_BB4SNR50{pert_number} = ave_vector_error_BB4SNR50(:,:);
-    pert_high_bar_error_BB4SNR50{pert_number} = high_bar_vector_error_BB4SNR50;
-    pert_cllow_bar_error_BB4SNR50{pert_number} = low_bar_vector_error_BB4SNR50;
+    ave_vector_error_BB4SNR50{pert_number} = ave_vector_error_BB4SNR50;
+    high_bar_vector_error_BB4SNR50{pert_number} = high_bar_vector_error_BB4SNR50;
+    low_bar_vector_error_BB4SNR50{pert_number} = low_bar_vector_error_BB4SNR50;
     
     %%
     

@@ -182,14 +182,20 @@ ac_conc_change = ac_conc_change.';
 
     % Typical chromophone concentration
 
-%     figure;
-%     plot(x,mua1,'ko-');
-%     hold on
-%     plot(x,mua2,'ko-');
-%     xlim([min(x) max(x)])
-%     xlabel('Wavelength (nm)');
-%     ylabel('Absorption coefficient mm^{-1})');
-%     title('Tissue absorption spectrum');
+    FigH = figure('Position', get(0, 'Screensize'));
+    F = getframe(FigH);
+    imwrite(F.cdata, 'Change in absorption coefficient laser.png', 'png')
+    plot(x,mua1,'ro-');
+    hold on
+    plot(x,mua2,'ko-');
+    ax = gca;
+    ax.FontSize = 20;
+    xlim([min(x) max(x)])
+    xlabel('Wavelength (nm)');
+    ylabel('Absorption coefficient mm^{-1})');
+    title('Change in absorption coefficient');
+    legend('mua1','mua2','Location','Best');
+    saveas(gcf,'Change in absorption coefficient laser.png')
 % 
 %     % Define and plot transport scatter coefficient
     power = -1.2;

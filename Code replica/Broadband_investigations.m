@@ -191,6 +191,12 @@ for pert_number = 1:20
     % Define actual (hard-coded) change in concs
     ac_conc_change = concs2 - concs1;
     ac_conc_change = ac_conc_change.';
+    
+    if pert_number == 1
+        disp(['conc change BB1 are', num2str(ac_conc_change(1))])
+        disp(['conc change BB1 are', num2str(ac_conc_change(2))])
+        disp(['conc change BB1 are', num2str(ac_conc_change(3))])
+    end
         
     %% Generate a typical brain spectrum
     
@@ -399,7 +405,9 @@ for pert_number = 1:20
     
     SNR_vector = [20; 30; 40; 50; 60];
     
-    for l = 1:20 % Number of iterations to average for error bars
+    iterations = 20;
+    
+    for l = 1:iterations % Number of iterations to average for error bars
     
         R1_BB_SNR20 = awgn(R1_BB,20,'measured');
         R2_BB_SNR20 = awgn(R2_BB,20,'measured');
@@ -902,7 +910,7 @@ for pert_number = 1:20
     
     for u = 1:4
         for j = 1:3
-            for k = 1:10
+            for k = 1:iterations
                 vector_error_BBSNR50(k,j) = perc_accum_errors_DPFE_BBSNR50_saved{1,k}(u,j);
             end
             ave_vector_error_BBSNR50(u,j) = mean(vector_error_BBSNR50(:,j));
@@ -1118,6 +1126,13 @@ for pert_number = 1:20
     % Define actual (hard-coded) change in concs
     ac_conc_change = concs2 - concs1;
     ac_conc_change = ac_conc_change.';
+    
+    if pert_number == 1
+        disp(['conc change BB2 are', num2str(ac_conc_change(1))])
+        disp(['conc change BB2 are', num2str(ac_conc_change(2))])
+        disp(['conc change BB2 are', num2str(ac_conc_change(3))])
+    end
+
         
     %% Generate a typical brain spectrum
     
@@ -1319,7 +1334,7 @@ for pert_number = 1:20
     
     SNR_vector = [20; 30; 40; 50; 60];
     
-    for l = 1:20 % Number of iterations to average for error bars
+    for l = 1:iterations % Number of iterations to average for error bars
     
         R1_BB2_SNR20 = awgn(R1_BB2,20,'measured');
         R2_BB2_SNR20 = awgn(R2_BB2,20,'measured');
@@ -1653,7 +1668,7 @@ for pert_number = 1:20
     
     for u = 1:4
         for j = 1:3
-            for k = 1:10
+            for k = 1:iterations
                 vector_error_BB2SNR50(k,j) = perc_accum_errors_DPFE_BB2SNR50_saved{1,k}(u,j);
             end
             ave_vector_error_BB2SNR50(u,j) = mean(vector_error_BB2SNR50(:,j));
@@ -1867,6 +1882,12 @@ for pert_number = 1:20
     % Define actual (hard-coded) change in concs
     ac_conc_change = concs2 - concs1;
     ac_conc_change = ac_conc_change.';
+    
+     if pert_number == 1
+        disp(['conc change BB3 are', num2str(ac_conc_change(1))])
+        disp(['conc change BB3 are', num2str(ac_conc_change(2))])
+        disp(['conc change BB3 are', num2str(ac_conc_change(3))])
+    end
         
     %% Generate a typical brain spectrum
     
@@ -2068,7 +2089,7 @@ for pert_number = 1:20
     
     SNR_vector = [20; 30; 40; 50; 60];
     
-    for l = 1:20
+    for l = 1:iterations
     
         R1_BB3_SNR20 = awgn(R1_BB3,20,'measured');
         R2_BB3_SNR20 = awgn(R2_BB3,20,'measured');
@@ -2397,7 +2418,7 @@ for pert_number = 1:20
     
     for u = 1:4
         for j = 1:3
-            for k = 1:10
+            for k = 1:iterations
                 vector_error_BB3SNR50(k,j) = perc_accum_errors_DPFE_BB3SNR50_saved{1,k}(u,j);
             end
             ave_vector_error_BB3SNR50(u,j) = mean(vector_error_BB3SNR50(:,j));
@@ -2613,6 +2634,13 @@ for pert_number = 1:20
     % Define actual (hard-coded) change in concs
     ac_conc_change = concs2 - concs1;
     ac_conc_change = ac_conc_change.';
+    
+    if pert_number == 1
+        disp(['conc change BB4 are', num2str(ac_conc_change(1))])
+        disp(['conc change BB4 are', num2str(ac_conc_change(2))])
+        disp(['conc change BB4 are', num2str(ac_conc_change(3))])
+    end
+
         
     %% Generate a typical brain spectrum
     
@@ -2812,10 +2840,9 @@ for pert_number = 1:20
         perc_diff_BB4(t) = ((conc_BB4(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
     end
     
-    
     SNR_vector = [20; 30; 40; 50; 60];
     
-    for l = 1:20
+    for l = 1:iterations
     
         R1_BB4_SNR20 = awgn(R1_BB4,20,'measured');
         R2_BB4_SNR20 = awgn(R2_BB4,20,'measured');
@@ -3142,7 +3169,7 @@ for pert_number = 1:20
     
     for u = 1:4
         for j = 1:3
-            for k = 1:10
+            for k = 1:iterations
                 vector_error_BB4SNR50(k,j) = perc_accum_errors_DPFE_BB4SNR50_saved{1,k}(u,j);
             end
             ave_vector_error_BB4SNR50(u,j) = mean(vector_error_BB4SNR50(:,j));
@@ -3153,7 +3180,7 @@ for pert_number = 1:20
     
     pert_ave_error_BB4SNR50{pert_number} = ave_vector_error_BB4SNR50(:,:);
     pert_high_bar_error_BB4SNR50{pert_number} = high_bar_vector_error_BB4SNR50;
-    pert_cllow_bar_error_BB4SNR50{pert_number} = low_bar_vector_error_BB4SNR50;
+    pert_low_bar_error_BB4SNR50{pert_number} = low_bar_vector_error_BB4SNR50;
     
     %%
     
@@ -3176,4 +3203,34 @@ for pert_number = 1:20
         saveas(gcf,'Comparison of percentage errors for increasing E and DPF changes for BB system 4 SNR 50.png')
     end
 end
+
+%% Editing this
+for u = 1:4
+    for j = 1:3
+        for k = 1:pert_number
+            total_pert_error_BB4SNR50(k,j) = perc_accum_errors_DPFE_BB4SNR50_saved{1,k}(u,j);
+        end
+        ave_pert_error_BB4SNR50(u,j) = mean(total_pert_error_BB4SNR50(:,j));
+        high_bar_pert_error_BB4SNR50(u,j) = max(total_pert_error_BB4SNR50(:,j));
+        low_bar_pert_error_BB4SNR50(u,j) = min(total_pert_error_BB4SNR50(:,j));
+    end
+end
+
+% NEED TO EDIT THIS - NOT CORRECT
+FigH = figure('Position', get(0, 'Screensize'));
+F = getframe(FigH);
+imwrite(F.cdata, 'Comparison of percentage errors for increasing E and DPF changes for BB system 4 SNR 50.png', 'png')
+errorbar(percent_vector,pert_ave_error_BB4SNR50(:,1),low_bar_vector_error_BB4SNR50(:,1),high_bar_vector_error_BB4SNR50(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
+hold on
+errorbar(percent_vector,pert_ave_error_BB4SNR50(:,2),low_bar_vector_error_BB4SNR50(:,2),high_bar_vector_error_BB4SNR50(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
+errorbar(percent_vector,pert_ave_error_BB4SNR50(:,3),low_bar_vector_error_BB4SNR50(:,3),high_bar_vector_error_BB4SNR50(:,3),'go-','MarkerSize',20,'LineWidth',1)
+grid on
+ax = gca;
+ax.FontSize = 20;
+xlim([-5 20]);
+legend('HbO','HbR','oxCCO','Location','Best');
+xlabel('Percentage change in both extinction coefficient and DPF values');
+ylabel('Percentage error in chromophore concentration values');
+title({'Comparison of percentage errors for increasing extinction coefficient', 'and DPF percentage changes for broadband system 4 (720-900nm), SNR = 50'});
+saveas(gcf,'Comparison of percentage errors for increasing E and DPF changes for BB system 4 SNR 50.png')
 

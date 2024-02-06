@@ -8,7 +8,7 @@
 % Enter simulation data
 SD = 30; % Source-detector separation on same surface of slab (mm)
 slab = 50; % Slab thickness (mm)
-for pert_number = 1:20
+for pert_number = 1:100
     %% Code for Broadband System 1
     % x contains all broadband wavelengths
     x = 680:921;
@@ -3204,31 +3204,130 @@ for pert_number = 1:20
     end
 end
 
+%% Editing this
+
+% Average BB1
 for u = 1:4
     for j = 1:3
         for k = 1:pert_number
-            total_pert_error_BB4SNR50(k,j) = perc_accum_errors_DPFE_BB4SNR50_saved{1,k}(u,j);
+            total_pert_error_BBSNR50(k,j) = pert_ave_error_BBSNR50{1,k}(u,j);
+            high_bar_vector_error_BB4SNR50(k,j) = pert_high_bar_error_BB4SNR50{1,k}(u,j);
+            low_bar_vector_error_BB4SNR50(k,j) = pert_low_bar_error_BB4SNR50{1,k}(u,j);
         end
-        ave_pert_error_BB4SNR50(u,j) = mean(vector_error_BB4SNR50(:,j));
-        high_bar_pert_error_BB4SNR50(u,j) = max(vector_error_BB4SNR50(:,j));
-        low_bar_pert_error_BB4SNR50(u,j) = min(vector_error_BB4SNR50(:,j));
+        ave_pert_error_BBSNR50(u,j) = mean(total_pert_error_BBSNR50(:,j)(total_pert_error_BBSNR50(:,j)<Inf));
+        high_bar_pert_error_BBSNR50(u,j) = max(high_bar_vector_error_BB4SNR50(:,j));
+        low_bar_pert_error_BBSNR50(u,j) = min(low_bar_vector_error_BB4SNR50(:,j));
     end
 end
 
+% Graph for BB1
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
-imwrite(F.cdata, 'Comparison of percentage errors for increasing E and DPF changes for BB system 4 SNR 50.png', 'png')
-errorbar(percent_vector,pert_ave_error_BB4SNR50(:,1),low_bar_vector_error_BB4SNR50(:,1),high_bar_vector_error_BB4SNR50(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
+imwrite(F.cdata, 'Average percentage errors for increasing E and DPF changes for BB1 SNR 50 random conc.png', 'png')
+errorbar(percent_vector,ave_pert_error_BBSNR50(:,1),low_bar_pert_error_BBSNR50(:,1),high_bar_pert_error_BBSNR50(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
 hold on
-errorbar(percent_vector,pert_ave_error_BB4SNR50(:,2),low_bar_vector_error_BB4SNR50(:,2),high_bar_vector_error_BB4SNR50(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
-errorbar(percent_vector,pert_ave_error_BB4SNR50(:,3),low_bar_vector_error_BB4SNR50(:,3),high_bar_vector_error_BB4SNR50(:,3),'go-','MarkerSize',20,'LineWidth',1)
+errorbar(percent_vector,ave_pert_error_BBSNR50(:,2),low_bar_pert_error_BBSNR50(:,2),high_bar_pert_error_BBSNR50(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
+errorbar(percent_vector,ave_pert_error_BBSNR50(:,3),low_bar_pert_error_BBSNR50(:,3),high_bar_pert_error_BBSNR50(:,3),'go-','MarkerSize',20,'LineWidth',1)
 grid on
 ax = gca;
 ax.FontSize = 20;
 xlim([-5 20]);
 legend('HbO','HbR','oxCCO','Location','Best');
 xlabel('Percentage change in both extinction coefficient and DPF values');
-ylabel('Percentage error in chromophore concentration values');
-title({'Comparison of percentage errors for increasing extinction coefficient', 'and DPF percentage changes for broadband system 4 (720-900nm), SNR = 50'});
-saveas(gcf,'Comparison of percentage errors for increasing E and DPF changes for BB system 4 SNR 50.png')
+ylabel('Average percentage error in chromophore concentration values');
+title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB1 with random conc changes (720-900nm), SNR = 50'});
+saveas(gcf,'Average percentage errors for increasing E and DPF changes for BB1 SNR 50 random conc.png')
+
+
+% Average BB2
+for u = 1:4
+    for j = 1:3
+        for k = 1:pert_number
+            total_pert_error_BB2SNR50(k,j) = pert_ave_error_BB2SNR50{1,k}(u,j);
+        end
+        ave_pert_error_BB2SNR50(u,j) = mean(total_pert_error_BB2SNR50(:,j));
+        high_bar_pert_error_BB2SNR50(u,j) = max(total_pert_error_BB2SNR50(:,j));
+        low_bar_pert_error_BB2SNR50(u,j) = min(total_pert_error_BB2SNR50(:,j));
+    end
+end
+
+% Graph for BB2
+FigH = figure('Position', get(0, 'Screensize'));
+F = getframe(FigH);
+imwrite(F.cdata, 'Average percentage errors for increasing E and DPF changes for BB2 SNR 50 random conc.png', 'png')
+errorbar(percent_vector,ave_pert_error_BB2SNR50(:,1),low_bar_pert_error_BB2SNR50(:,1),high_bar_pert_error_BB2SNR50(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
+hold on
+errorbar(percent_vector,ave_pert_error_BB2SNR50(:,2),low_bar_pert_error_BB2SNR50(:,2),high_bar_pert_error_BB2SNR50(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
+errorbar(percent_vector,ave_pert_error_BB2SNR50(:,3),low_bar_pert_error_BB2SNR50(:,3),high_bar_pert_error_BB2SNR50(:,3),'go-','MarkerSize',20,'LineWidth',1)
+grid on
+ax = gca;
+ax.FontSize = 20;
+xlim([-5 20]);
+legend('HbO','HbR','oxCCO','Location','Best');
+xlabel('Percentage change in both extinction coefficient and DPF values');
+ylabel('Average percentage error in chromophore concentration values');
+title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB2 with random conc changes (720-900nm), SNR = 50'});
+saveas(gcf,'Average percentage errors for increasing E and DPF changes for BB2 SNR 50 random conc.png')
+
+
+% Average BB3
+for u = 1:4
+    for j = 1:3
+        for k = 1:pert_number
+            total_pert_error_BB3SNR50(k,j) = pert_ave_error_BB3SNR50{1,k}(u,j);
+        end
+        ave_pert_error_BB3SNR50(u,j) = mean(total_pert_error_BB3SNR50(:,j));
+        high_bar_pert_error_BB3SNR50(u,j) = max(total_pert_error_BB3SNR50(:,j));
+        low_bar_pert_error_BB3SNR50(u,j) = min(total_pert_error_BB3SNR50(:,j));
+    end
+end
+
+% Graph for BB3
+FigH = figure('Position', get(0, 'Screensize'));
+F = getframe(FigH);
+imwrite(F.cdata, 'Average percentage errors for increasing E and DPF changes for BB3 SNR 50 random conc.png', 'png')
+errorbar(percent_vector,ave_pert_error_BB3SNR50(:,1),low_bar_pert_error_BB3SNR50(:,1),high_bar_pert_error_BB3SNR50(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
+hold on
+errorbar(percent_vector,ave_pert_error_BB3SNR50(:,2),low_bar_pert_error_BB3SNR50(:,2),high_bar_pert_error_BB3SNR50(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
+errorbar(percent_vector,ave_pert_error_BB3SNR50(:,3),low_bar_pert_error_BB3SNR50(:,3),high_bar_pert_error_BB3SNR50(:,3),'go-','MarkerSize',20,'LineWidth',1)
+grid on
+ax = gca;
+ax.FontSize = 20;
+xlim([-5 20]);
+legend('HbO','HbR','oxCCO','Location','Best');
+xlabel('Percentage change in both extinction coefficient and DPF values');
+ylabel('Average percentage error in chromophore concentration values');
+title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB3 with random conc changes (720-900nm), SNR = 50'});
+saveas(gcf,'Average percentage errors for increasing E and DPF changes for BB3 SNR 50 random conc.png')
+
+
+% Average BB4
+for u = 1:4
+    for j = 1:3
+        for k = 1:pert_number
+            total_pert_error_BB4SNR50(k,j) = pert_ave_error_BB4SNR50{1,k}(u,j);
+        end
+        ave_pert_error_BB4SNR50(u,j) = mean(total_pert_error_BB4SNR50(:,j));
+        high_bar_pert_error_BB4SNR50(u,j) = max(total_pert_error_BB4SNR50(:,j));
+        low_bar_pert_error_BB4SNR50(u,j) = min(total_pert_error_BB4SNR50(:,j));
+    end
+end
+
+% Graph for BB4
+FigH = figure('Position', get(0, 'Screensize'));
+F = getframe(FigH);
+imwrite(F.cdata, 'Average percentage errors for increasing E and DPF changes for BB4 SNR 50 random conc.png', 'png')
+errorbar(percent_vector,ave_pert_error_BB4SNR50(:,1),low_bar_pert_error_BB4SNR50(:,1),high_bar_pert_error_BB4SNR50(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
+hold on
+errorbar(percent_vector,ave_pert_error_BB4SNR50(:,2),low_bar_pert_error_BB4SNR50(:,2),high_bar_pert_error_BB4SNR50(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
+errorbar(percent_vector,ave_pert_error_BB4SNR50(:,3),low_bar_pert_error_BB4SNR50(:,3),high_bar_pert_error_BB4SNR50(:,3),'go-','MarkerSize',20,'LineWidth',1)
+grid on
+ax = gca;
+ax.FontSize = 20;
+xlim([-5 20]);
+legend('HbO','HbR','oxCCO','Location','Best');
+xlabel('Percentage change in both extinction coefficient and DPF values');
+ylabel('Average percentage error in chromophore concentration values');
+title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB4 with random conc changes (720-900nm), SNR = 50'});
+saveas(gcf,'Average percentage errors for increasing E and DPF changes for BB4 SNR 50 random conc.png')
 

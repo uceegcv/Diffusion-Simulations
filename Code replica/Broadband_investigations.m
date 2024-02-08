@@ -3162,7 +3162,8 @@ for pert_number = 1:100
         end
         %%
         perc_accum_errors_DPFE_BB4SNR50 = [perc_diff_BB4; perc_error_BB4_5s_SNR50; perc_error_BB4_10s_SNR50; perc_error_BB4_15s_SNR50];
-    
+        perc_accum_errors_DPFE_BB4SNR50 = abs(perc_accum_errors_DPFE_BB4SNR50);
+        
         perc_accum_errors_DPFE_BB4SNR50_saved{l} = perc_accum_errors_DPFE_BB4SNR50(:,:); %Save each iteration to cell array
     end
     %%
@@ -3206,6 +3207,9 @@ end
 
 %% Editing this
 
+% change all values of perc_accum_errors_DPFE_BB4SNR50 to
+% abs(perc_accum_errors_DPFE_BB4SNR50)
+
 % Average BB1
 for u = 1:4
     for j = 1:3
@@ -3214,7 +3218,9 @@ for u = 1:4
             high_bar_vector_error_BB4SNR50(k,j) = pert_high_bar_error_BB4SNR50{1,k}(u,j);
             low_bar_vector_error_BB4SNR50(k,j) = pert_low_bar_error_BB4SNR50{1,k}(u,j);
         end
-        ave_pert_error_BBSNR50(u,j) = mean(total_pert_error_BBSNR50(:,j(total_pert_error_BBSNR50(:,j)<Inf)));
+        % Use this method for each array
+        val_to_ave_error = total_pert_error_BBSNR50(:,j);
+        ave_pert_error_BBSNR50(u,j) = mean(val_to_ave_error(val_to_ave_error<Inf));
         high_bar_pert_error_BBSNR50(u,j) = max(high_bar_vector_error_BB4SNR50(:,j));
         low_bar_pert_error_BBSNR50(u,j) = min(low_bar_vector_error_BB4SNR50(:,j));
     end

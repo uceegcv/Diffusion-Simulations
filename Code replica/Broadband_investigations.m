@@ -885,7 +885,8 @@ for pert_number = 1:100
         end
         %%
         perc_accum_errors_DPFE_BBSNR50 = [perc_diff_BB; perc_error_BB_5s_SNR50; perc_error_BB_10s_SNR50; perc_error_BB_15s_SNR50];
-    
+        perc_accum_errors_DPFE_BBSNR50 = abs(perc_accum_errors_DPFE_BBSNR50);
+
         perc_accum_errors_DPFE_BBSNR50_saved{l} = perc_accum_errors_DPFE_BBSNR50(:,:); %Save each iteration to cell array
     
         % FigH = figure('Position', get(0, 'Screensize'));
@@ -921,7 +922,7 @@ for pert_number = 1:100
     
     pert_ave_error_BBSNR50{pert_number} = ave_vector_error_BBSNR50(:,:);
     pert_high_bar_error_BBSNR50{pert_number} = high_bar_vector_error_BBSNR50;
-    pert_cllow_bar_error_BBSNR50{pert_number} = low_bar_vector_error_BBSNR50;
+    pert_low_bar_error_BBSNR50{pert_number} = low_bar_vector_error_BBSNR50;
     
     %%
     
@@ -1658,7 +1659,8 @@ for pert_number = 1:100
         end
         %%
         perc_accum_errors_DPFE_BB2SNR50 = [perc_diff_BB2; perc_error_BB2_5s_SNR50; perc_error_BB2_10s_SNR50; perc_error_BB2_15s_SNR50];
-    
+        perc_accum_errors_DPFE_BB2SNR50 = abs(perc_accum_errors_DPFE_BB2SNR50);
+
         perc_accum_errors_DPFE_BB2SNR50_saved{l} = perc_accum_errors_DPFE_BB2SNR50(:,:); %Save each iteration to cell array
     
     end
@@ -1679,7 +1681,7 @@ for pert_number = 1:100
     
     pert_ave_error_BB2SNR50{pert_number} = ave_vector_error_BB2SNR50(:,:);
     pert_high_bar_error_BB2SNR50{pert_number} = high_bar_vector_error_BB2SNR50;
-    pert_cllow_bar_error_BB2SNR50{pert_number} = low_bar_vector_error_BB2SNR50;
+    pert_low_bar_error_BB2SNR50{pert_number} = low_bar_vector_error_BB2SNR50;
     
     %%
     
@@ -2411,7 +2413,8 @@ for pert_number = 1:100
         end
         %%
         perc_accum_errors_DPFE_BB3SNR50 = [perc_diff_BB3; perc_error_BB3_5s_SNR50; perc_error_BB3_10s_SNR50; perc_error_BB3_15s_SNR50];
-    
+        perc_accum_errors_DPFE_BB3SNR50 = abs(perc_accum_errors_DPFE_BB3SNR50);
+
         perc_accum_errors_DPFE_BB3SNR50_saved{l} = perc_accum_errors_DPFE_BB3SNR50(:,:); %Save each iteration to cell array
     end
     %%
@@ -2429,7 +2432,7 @@ for pert_number = 1:100
     
     pert_ave_error_BB3SNR50{pert_number} = ave_vector_error_BB3SNR50(:,:);
     pert_high_bar_error_BB3SNR50{pert_number} = high_bar_vector_error_BB3SNR50;
-    pert_cllow_bar_error_BB3SNR50{pert_number} = low_bar_vector_error_BB3SNR50;
+    pert_low_bar_error_BB3SNR50{pert_number} = low_bar_vector_error_BB3SNR50;
     
     %%
     
@@ -3215,14 +3218,16 @@ for u = 1:4
     for j = 1:3
         for k = 1:pert_number
             total_pert_error_BBSNR50(k,j) = pert_ave_error_BBSNR50{1,k}(u,j);
-            high_bar_vector_error_BB4SNR50(k,j) = pert_high_bar_error_BB4SNR50{1,k}(u,j);
-            low_bar_vector_error_BB4SNR50(k,j) = pert_low_bar_error_BB4SNR50{1,k}(u,j);
+            high_bar_vector_error_BBSNR50(k,j) = pert_high_bar_error_BBSNR50{1,k}(u,j);
+            low_bar_vector_error_BBSNR50(k,j) = pert_low_bar_error_BBSNR50{1,k}(u,j);
         end
         % Use this method for each array
         val_to_ave_error = total_pert_error_BBSNR50(:,j);
+        high_to_ave_error = high_bar_vector_error_BBSNR50(:,j);
+        low_to_ave_error = low_bar_vector_error_BBSNR50(:,j);
         ave_pert_error_BBSNR50(u,j) = mean(val_to_ave_error(val_to_ave_error<Inf));
-        high_bar_pert_error_BBSNR50(u,j) = max(high_bar_vector_error_BB4SNR50(:,j));
-        low_bar_pert_error_BBSNR50(u,j) = min(low_bar_vector_error_BB4SNR50(:,j));
+        high_bar_pert_error_BBSNR50(u,j) = mean(high_to_ave_error(high_to_ave_error<Inf));
+        low_bar_pert_error_BBSNR50(u,j) = mean(low_to_ave_error(low_to_ave_error<Inf));
     end
 end
 
@@ -3241,7 +3246,7 @@ xlim([-5 20]);
 legend('HbO','HbR','oxCCO','Location','Best');
 xlabel('Percentage change in both extinction coefficient and DPF values');
 ylabel('Average percentage error in chromophore concentration values');
-title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB1 with random conc changes (720-900nm), SNR = 50'});
+title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB1 with random conc changes (680-921nm), SNR = 50'});
 saveas(gcf,'Average percentage errors for increasing E and DPF changes for BB1 SNR 50 random conc.png')
 
 
@@ -3250,10 +3255,16 @@ for u = 1:4
     for j = 1:3
         for k = 1:pert_number
             total_pert_error_BB2SNR50(k,j) = pert_ave_error_BB2SNR50{1,k}(u,j);
+            high_bar_vector_error_BB2SNR50(k,j) = pert_high_bar_error_BB2SNR50{1,k}(u,j);
+            low_bar_vector_error_BB2SNR50(k,j) = pert_low_bar_error_BB2SNR50{1,k}(u,j);
         end
-        ave_pert_error_BB2SNR50(u,j) = mean(total_pert_error_BB2SNR50(:,j));
-        high_bar_pert_error_BB2SNR50(u,j) = max(total_pert_error_BB2SNR50(:,j));
-        low_bar_pert_error_BB2SNR50(u,j) = min(total_pert_error_BB2SNR50(:,j));
+        % Use this method for each array
+        val_to_ave_error2 = total_pert_error_BB2SNR50(:,j);
+        high_to_ave_error2 = high_bar_vector_error_BB2SNR50(:,j);
+        low_to_ave_error2 = low_bar_vector_error_BB2SNR50(:,j);
+        ave_pert_error_BB2SNR50(u,j) = mean(val_to_ave_error2(val_to_ave_error2<Inf));
+        high_bar_pert_error_BB2SNR50(u,j) = mean(high_to_ave_error2(high_to_ave_error2<Inf));
+        low_bar_pert_error_BB2SNR50(u,j) = mean(low_to_ave_error2(low_to_ave_error2<Inf));
     end
 end
 
@@ -3272,7 +3283,7 @@ xlim([-5 20]);
 legend('HbO','HbR','oxCCO','Location','Best');
 xlabel('Percentage change in both extinction coefficient and DPF values');
 ylabel('Average percentage error in chromophore concentration values');
-title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB2 with random conc changes (720-900nm), SNR = 50'});
+title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB2 with random conc changes (740-900nm), SNR = 50'});
 saveas(gcf,'Average percentage errors for increasing E and DPF changes for BB2 SNR 50 random conc.png')
 
 
@@ -3281,10 +3292,16 @@ for u = 1:4
     for j = 1:3
         for k = 1:pert_number
             total_pert_error_BB3SNR50(k,j) = pert_ave_error_BB3SNR50{1,k}(u,j);
+            high_bar_vector_error_BB3SNR50(k,j) = pert_high_bar_error_BB3SNR50{1,k}(u,j);
+            low_bar_vector_error_BB3SNR50(k,j) = pert_low_bar_error_BB3SNR50{1,k}(u,j);
         end
-        ave_pert_error_BB3SNR50(u,j) = mean(total_pert_error_BB3SNR50(:,j));
-        high_bar_pert_error_BB3SNR50(u,j) = max(total_pert_error_BB3SNR50(:,j));
-        low_bar_pert_error_BB3SNR50(u,j) = min(total_pert_error_BB3SNR50(:,j));
+        % Use this method for each array
+        val_to_ave_error3 = total_pert_error_BB3SNR50(:,j);
+        high_to_ave_error3 = high_bar_vector_error_BB3SNR50(:,j);
+        low_to_ave_error3 = low_bar_vector_error_BB3SNR50(:,j);
+        ave_pert_error_BB3SNR50(u,j) = mean(val_to_ave_error3(val_to_ave_error3<Inf));
+        high_bar_pert_error_BB3SNR50(u,j) = mean(high_to_ave_error3(high_to_ave_error3<Inf));
+        low_bar_pert_error_BB3SNR50(u,j) = mean(low_to_ave_error3(low_to_ave_error3<Inf));
     end
 end
 
@@ -3303,7 +3320,7 @@ xlim([-5 20]);
 legend('HbO','HbR','oxCCO','Location','Best');
 xlabel('Percentage change in both extinction coefficient and DPF values');
 ylabel('Average percentage error in chromophore concentration values');
-title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB3 with random conc changes (720-900nm), SNR = 50'});
+title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB3 with random conc changes (780-900nm), SNR = 50'});
 saveas(gcf,'Average percentage errors for increasing E and DPF changes for BB3 SNR 50 random conc.png')
 
 
@@ -3312,10 +3329,16 @@ for u = 1:4
     for j = 1:3
         for k = 1:pert_number
             total_pert_error_BB4SNR50(k,j) = pert_ave_error_BB4SNR50{1,k}(u,j);
+            high_bar_vector_error_BB4SNR50(k,j) = pert_high_bar_error_BB4SNR50{1,k}(u,j);
+            low_bar_vector_error_BB4SNR50(k,j) = pert_low_bar_error_BB4SNR50{1,k}(u,j);
         end
-        ave_pert_error_BB4SNR50(u,j) = mean(total_pert_error_BB4SNR50(:,j));
-        high_bar_pert_error_BB4SNR50(u,j) = max(total_pert_error_BB4SNR50(:,j));
-        low_bar_pert_error_BB4SNR50(u,j) = min(total_pert_error_BB4SNR50(:,j));
+        % Use this method for each array
+        val_to_ave_error4 = total_pert_error_BB4SNR50(:,j);
+        high_to_ave_error4 = high_bar_vector_error_BB4SNR50(:,j);
+        low_to_ave_error4 = low_bar_vector_error_BB4SNR50(:,j);
+        ave_pert_error_BB4SNR50(u,j) = mean(val_to_ave_error4(val_to_ave_error4<Inf));
+        high_bar_pert_error_BB4SNR50(u,j) = mean(high_to_ave_error4(high_to_ave_error4<Inf));
+        low_bar_pert_error_BB4SNR50(u,j) = mean(low_to_ave_error4(low_to_ave_error4<Inf));
     end
 end
 

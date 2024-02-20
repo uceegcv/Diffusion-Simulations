@@ -3208,10 +3208,7 @@ for pert_number = 1:100
     end
 end
 
-%% Editing this
-
-% change all values of perc_accum_errors_DPFE_BB4SNR50 to
-% abs(perc_accum_errors_DPFE_BB4SNR50)
+%% Printouts Final
 
 % Average BB1
 for u = 1:4

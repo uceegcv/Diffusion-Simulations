@@ -88,20 +88,20 @@ for pert_number = 1:100
     %ext_CYRIL = ext_CYRIL/(2*2.3);
     % %% Chromophore spectra
     %Plot constituent spectra
-    FigH = figure('Position', get(0, 'Screensize'));
-    F = getframe(FigH);
-    imwrite(F.cdata, 'Constituent spectra (and polynomial fits) from Homer2 for broadband system 1.png', 'png')
-    plot(x,E(:,1),'ro-');hold on;
-    plot(x,E(:,2),'bo-');
-    % plot(x,(E(:,3)/10),'go-'); %Divide by 10 to improve display
-    % plot(x,(E(:,4)/10),'ko-'); %Divide by 10 to improve display
-    plot(x,E(:,3),'mo-');
-    xlim([min(x) max(x)])
-    legend('HbO','HbR','aa3');
-    xlabel('Wavelength (nm)');
-    ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
-    title('Constituent spectra from Homer2 for broadband system 1 (680-921nm)');
-    saveas(gcf,'Constituent spectra (and polynomial fits) from Homer2 for broadband system 1.png')
+%     FigH = figure('Position', get(0, 'Screensize'));
+%     F = getframe(FigH);
+%     imwrite(F.cdata, 'Constituent spectra (and polynomial fits) from Homer2 for broadband system 1.png', 'png')
+%     plot(x,E(:,1),'ro-');hold on;
+%     plot(x,E(:,2),'bo-');
+%     % plot(x,(E(:,3)/10),'go-'); %Divide by 10 to improve display
+%     % plot(x,(E(:,4)/10),'ko-'); %Divide by 10 to improve display
+%     plot(x,E(:,3),'mo-');
+%     xlim([min(x) max(x)])
+%     legend('HbO','HbR','aa3');
+%     xlabel('Wavelength (nm)');
+%     ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
+%     title('Constituent spectra from Homer2 for broadband system 1 (680-921nm)');
+%     saveas(gcf,'Constituent spectra (and polynomial fits) from Homer2 for broadband system 1.png')
     
     % 
     % figure;
@@ -195,22 +195,22 @@ for pert_number = 1:100
         
     %% Generate a typical brain spectrum
     
-        % Typical chromophone concentration
-    
-        FigH = figure('Position', get(0, 'Screensize'));
-        F = getframe(FigH);
-        imwrite(F.cdata, 'Change in absorption coefficient laser.png', 'png')
-        plot(x,mua1,'ro-');
-        hold on
-        plot(x,mua2,'ko-');
-        ax = gca;
-        ax.FontSize = 20;
-        xlim([min(x) max(x)])
-        xlabel('Wavelength (nm)');
-        ylabel('Absorption coefficient mm^{-1})');
-        title('Change in absorption coefficient');
-        legend('mua1','mua2','Location','Best');
-        saveas(gcf,'Change in absorption coefficient laser.png')
+%         % Typical chromophone concentration
+%     
+%         FigH = figure('Position', get(0, 'Screensize'));
+%         F = getframe(FigH);
+%         imwrite(F.cdata, 'Change in absorption coefficient laser.png', 'png')
+%         plot(x,mua1,'ro-');
+%         hold on
+%         plot(x,mua2,'ko-');
+%         ax = gca;
+%         ax.FontSize = 20;
+%         xlim([min(x) max(x)])
+%         xlabel('Wavelength (nm)');
+%         ylabel('Absorption coefficient mm^{-1})');
+%         title('Change in absorption coefficient');
+%         legend('mua1','mua2','Location','Best');
+%         saveas(gcf,'Change in absorption coefficient laser.png')
     % 
     %     % Define and plot transport scatter coefficient
         power = -1.2;
@@ -458,20 +458,20 @@ for pert_number = 1:100
     perc_diff_SNR_vector = [perc_diff_BB_SNR20;perc_diff_BB_SNR30;perc_diff_BB_SNR40;perc_diff_BB_SNR50;perc_diff_BB_SNR60;perc_diff_BB];
     perc_diff_SNR_vector = abs(perc_diff_SNR_vector);
     
-    FigH = figure('Position', get(0, 'Screensize'));
-    F = getframe(FigH);
-    imwrite(F.cdata, 'Comparison of percentage errors for increasing SNR of broadband system 1.png', 'png')
-    plot(perc_vector_SNR,perc_diff_SNR_vector(:,1),'r*-','MarkerSize',20)
-    hold on
-    plot(perc_vector_SNR,perc_diff_SNR_vector(:,2),'bs-','MarkerSize',10)
-    plot(perc_vector_SNR,perc_diff_SNR_vector(:,3),'go-','MarkerSize',10)
-    ax = gca;
-    ax.FontSize = 20;
-    legend('HbO','HbR','oxCCO','Location','Best');
-    xlabel('Absolute SNR value');
-    ylabel('Percentage error in chromophore concentration values');
-    title({'Comparison of percentage errors for increasing SNR', 'of broadband system 1 (680-921nm)'});
-    saveas(gcf,'Comparison of percentage errors for increasing SNR of broadband system 1.png')
+%     FigH = figure('Position', get(0, 'Screensize'));
+%     F = getframe(FigH);
+%     imwrite(F.cdata, 'Comparison of percentage errors for increasing SNR of broadband system 1.png', 'png')
+%     plot(perc_vector_SNR,perc_diff_SNR_vector(:,1),'r*-','MarkerSize',20)
+%     hold on
+%     plot(perc_vector_SNR,perc_diff_SNR_vector(:,2),'bs-','MarkerSize',10)
+%     plot(perc_vector_SNR,perc_diff_SNR_vector(:,3),'go-','MarkerSize',10)
+%     ax = gca;
+%     ax.FontSize = 20;
+%     legend('HbO','HbR','oxCCO','Location','Best');
+%     xlabel('Absolute SNR value');
+%     ylabel('Percentage error in chromophore concentration values');
+%     title({'Comparison of percentage errors for increasing SNR', 'of broadband system 1 (680-921nm)'});
+%     saveas(gcf,'Comparison of percentage errors for increasing SNR of broadband system 1.png')
     
     %% Introduce errors in BB measurements due to DPF changes
     
@@ -515,21 +515,21 @@ for pert_number = 1:100
     perc_error_DPF_vector = [perc_diff_BB; perc_error_BB_DPF5; perc_error_BB_DPF10; perc_error_BB_DPF15];
     perc_error_DPF_vector = abs(perc_error_DPF_vector);
     
-    FigH = figure('Position', get(0, 'Screensize'));
-    F = getframe(FigH);
-    imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for Broadband System 1.png', 'png')
-    plot(percent_vector,perc_error_DPF_vector(:,1),'r*-','MarkerSize',20)
-    hold on
-    plot(percent_vector,perc_error_DPF_vector(:,2),'bs-','MarkerSize',10)
-    plot(percent_vector,perc_error_DPF_vector(:,3),'go-','MarkerSize',10)
-    ax = gca;
-    ax.FontSize = 20;
-    ylim([0 35]);
-    legend('HbO','HbR','oxCCO','Location','Best');
-    xlabel('Percentage change in DPF value');
-    ylabel('Percentage error in chromophore concentration values');
-    title({'Comparison of percentage errors for increasing DPF percentage changes', 'for Broadband System 1 (680-921nm)'});
-    saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for Broadband System 1.png')
+%     FigH = figure('Position', get(0, 'Screensize'));
+%     F = getframe(FigH);
+%     imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for Broadband System 1.png', 'png')
+%     plot(percent_vector,perc_error_DPF_vector(:,1),'r*-','MarkerSize',20)
+%     hold on
+%     plot(percent_vector,perc_error_DPF_vector(:,2),'bs-','MarkerSize',10)
+%     plot(percent_vector,perc_error_DPF_vector(:,3),'go-','MarkerSize',10)
+%     ax = gca;
+%     ax.FontSize = 20;
+%     ylim([0 35]);
+%     legend('HbO','HbR','oxCCO','Location','Best');
+%     xlabel('Percentage change in DPF value');
+%     ylabel('Percentage error in chromophore concentration values');
+%     title({'Comparison of percentage errors for increasing DPF percentage changes', 'for Broadband System 1 (680-921nm)'});
+%     saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for Broadband System 1.png')
     
     for r = 1:length(E)
         for q = 1:length(ac_conc_change)
@@ -570,21 +570,21 @@ for pert_number = 1:100
     perc_error_E_vector_BB = [perc_diff_BB; perc_error_BB_E5; perc_error_BB_E10; perc_error_BB_E15];
     perc_error_E_vector_BB = abs(perc_error_E_vector_BB);
     
-    FigH = figure('Position', get(0, 'Screensize'));
-    F = getframe(FigH);
-    imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 1.png', 'png')
-    plot(percent_vector,perc_error_E_vector_BB(:,1),'r*-','MarkerSize',20)
-    hold on
-    plot(percent_vector,perc_error_E_vector_BB(:,2),'bs-','MarkerSize',10)
-    plot(percent_vector,perc_error_E_vector_BB(:,3),'go-','MarkerSize',10)
-    ax = gca;
-    ax.FontSize = 20;
-    ylim([0 35]);
-    legend('HbO','HbR','oxCCO','Location','Best');
-    xlabel('Percentage change in extinction coefficient value');
-    ylabel('Percentage error in chromophore concentration values');
-    title({'Comparison of percentage errors for increasing extinction coefficient', 'percentage changes for broadband system 1 (680-921nm)'});
-    saveas(gcf,'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 1.png')
+%     FigH = figure('Position', get(0, 'Screensize'));
+%     F = getframe(FigH);
+%     imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 1.png', 'png')
+%     plot(percent_vector,perc_error_E_vector_BB(:,1),'r*-','MarkerSize',20)
+%     hold on
+%     plot(percent_vector,perc_error_E_vector_BB(:,2),'bs-','MarkerSize',10)
+%     plot(percent_vector,perc_error_E_vector_BB(:,3),'go-','MarkerSize',10)
+%     ax = gca;
+%     ax.FontSize = 20;
+%     ylim([0 35]);
+%     legend('HbO','HbR','oxCCO','Location','Best');
+%     xlabel('Percentage change in extinction coefficient value');
+%     ylabel('Percentage error in chromophore concentration values');
+%     title({'Comparison of percentage errors for increasing extinction coefficient', 'percentage changes for broadband system 1 (680-921nm)'});
+%     saveas(gcf,'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 1.png')
     
     % %% Repeat with previously assumed DPF values instead
     
@@ -1153,7 +1153,7 @@ for pert_number = 1:100
         perc_diff_SNR_vector = [perc_diff_laser_SNR20;perc_diff_laser_SNR30;perc_diff_laser_SNR40;perc_diff_laser_SNR50;perc_diff_laser_SNR60;perc_diff_laser];
         perc_diff_SNR_vector = abs(perc_diff_SNR_vector);
     
-        if l == 1
+        if l == 1 && pert_number == 1
             
             FigH = figure('Position', get(0, 'Screensize'));
             F = getframe(FigH);
@@ -1212,21 +1212,21 @@ for pert_number = 1:100
             perc_error_DPF_vector_laser = [perc_diff_laser; perc_error_laser_DPF5; perc_error_laser_DPF10; perc_error_laser_DPF15];
             perc_error_DPF_vector_laser = abs(perc_error_DPF_vector_laser);
     
-            FigH = figure('Position', get(0, 'Screensize'));
-            F = getframe(FigH);
-            imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for 5-wavelength laser system.png', 'png')
-            plot(percent_vector,perc_error_DPF_vector_laser(:,1),'r*-','MarkerSize',20)
-            hold on
-            plot(percent_vector,perc_error_DPF_vector_laser(:,2),'bs-','MarkerSize',10)
-            plot(percent_vector,perc_error_DPF_vector_laser(:,3),'go-','MarkerSize',10)
-            ax = gca;
-            ax.FontSize = 20;
-            ylim([0 35]);
-            legend('HbO','HbR','oxCCO','Location','Best');
-            xlabel('Percentage change in DPF value');
-            ylabel('Percentage error in chromophore concentration values');
-            title({'Comparison of percentage errors for increasing DPF percentage' ,'changes for 5-wavelength laser system'});
-            saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for 5-wavelength laser system.png')
+%             FigH = figure('Position', get(0, 'Screensize'));
+%             F = getframe(FigH);
+%             imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for 5-wavelength laser system.png', 'png')
+%             plot(percent_vector,perc_error_DPF_vector_laser(:,1),'r*-','MarkerSize',20)
+%             hold on
+%             plot(percent_vector,perc_error_DPF_vector_laser(:,2),'bs-','MarkerSize',10)
+%             plot(percent_vector,perc_error_DPF_vector_laser(:,3),'go-','MarkerSize',10)
+%             ax = gca;
+%             ax.FontSize = 20;
+%             ylim([0 35]);
+%             legend('HbO','HbR','oxCCO','Location','Best');
+%             xlabel('Percentage change in DPF value');
+%             ylabel('Percentage error in chromophore concentration values');
+%             title({'Comparison of percentage errors for increasing DPF percentage' ,'changes for 5-wavelength laser system'});
+%             saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for 5-wavelength laser system.png')
     
             % Now errors in extinction coefficients
             for r = 1:length(E)
@@ -1267,22 +1267,22 @@ for pert_number = 1:100
     
             perc_error_E_vector_laser = [perc_diff_laser; perc_error_laser_E5; perc_error_laser_E10; perc_error_laser_E15];
             perc_error_E_vector_laser = abs(perc_error_E_vector_laser);
-    
-            FigH = figure('Position', get(0, 'Screensize'));
-            F = getframe(FigH);
-            imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient percentage changes for 5-wavelength laser system.png', 'png')
-            plot(percent_vector,perc_error_E_vector_laser(:,1),'r*-','MarkerSize',20)
-            hold on
-            plot(percent_vector,perc_error_E_vector_laser(:,2),'bs-','MarkerSize',10)
-            plot(percent_vector,perc_error_E_vector_laser(:,3),'go-','MarkerSize',10)
-            ax = gca;
-            ax.FontSize = 20;
-            ylim([0 35]);
-            legend('HbO','HbR','oxCCO','Location','Best');
-            xlabel('Percentage change in extinction coefficient value');
-            ylabel('Percentage error in chromophore concentration values');
-            title({'Comparison of percentage errors for increasing extinction coefficient' ,'percentage changes for 5-wavelength laser system'});
-            saveas(gcf,'Comparison of percentage errors for increasing extinction coefficient percentage changes for 5-wavelength laser system.png')
+%     
+%             FigH = figure('Position', get(0, 'Screensize'));
+%             F = getframe(FigH);
+%             imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient percentage changes for 5-wavelength laser system.png', 'png')
+%             plot(percent_vector,perc_error_E_vector_laser(:,1),'r*-','MarkerSize',20)
+%             hold on
+%             plot(percent_vector,perc_error_E_vector_laser(:,2),'bs-','MarkerSize',10)
+%             plot(percent_vector,perc_error_E_vector_laser(:,3),'go-','MarkerSize',10)
+%             ax = gca;
+%             ax.FontSize = 20;
+%             ylim([0 35]);
+%             legend('HbO','HbR','oxCCO','Location','Best');
+%             xlabel('Percentage change in extinction coefficient value');
+%             ylabel('Percentage error in chromophore concentration values');
+%             title({'Comparison of percentage errors for increasing extinction coefficient' ,'percentage changes for 5-wavelength laser system'});
+%             saveas(gcf,'Comparison of percentage errors for increasing extinction coefficient percentage changes for 5-wavelength laser system.png')
     
         end
     

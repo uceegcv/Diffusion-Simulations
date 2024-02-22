@@ -798,7 +798,7 @@ for pert_number = 1:100
     % x contains the selected wavelengths
     % x = [874,889,892,895,898];
     % x = [720,760,800,850,890];
-    x = 682:40:921;
+    x = 682:32:921;
     
     % Bandwidth
     % w_LED = [45, 45, 45, 47, 47];
@@ -1524,7 +1524,7 @@ end
 % Graph for LED1
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
-imwrite(F.cdata, 'Average percentage errors for increasing E and DPF changes for BB 40step random conc.png', 'png')
+imwrite(F.cdata, 'Average percentage errors for increasing E and DPF changes for BB 33step random conc.png', 'png')
 errorbar(percent_vector,ave_pert_error_LEDSNR50(:,1),low_bar_pert_error_LEDSNR50(:,1),high_bar_pert_error_LEDSNR50(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
 hold on
 errorbar(percent_vector,ave_pert_error_LEDSNR50(:,2),low_bar_pert_error_LEDSNR50(:,2),high_bar_pert_error_LEDSNR50(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
@@ -1536,5 +1536,5 @@ xlim([-5 20]);
 legend('HbO','HbR','oxCCO','Location','Best');
 xlabel('Percentage change in both extinction coefficient and DPF values');
 ylabel('Average percentage error in chromophore concentration values');
-title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB 40step with random conc changes, SNR = 50'});
-saveas(gcf,'Average percentage errors for increasing E and DPF changes for BB 40step random conc.png')
+title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB 33step with random conc changes, SNR = 50'});
+saveas(gcf,'Average percentage errors for increasing E and DPF changes for BB 33step random conc.png')

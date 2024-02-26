@@ -1,0 +1,22 @@
+broad_errors = load('all_BB_errors.mat');
+
+AV3_error = load('5wav_LED_error.mat');
+
+laser_is_error = load('5wav_laser_Israel_error.mat');
+
+FigH = figure('Position', get(0, 'Screensize'));
+F = getframe(FigH);
+imwrite(F.cdata, 'Comparing system errors 0 DPF and E.png', 'png')
+plot(percent_vector,ave_pert_error_LEDSNR50(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
+hold on
+errorbar(percent_vector,ave_pert_error_LEDSNR50(:,2),low_bar_pert_error_LEDSNR50(:,2),high_bar_pert_error_LEDSNR50(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
+errorbar(percent_vector,ave_pert_error_LEDSNR50(:,3),low_bar_pert_error_LEDSNR50(:,3),high_bar_pert_error_LEDSNR50(:,3),'go-','MarkerSize',20,'LineWidth',1)
+grid on
+ax = gca;
+ax.FontSize = 20;
+xlim([-5 20]);
+legend('HbO','HbR','oxCCO','Location','Best');
+xlabel('Percentage change in both extinction coefficient and DPF values');
+ylabel('Average percentage error in chromophore concentration values');
+title({'Comparing system errors with 0 DPF and E error'});
+saveas(gcf,'Comparing system errors 0 DPF and E.png')

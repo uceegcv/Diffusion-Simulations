@@ -40,8 +40,8 @@ for xstep = 1:40
     for pert_number = 1:100
         
         % Enter simulation data
-        SD = 30; % Source-detector separation on same surface of slab (mm)
-        slab = 50; % Slab thickness (mm)
+SD = 30; % Source-detector separation on same surface of slab (mm)
+slab = 50; % Slab thickness (mm)
 
         x = 680:921;
 

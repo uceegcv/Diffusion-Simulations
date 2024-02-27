@@ -4,6 +4,79 @@ AV3_error = load('5wav_LED_error.mat');
 
 laser_is_error = load('5wav_laser_Israel_error.mat');
 
+% wav_error_6 = load('ave_error_6_wavelengths.mat');
+% error24 = wav_error_6.ave_pert_error_LEDSNR50;  
+% wav_error_7 = load('ave_error_7_wavelengths.mat');
+% error23 = wav_error_7.ave_pert_error_LEDSNR50;  
+% wav_error_8 = load('ave_error_8_wavelengths.mat');
+% error22 = wav_error_8.ave_pert_error_LEDSNR50;  
+% wav_error_9 = load('ave_error_10_wavelengths.mat');
+% error21 = wav_error_9.ave_pert_error_LEDSNR50;  
+% wav_error_10 = load('ave_error_10_wavelengths.mat');
+% error20 = wav_error_10.ave_pert_error_LEDSNR50;  
+% wav_error_11 = load('ave_error_11_wavelengths.mat');
+% error19 = wav_error_11.ave_pert_error_LEDSNR50;  
+% wav_error_12 = load('ave_error_12_wavelengths.mat');
+% error18 = wav_error_12.ave_pert_error_LEDSNR50;  
+% wav_error_13 = load('ave_error_13_wavelengths.mat');
+% error17 = wav_error_13.ave_pert_error_LEDSNR50;  
+% wav_error_14 = load('ave_error_14_wavelengths.mat');
+% error16 = wav_error_14.ave_pert_error_LEDSNR50;  
+% wav_error_15 = load('ave_error_15_wavelengths.mat');
+% error15 = wav_error_15.ave_pert_error_LEDSNR50;  
+% wav_error_16 = load('ave_error_16_wavelengths.mat');
+% error14 = wav_error_16.ave_pert_error_LEDSNR50;  
+% wav_error_18 = load('ave_error_18_wavelengths.mat');
+% error13 = wav_error_18.ave_pert_error_LEDSNR50;  
+% wav_error_20 = load('ave_error_20_wavelengths.mat');
+% error12 = wav_error_20.ave_pert_error_LEDSNR50;  
+% wav_error_22 = load('ave_error_22_wavelengths.mat');
+% error11 = wav_error_22.ave_pert_error_LEDSNR50;  
+% wav_error_24 = load('ave_error_24_wavelengths.mat');
+% error10 = wav_error_24.ave_pert_error_LEDSNR50;  
+% wav_error_27 = load('ave_error_27_wavelengths.mat');
+% error9 = wav_error_27.ave_pert_error_LEDSNR50;  
+% wav_error_30 = load('ave_error_30_wavelengths.mat');
+% error8 = wav_error_30.ave_pert_error_LEDSNR50;  
+% wav_error_35 = load('ave_error_35_wavelengths.mat');
+% error7 = wav_error_35.ave_pert_error_LEDSNR50;  
+% wav_error_40 = load('ave_error_40_wavelengths.mat');
+% error6 = wav_error_40.ave_pert_error_LEDSNR50;  
+% wav_error_48 = load('ave_error_48_wavelengths.mat');
+% error5 = wav_error_48.ave_pert_error_LEDSNR50;  
+% wav_error_60 = load('ave_error_60_wavelengths.mat');
+% error4 = wav_error_60.ave_pert_error_LEDSNR50;  
+% wav_error_80 = load('ave_error_80_wavelengths.mat');
+% error3 = wav_error_80.ave_pert_error_LEDSNR50;  
+% wav_error_120 = load('ave_error_120_wavelengths.mat');
+% error2 = wav_error_120.ave_pert_error_LEDSNR50;  
+% wav_error_240 = load('ave_error_240_wavelengths.mat');
+% error1 = wav_error_240.ave_pert_error_LEDSNR50;
+
+wavelengths_vector = [6 7 8 9 10 11 12 13 14 15 16 18 19 20 22 24 27 30 35 40 48 60 80 120 240];
+filePattern = fullfile('change_wavelength_errors','*mat');
+
+theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/change_wavelengths_errors/*.mat');
+
+theFiles = theFiles(~[theFiles.isdir]);
+[~,idx] = sort([theFiles.datenum]);
+theFiles = theFiles(idx);
+for k = 1 : length(theFiles)
+    baseFileName = theFiles(k).name;
+    newdata = load(baseFileName);
+    data_to_analyse = newdata.ave_pert_error_LEDSNR50;
+    
+    %change_wavs_CCO_zero_error(k
+    
+end
+
+
+% for step = 1:length(wavelengths_vector)
+%     current_file = 
+%     
+% end
+    %change_wavs_CCO_zero_error(step) = 
+
 percent_vector = [0.01; 5; 10; 15];
 
 FigH = figure('Position', get(0, 'Screensize'));

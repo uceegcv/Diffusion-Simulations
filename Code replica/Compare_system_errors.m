@@ -9,8 +9,8 @@ percent_vector = [0.01; 5; 10; 15];
 wavelengths_vector = [6 7 8 9 10 11 12 13 14 15 16 18 19 20 22 24 27 30 35 40 48 60 80 120 240];
 filePattern = fullfile('change_wavelength_errors','*mat');
 
-%theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/change_wavelengths_errors/*.mat');
-theFiles = dir('\\ifs.eng.cam.ac.uk\users\gcl33\Documents\GitHub\Diffusion-Simulations\Code replica\change_wavelengths_errors\*.mat');
+theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/change_wavelengths_errors/*.mat');
+%theFiles = dir('\\ifs.eng.cam.ac.uk\users\gcl33\Documents\GitHub\Diffusion-Simulations\Code replica\change_wavelengths_errors\*.mat');
 
 %% Sort the files in order of ascending number of wavelengths
 
@@ -40,16 +40,67 @@ end
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
 imwrite(F.cdata, 'Comparing BB systems zero parameter error.png', 'png')
-plot(wavelengths_vector,change_wavs_HbO_zero_error(:,1),'rx-','MarkerSize',20,'LineWidth',1.8)
+plot(wavelengths_vector,change_wavs_HbO_zero_error(:,1),'rx-','MarkerSize',10,'LineWidth',1.8)
 hold on
-plot (wavelengths_vector,change_wavs_HbR_zero_error(:,1),'b-','MarkerSize',20,'LineWidth',1.8)
-plot (wavelengths_vector,change_wavs_CCO_zero_error(:,1),'g-','MarkerSize',20,'LineWidth',1.8)
+plot (wavelengths_vector,change_wavs_HbR_zero_error(:,1),'bx-','MarkerSize',10,'LineWidth',1.8)
+plot (wavelengths_vector,change_wavs_CCO_zero_error(:,1),'gx-','MarkerSize',10,'LineWidth',1.8)
 grid on
 ax = gca;
 ax.FontSize = 20;
 %xlim([-2 17]);
 legend('HbO','HbR','CCO','Location','Best');
-xlabel('Percentage change in both extinction coefficient and DPF values');
+xlabel('Number of wavelengths');
 ylabel('Average percentage error in chromophore concentration values');
 title({'Comparing broadband system errors in chromophores with zero error in DPF and E'});
 saveas(gcf,'Comparing BB systems zero parameter error.png')
+
+FigH = figure('Position', get(0, 'Screensize'));
+F = getframe(FigH);
+imwrite(F.cdata, 'Comparing BB systems five percent parameter error.png', 'png')
+plot(wavelengths_vector,change_wavs_HbO_zero_error(:,2),'rx-','MarkerSize',10,'LineWidth',1.8)
+hold on
+plot (wavelengths_vector,change_wavs_HbR_zero_error(:,2),'bx-','MarkerSize',10,'LineWidth',1.8)
+plot (wavelengths_vector,change_wavs_CCO_zero_error(:,2),'gx-','MarkerSize',10,'LineWidth',1.8)
+grid on
+ax = gca;
+ax.FontSize = 20;
+%xlim([-2 17]);
+legend('HbO','HbR','CCO','Location','Best');
+xlabel('Number of wavelengths');
+ylabel('Average percentage error in chromophore concentration values');
+title({'Comparing broadband system errors in chromophores with five percent error in DPF and E'});
+saveas(gcf,'Comparing BB systems five percent parameter error.png')
+
+FigH = figure('Position', get(0, 'Screensize'));
+F = getframe(FigH);
+imwrite(F.cdata, 'Comparing BB systems ten percent parameter error.png', 'png')
+plot(wavelengths_vector,change_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
+hold on
+plot (wavelengths_vector,change_wavs_HbR_zero_error(:,3),'bx-','MarkerSize',10,'LineWidth',1.8)
+plot (wavelengths_vector,change_wavs_CCO_zero_error(:,3),'gx-','MarkerSize',10,'LineWidth',1.8)
+grid on
+ax = gca;
+ax.FontSize = 20;
+%xlim([-2 17]);
+legend('HbO','HbR','CCO','Location','Best');
+xlabel('Number of wavelengths');
+ylabel('Average percentage error in chromophore concentration values');
+title({'Comparing broadband system errors in chromophores with ten percent error in DPF and E'});
+saveas(gcf,'Comparing BB systems ten percent parameter error.png')
+
+FigH = figure('Position', get(0, 'Screensize'));
+F = getframe(FigH);
+imwrite(F.cdata, 'Comparing BB systems fiteen percent parameter error.png', 'png')
+plot(wavelengths_vector,change_wavs_HbO_zero_error(:,4),'rx-','MarkerSize',10,'LineWidth',1.8)
+hold on
+plot (wavelengths_vector,change_wavs_HbR_zero_error(:,4),'bx-','MarkerSize',10,'LineWidth',1.8)
+plot (wavelengths_vector,change_wavs_CCO_zero_error(:,4),'gx-','MarkerSize',10,'LineWidth',1.8)
+grid on
+ax = gca;
+ax.FontSize = 20;
+%xlim([-2 17]);
+legend('HbO','HbR','CCO','Location','Best');
+xlabel('Number of wavelengths');
+ylabel('Average percentage error in chromophore concentration values');
+title({'Comparing broadband system errors in chromophores with fifteen percent error in DPF and E'});
+saveas(gcf,'Comparing BB systems fifteen percent parameter error.png')

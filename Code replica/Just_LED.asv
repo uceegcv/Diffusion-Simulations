@@ -1574,8 +1574,9 @@ plot(perc_vector_SNR,final_SNR_BB(:,3),'gx-','MarkerSize',20,'LineWidth',1.8)
 grid on
 ax = gca;
 ax.FontSize = 20;
+xlim([-5 20]);
 legend('HbO','HbR','oxCCO','Location','Best');
-xlabel('Absolute SNR value');
+xlabel('Percentage change in both extinction coefficient and DPF values');
 ylabel('Average percentage error in chromophore concentration values');
 %title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for LED with random conc changes, SNR = 50'});
 saveas(gcf,'SNR graph broadband.png')
@@ -1586,13 +1587,14 @@ imwrite(F.cdata, 'SNR graph LED.png', 'png')
 plot(perc_vector_SNR,final_SNR_LED(:,1),'rx-','MarkerSize',20,'LineWidth',1.8)
 hold on
 plot(perc_vector_SNR,final_SNR_LED(:,2),'bx-','MarkerSize',20,'LineWidth',1.8)
-plot(perc_vector_SNR,final_SNR_LED(:,3),'gx-','MarkerSize',20,'LineWidth',1.8)
+plot(perc_vector_SNR,final_SNR_BB(:,3),'gx-','MarkerSize',20,'LineWidth',1.8)
 grid on
 ax = gca;
 ax.FontSize = 20;
+xlim([-5 20]);
 legend('HbO','HbR','oxCCO','Location','Best');
-xlabel('Absolute SNR value');
+xlabel('Percentage change in both extinction coefficient and DPF values');
 ylabel('Average percentage error in chromophore concentration values');
 %title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for LED with random conc changes, SNR = 50'});
-saveas(gcf,'SNR graph LED.png')
+saveas(gcf,'SNR graph broadband.png')
 

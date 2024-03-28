@@ -39,8 +39,8 @@
 
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
-for band = 1:50
-    for pert_number = 1:500
+for band = 1:30
+    for pert_number = 1:200
 
         % Enter simulation data
         SD = 30; % Source-detector separation on same surface of slab (mm)
@@ -877,23 +877,27 @@ for band = 1:50
         
         I_broadband_1 = exp(-muabrain_broad_1);
         
+        muabrain_LED_1 = (E(:,1)*C_HbO(1)) + (E(:,2)*C_HbR(1)) + (E(:,3)*C_aa3(1));
+        
+        I_LED_1 = exp(-muabrain_LED_1);
+        
         % Find area under each LED peak
         LED_area = trapz(LED_spec);
         
-        % For LED
-        for l = 1:length(x)
-            for k = 1:length(wl)
-                I_effective_1_LED(k,l) = change_I_BB(k)*LED_spec(k,l);
-                %I_effective_1_LED(k,l) = I_broadband_1(k)*LED_spec(k,l);
-            end
-            I_effective_noise_LED(:,l) = awgn(I_effective_1_LED(:,l),60); %???
-        end
-        
-        for g = 1:length(x)
-            I_prime_1_LED(g) = sum(I_effective_1_LED(:,g))/LED_area(g);
-            %I_prime_1_LED(g) = sum(I_effective_noise_LED(:,g))/LED_area(g);
-        end
-        
+%         % For LED
+%         for l = 1:length(x)
+%             for k = 1:length(wl)
+%                 I_effective_1_LED(k,l) = change_I_BB(k)*LED_spec(k,l);
+%                 %I_effective_1_LED(k,l) = I_broadband_1(k)*LED_spec(k,l);
+%             end
+%             I_effective_noise_LED(:,l) = awgn(I_effective_1_LED(:,l),60); %???
+%         end
+%         
+%         for g = 1:length(x)
+%             I_prime_1_LED(g) = sum(I_effective_1_LED(:,g))/LED_area(g);
+%             %I_prime_1_LED(g) = sum(I_effective_noise_LED(:,g))/LED_area(g);
+%         end
+%         
         %% Effective absorption
         
         % Find the extinction coefficients adjusted by convolution according to LED
@@ -968,8 +972,9 @@ for band = 1:50
         
         % Get input mua for diffusion code according to LED spectra
         % mua1_LED = (E_prime_LED(:,1)*C_HbO(1)) + (E_prime_LED(:,2)*C_HbR(1)) + (E_prime_LED(:,3)*W(1)) + (E_prime_LED(:,4)*L1(1)) + (E_prime_LED(:,5)*C_aa3(1));
-        mua1_LED = (E_prime_LED(:,1)*C_HbO(1)) + (E_prime_LED(:,2)*C_HbR(1)) + (E_prime_LED(:,3)*C_aa3(1));
-        
+%         mua1_LED = (E_prime_LED(:,1)*C_HbO(1)) + (E_prime_LED(:,2)*C_HbR(1)) + (E_prime_LED(:,3)*C_aa3(1));
+        mua1_LED = (E(:,1)*C_HbO(1)) + (E(:,2)*C_HbR(1)) + (E(:,3)*C_aa3(1));
+
         % This is second input to diffusion equations
         % mua2_LED = (E_prime_LED(:,1)*C_HbO(2)) + (E_prime_LED(:,2)*C_HbR(2)) + (E_prime_LED(:,3)*W(2)) + (E_prime_LED(:,4)*L1(2)) + (E_prime_LED(:,5)*C_aa3(2));
         mua2_LED = (E_prime_LED(:,1)*C_HbO(2)) + (E_prime_LED(:,2)*C_HbR(2)) + (E_prime_LED(:,3)*C_aa3(2));

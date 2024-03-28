@@ -877,23 +877,27 @@ for band = 1:50
         
         I_broadband_1 = exp(-muabrain_broad_1);
         
+        muabrain_LED_1 = (E(:,1)*C_HbO(1)) + (E(:,2)*C_HbR(1)) + (E(:,3)*C_aa3(1));
+        
+        I_LED_1 = exp(-muabrain_LED_1);
+        
         % Find area under each LED peak
         LED_area = trapz(LED_spec);
         
-        % For LED
-        for l = 1:length(x)
-            for k = 1:length(wl)
-                I_effective_1_LED(k,l) = change_I_BB(k)*LED_spec(k,l);
-                %I_effective_1_LED(k,l) = I_broadband_1(k)*LED_spec(k,l);
-            end
-            I_effective_noise_LED(:,l) = awgn(I_effective_1_LED(:,l),60); %???
-        end
-        
-        for g = 1:length(x)
-            I_prime_1_LED(g) = sum(I_effective_1_LED(:,g))/LED_area(g);
-            %I_prime_1_LED(g) = sum(I_effective_noise_LED(:,g))/LED_area(g);
-        end
-        
+%         % For LED
+%         for l = 1:length(x)
+%             for k = 1:length(wl)
+%                 I_effective_1_LED(k,l) = change_I_BB(k)*LED_spec(k,l);
+%                 %I_effective_1_LED(k,l) = I_broadband_1(k)*LED_spec(k,l);
+%             end
+%             I_effective_noise_LED(:,l) = awgn(I_effective_1_LED(:,l),60); %???
+%         end
+%         
+%         for g = 1:length(x)
+%             I_prime_1_LED(g) = sum(I_effective_1_LED(:,g))/LED_area(g);
+%             %I_prime_1_LED(g) = sum(I_effective_noise_LED(:,g))/LED_area(g);
+%         end
+%         
         %% Effective absorption
         
         % Find the extinction coefficients adjusted by convolution according to LED
@@ -968,12 +972,14 @@ for band = 1:50
         
         % Get input mua for diffusion code according to LED spectra
         % mua1_LED = (E_prime_LED(:,1)*C_HbO(1)) + (E_prime_LED(:,2)*C_HbR(1)) + (E_prime_LED(:,3)*W(1)) + (E_prime_LED(:,4)*L1(1)) + (E_prime_LED(:,5)*C_aa3(1));
-        mua1_LED = (E_prime_LED(:,1)*C_HbO(1)) + (E_prime_LED(:,2)*C_HbR(1)) + (E_prime_LED(:,3)*C_aa3(1));
-        
+%         mua1_LED = (E_prime_LED(:,1)*C_HbO(1)) + (E_prime_LED(:,2)*C_HbR(1)) + (E_prime_LED(:,3)*C_aa3(1));
+        mua1_LED = (E(:,1)*C_HbO(1)) + (E(:,2)*C_HbR(1)) + (E(:,3)*C_aa3(1));
+
         % This is second input to diffusion equations
         % mua2_LED = (E_prime_LED(:,1)*C_HbO(2)) + (E_prime_LED(:,2)*C_HbR(2)) + (E_prime_LED(:,3)*W(2)) + (E_prime_LED(:,4)*L1(2)) + (E_prime_LED(:,5)*C_aa3(2));
-        mua2_LED = (E_prime_LED(:,1)*C_HbO(2)) + (E_prime_LED(:,2)*C_HbR(2)) + (E_prime_LED(:,3)*C_aa3(2));
-        
+%         mua2_LED = (E_prime_LED(:,1)*C_HbO(2)) + (E_prime_LED(:,2)*C_HbR(2)) + (E_prime_LED(:,3)*C_aa3(2));
+        mua2_LED = (E(:,1)*C_HbO(2)) + (E(:,2)*C_HbR(2)) + (E(:,3)*C_aa3(2));
+
             %% Slab model from Contini et al. Appl.Opt. 36, 4587 (1997). - 1
         %     
             power = -1.2;
@@ -1170,8 +1176,11 @@ for band = 1:50
         
             ave_DPF_LED = (DPF1_LED + DPF2_LED)/2;
         
+%             for t = 1:length(x)
+%                 calc_I_LED(t) = ave_DPF_LED(t)*SD*(C_HbO(2)-C_HbO(1))*E_prime_LED(t,1);
+%             end
             for t = 1:length(x)
-                calc_I_LED(t) = ave_DPF_LED(t)*SD*(C_HbO(2)-C_HbO(1))*E_prime_LED(t,1);
+                calc_I_LED(t) = ave_DPF_LED(t)*SD*(C_HbO(2)-C_HbO(1))*E(t,1);
             end
         
             for t = 1:length(x)
@@ -1179,13 +1188,21 @@ for band = 1:50
             end
         
             % This is the value to pay attention to!! From diffusion
-            conc_LED =  E_prime_invert_LED * (-change_I_LED ./ (SD*ave_DPF_LED))'; % From diffusion
+%             conc_LED =  E_prime_invert_LED * (-change_I_LED ./ (SD*ave_DPF_LED))'; % From diffusion
+%         
+%             conc_LED_SNR20 =  E_prime_invert_LED * (-change_I_LED_SNR20 ./ (SD*ave_DPF_LED))';
+%             conc_LED_SNR30 =  E_prime_invert_LED * (-change_I_LED_SNR30 ./ (SD*ave_DPF_LED))';
+%             conc_LED_SNR40 =  E_prime_invert_LED * (-change_I_LED_SNR40 ./ (SD*ave_DPF_LED))';
+%             conc_LED_SNR50 =  E_prime_invert_LED * (-change_I_LED_SNR50 ./ (SD*ave_DPF_LED))';
+%             conc_LED_SNR60 =  E_prime_invert_LED * (-change_I_LED_SNR60 ./ (SD*ave_DPF_LED))';
+            E_no_conv = pinv(E);
+            conc_LED =  E_no_conv * (-change_I_LED ./ (SD*ave_DPF_LED))'; % From diffusion
         
-            conc_LED_SNR20 =  E_prime_invert_LED * (-change_I_LED_SNR20 ./ (SD*ave_DPF_LED))';
-            conc_LED_SNR30 =  E_prime_invert_LED * (-change_I_LED_SNR30 ./ (SD*ave_DPF_LED))';
-            conc_LED_SNR40 =  E_prime_invert_LED * (-change_I_LED_SNR40 ./ (SD*ave_DPF_LED))';
-            conc_LED_SNR50 =  E_prime_invert_LED * (-change_I_LED_SNR50 ./ (SD*ave_DPF_LED))';
-            conc_LED_SNR60 =  E_prime_invert_LED * (-change_I_LED_SNR60 ./ (SD*ave_DPF_LED))';
+            conc_LED_SNR20 =  E_no_conv * (-change_I_LED_SNR20 ./ (SD*ave_DPF_LED))';
+            conc_LED_SNR30 =  E_no_conv * (-change_I_LED_SNR30 ./ (SD*ave_DPF_LED))';
+            conc_LED_SNR40 =  E_no_conv * (-change_I_LED_SNR40 ./ (SD*ave_DPF_LED))';
+            conc_LED_SNR50 =  E_no_conv * (-change_I_LED_SNR50 ./ (SD*ave_DPF_LED))';
+            conc_LED_SNR60 =  E_no_conv * (-change_I_LED_SNR60 ./ (SD*ave_DPF_LED))';
         
         
             for t = 1:length(ac_conc_change)
@@ -1236,13 +1253,13 @@ for band = 1:50
                     LED_DPF_take15(r) = ave_DPF_LED(r) - fifteen_perc_LED_DPF(r);
                 end
         
-                conc_LED_add5percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_add5))';
-                conc_LED_add10percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_add10))';
-                conc_LED_add15percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_add15))';
+                conc_LED_add5percDPF =  E_no_conv * (-change_I_LED ./ (SD*LED_DPF_add5))';
+                conc_LED_add10percDPF =  E_no_conv * (-change_I_LED ./ (SD*LED_DPF_add10))';
+                conc_LED_add15percDPF =  E_no_conv * (-change_I_LED ./ (SD*LED_DPF_add15))';
         
-                conc_LED_take5percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_take5))';
-                conc_LED_take10percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_take10))';
-                conc_LED_take15percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_take15))';
+                conc_LED_take5percDPF =  E_no_conv * (-change_I_LED ./ (SD*LED_DPF_take5))';
+                conc_LED_take10percDPF =  E_no_conv * (-change_I_LED ./ (SD*LED_DPF_take10))';
+                conc_LED_take15percDPF =  E_no_conv * (-change_I_LED ./ (SD*LED_DPF_take15))';
         
                 for t = 1:length(ac_conc_change)
                     perc_error_LED_add5DPF(t) = ((conc_LED_add5percDPF(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
@@ -1278,17 +1295,17 @@ for band = 1:50
         
                 for r = 1:length(E)
                     for q = 1:length(concs1)
-                        five_perc_LED_E(r,q) = (E_prime_LED(r,q)/100) *5;
-                        ten_perc_LED_E(r,q) = (E_prime_LED(r,q)/100) *10;
-                        fifteen_perc_LED_E(r,q) = (E_prime_LED(r,q)/100) *15;
+                        five_perc_LED_E(r,q) = (E(r,q)/100) *5;
+                        ten_perc_LED_E(r,q) = (E(r,q)/100) *10;
+                        fifteen_perc_LED_E(r,q) = (E(r,q)/100) *15;
         
-                        LED_E_add5(r,q) = E_prime_LED(r,q) + five_perc_LED_E(r,q);
-                        LED_E_add10(r,q) = E_prime_LED(r,q) + ten_perc_LED_E(r,q);
-                        LED_E_add15(r,q) = E_prime_LED(r,q) + fifteen_perc_LED_E(r,q);
+                        LED_E_add5(r,q) = E(r,q) + five_perc_LED_E(r,q);
+                        LED_E_add10(r,q) = E(r,q) + ten_perc_LED_E(r,q);
+                        LED_E_add15(r,q) = E(r,q) + fifteen_perc_LED_E(r,q);
         
-                        LED_E_take5(r,q) = E_prime_LED(r,q) - five_perc_LED_E(r,q);
-                        LED_E_take10(r,q) = E_prime_LED(r,q) - ten_perc_LED_E(r,q);
-                        LED_E_take15(r,q) = E_prime_LED(r,q) - fifteen_perc_LED_E(r,q);
+                        LED_E_take5(r,q) = E(r,q) - five_perc_LED_E(r,q);
+                        LED_E_take10(r,q) = E(r,q) - ten_perc_LED_E(r,q);
+                        LED_E_take15(r,q) = E(r,q) - fifteen_perc_LED_E(r,q);
                     end
                 end
         
@@ -1523,7 +1540,7 @@ for band = 1:50
     end
     
     
-    save(['ave_error_',num2str(band),'_bandwidth_5wav'],'ave_pert_error_LEDSNR50')
+    save(['ave_error_',num2str(band),'_bandwidth_5wav_noconv'],'ave_pert_error_LEDSNR50')
     
     clear all;
 

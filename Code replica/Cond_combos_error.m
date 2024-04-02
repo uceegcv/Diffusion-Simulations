@@ -1,45 +1,14 @@
-%% Diffuse reflection model for a slab geometry
-% % September 2023
-% clear all;
-% clc;
-% close all;
-% addpath(genpath('N:\Matlab code\homer2_v2_8_11022018')) 
-
-% %% Find SNR of real AV3 data
-% % Select AV3 data folder
-% [file, path] = uigetfile('*.mat');
-% AV3_conc = load([path file]);
-% %
-% prompt = 'Which source would you like? ';
-% a = input(prompt);
-% prompt = 'Which detector would you like? ';
-% b = input(prompt);
-% 
-% if  a ==1
-%     channel = a*b;
-% elseif a == 2
-%     channel = b + 8;
-% end
-% 
-% for i = 1:80
-%     snr_val_AV3_hard(i) = snr(AV3_conc.dod(:,i));
-% end
-% 
-% for i = 1:80
-%     mean_AV3_sat_val(i) = mean(AV3_conc.dod(920:1111,i));
-%     high_AV3_noise(i) = max(AV3_conc.dod(920:1111,i));
-%     low_AV3_noise(i) = min(AV3_conc.dod(920:1111,i));
-% end
-% 
+%% Script to find error of different wavelength combos
 
 
 
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
-% for xstep = 1:40
-for nwavs = 5:200
-    
-    %load('cond_array_3-50wav.mat')
+
+for nwavs = 3:50
+
+    data_vals = load('cond_array_3-50wav.mat');
+    best_vals_new = data_vals.best_vals;
     
     for pert_number = 1:300
         
@@ -48,7 +17,7 @@ for nwavs = 5:200
         slab = 50; % Slab thickness (mm)
 
         x = 680:921;
-
+ 
         % Contains broadband wavelengths of interest - the one to edit
         %wl = 680:921; %nm (cannot be a larger range than x)
         wl = 680:921; % de Roever
@@ -803,8 +772,11 @@ for nwavs = 5:200
         % x = [874,889,892,895,898];
         % x = [720,760,800,850,890];
 %         x = 682:xstep:921;
-        x_setup = linspace(700,900,nwavs);
-        x = ceil(x_setup);
+%         x_setup = linspace(700,900,nwavs);
+%         x = ceil(x_setup);
+        x = data_vals.best_vals{1,nwavs-2}(2:end);
+
+        best_vals_cond = best_vals_new{1,nwavs-2}(1);
 
         % Bandwidth
         % w_LED = [45, 45, 45, 47, 47];
@@ -1533,26 +1505,14 @@ for nwavs = 5:200
     end
 
     num_wavs = length(x);
-    save(['ave_error_',num2str(num_wavs),'_wavelengths_std_27March'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
+    save(['ave_error_',num2str(num_wavs),'_wavelengths_cond'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','best_vals_cond')
     
     clear all;
     
 end
 
-% % Graph for LED1
-% FigH = figure('Position', get(0, 'Screensize'));
-% F = getframe(FigH);
-% imwrite(F.cdata, 'Average percentage errors for increasing E and DPF changes for BB 40step random conc.png', 'png')
-% errorbar(percent_vector,ave_pert_error_LEDSNR50(:,1),low_bar_pert_error_LEDSNR50(:,1),high_bar_pert_error_LEDSNR50(:,1),'r*-','MarkerSize',20,'LineWidth',1.8)
-% hold on
-% errorbar(percent_vector,ave_pert_error_LEDSNR50(:,2),low_bar_pert_error_LEDSNR50(:,2),high_bar_pert_error_LEDSNR50(:,2),'bs-','MarkerSize',20,'LineWidth',1.5)
-% errorbar(percent_vector,ave_pert_error_LEDSNR50(:,3),low_bar_pert_error_LEDSNR50(:,3),high_bar_pert_error_LEDSNR50(:,3),'go-','MarkerSize',20,'LineWidth',1)
-% grid on
-% ax = gca;
-% ax.FontSize = 20;
-% xlim([-5 20]);
-% legend('HbO','HbR','oxCCO','Location','Best');
-% xlabel('Percentage change in both extinction coefficient and DPF values');
-% ylabel('Average percentage error in chromophore concentration values');
-% title({'Average percentage errors for increasing extinction coefficient', 'and DPF percentage changes for BB 40step with random conc changes, SNR = 50'});
-% saveas(gcf,'Average percentage errors for increasing E and DPF changes for BB 40step random conc.png')
+
+
+
+
+

@@ -38,6 +38,9 @@
 % x contains all broadband wavelengths
 % for xstep = 1:40
 for nwavs = 5:200
+    
+    load('cond_array_3-50wav.mat')
+    
     for pert_number = 1:300
         
         % Enter simulation data

@@ -8,7 +8,7 @@
 for nwavs = 3:50
 
     data_vals = load('cond_array_3-50wav.mat');
-    best_vals_new = data_vals.best_vals;
+    worst_vals_new = data_vals.worst_vals;
     
     for pert_number = 1:300
         
@@ -774,9 +774,9 @@ for nwavs = 3:50
 %         x = 682:xstep:921;
 %         x_setup = linspace(700,900,nwavs);
 %         x = ceil(x_setup);
-        x = data_vals.best_vals{1,nwavs-2}(2:end);
+        x = data_vals.worst_vals{1,nwavs-2}(2:end);
 
-        best_vals_cond = best_vals_new{1,nwavs-2}(1);
+        worst_vals_cond = worst_vals_new{1,nwavs-2}(1);
 
         % Bandwidth
         % w_LED = [45, 45, 45, 47, 47];
@@ -1505,7 +1505,7 @@ for nwavs = 3:50
     end
 
     num_wavs = length(x);
-    save(['ave_error_',num2str(num_wavs),'_wavelengths_cond'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','best_vals_cond')
+    save(['ave_error_',num2str(num_wavs),'_wavelengths_cond_worst'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','worst_vals_cond')
     
     clear all;
     

@@ -1319,6 +1319,8 @@ for nwavs = 5:200
 
                 perc_error_E_vector_LED = [perc_diff_LED; perc_error_LED_E5; perc_error_LED_E10; perc_error_LED_E15];
                 perc_error_E_vector_LED = abs(perc_error_E_vector_LED);
+                
+                %perc_error_E_vector_LED_saved{l} = perc_error_E_vector_LED(:,:);
 
 %                 FigH = figure('Position', get(0, 'Screensize'));
 %                 F = getframe(FigH);
@@ -1478,6 +1480,7 @@ for nwavs = 5:200
             for j = 1:3
                 for k = 1:10
                     vector_error_LEDSNR50(k,j) = perc_accum_errors_DPFE_LEDSNR50_saved{1,k}(u,j);
+                    %perc_error_E_vector_LED_saved
                 end
                 ave_vector_error_LEDSNR50(u,j) = mean(vector_error_LEDSNR50(:,j));
                 high_bar_vector_error_LEDSNR50(u,j) = max(vector_error_LEDSNR50(:,j));

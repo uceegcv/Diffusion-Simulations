@@ -10,8 +10,8 @@ xvalues = 2:1:200;
 
 % theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/change_wavelengths_errors/*.mat');
 %theFiles = dir('\\ifs.eng.cam.ac.uk\users\gcl33\Documents\GitHub\Diffusion-Simulations\Code replica\change_wavelengths_errors\*.mat');
-theFiles = dir('\\ifs.eng.cam.ac.uk\users\gcl33\Documents\GitHub\Diffusion-Simulations\Code replica\LUMO 2-200 wavs\*.mat');
-% theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/LUMO 2-200 wavs/*.mat');
+% theFiles = dir('\\ifs.eng.cam.ac.uk\users\gcl33\Documents\GitHub\Diffusion-Simulations\Code replica\LUMO 2-200 wavs\*.mat');
+theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/LUMO 2-200 wavs/*.mat');
 
 %% Sort the files in order of ascending number of wavelengths
 
@@ -42,10 +42,10 @@ end
 
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
-imwrite(F.cdata, 'Comparing 2-200wav LUMO ten percent parameter error.png', 'png')
-errorbar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
+imwrite(F.cdata, 'Comparing 2-200wav LUMO zero parameter error shaded.png', 'png')
+shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,1),std_wavs_HbO_zero_error(:,1),'lineProps',{'r-o','markerfacecolor','r','markersize',8})
 hold on
-errorbar(xvalues,change_wavs_HbR_zero_error(:,3),std_wavs_HbR_zero_error(:,3),std_wavs_HbR_zero_error(:,3),'bx-','MarkerSize',10,'LineWidth',1.8)
+shadedErrorBar(xvalues,change_wavs_HbR_zero_error(:,1),std_wavs_HbR_zero_error(:,1),'lineProps',{'b-o','markerfacecolor','b','markersize',8})
 %errorbar(xvalues,change_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),'gx-','MarkerSize',10,'LineWidth',1.8)
 grid on
 ax = gca;
@@ -55,7 +55,7 @@ legend('HbO','HbR','Location','Best');
 xlabel('Number of wavelengths');
 ylabel('Average percentage error in chromophore concentration values');
 %title({'Comparing 5-wavelength systems with increasing bandwidth and fifteen percent error in DPF and E'});
-saveas(gcf,'Comparing 2-200wav LUMO ten percent parameter error.png')
+saveas(gcf,'Comparing 2-200wav LUMO zero parameter error shaded.png')
 
 
 

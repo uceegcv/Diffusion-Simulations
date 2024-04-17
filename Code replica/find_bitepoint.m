@@ -37,7 +37,7 @@
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
 % for xstep = 1:40
-for nwavs = 5:200
+for nwavs = 3:200
     
     %load('cond_array_3-50wav.mat')
     
@@ -951,6 +951,12 @@ for nwavs = 5:200
             new_ave_DPF_LED(g) = ave_DPF_BB(ave_ext_wav_LED(g)-wl(1));
         end
 
+        %!!!!!!!!!!!!!!!!!!!
+        %Overwriting this part as Jem says previous lines no good
+        for g = 1:length(x)
+            new_ave_DPF_LED(g) = ave_DPF_BB(x(g)-wl(1));
+        end
+        
         % % Exts from book
         % 
         % for u = 1:length(concs1) 
@@ -1455,7 +1461,13 @@ for nwavs = 5:200
                 perc_accum_errors_DPFE_LEDSNR50 = abs(perc_accum_errors_DPFE_LEDSNR50);
 
                 perc_accum_errors_DPFE_LEDSNR50_saved{l} = perc_accum_errors_DPFE_LEDSNR50(:,:); %Save each iteration to cell array
-
+                
+                R1_iteration(:,l) = R1_LED_SNR50(1);
+                R2_iteration(:,l) = R2_LED_SNR50;
+%                 R1_iteration(:,l) = R1_LED(1);
+%                 R2_iteration(:,l) = R2_LED;
+                
+                
                 % FigH = figure('Position', get(0, 'Screensize'));
                 % F = getframe(FigH);
                 % imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient and DPF percentage changes for broadband system 1 SNR 50.png', 'png')
@@ -1493,6 +1505,9 @@ for nwavs = 5:200
         pert_high_bar_error_LED{pert_number} = high_bar_vector_error_LEDSNR50;
         pert_low_bar_error_LED{pert_number} = low_bar_vector_error_LEDSNR50;
         pert_stand_dev_LED{pert_number} = stand_dev_LEDSNR50;
+        
+        pert_R1{pert_number} = R1_iteration;
+        pert_R2{pert_number} = R2_iteration;
 
         %%
     %     FigH = figure('Position', get(0, 'Screensize'));
@@ -1514,6 +1529,8 @@ for nwavs = 5:200
 
     end
 
+    %histogram(pert_R1)
+    
     %%
     % Average LED
     for u = 1:4
@@ -1536,7 +1553,7 @@ for nwavs = 5:200
     end
 
     num_wavs = length(x);
-    save(['ave_error_',num2str(num_wavs),'_wavelengths_std_27March'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
+    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
     
     clear all;
     

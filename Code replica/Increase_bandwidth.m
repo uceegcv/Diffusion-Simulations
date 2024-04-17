@@ -8,8 +8,8 @@
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
 
-for band = 1:50 %bandwidth
-    for pert_number = 1:500 %concentration iterations
+for band = 1:200 %bandwidth
+    for pert_number = 1:300 %concentration iterations
 
         % Enter simulation data
         SD = 30; % Source-detector separation on same surface of slab (mm)
@@ -917,6 +917,13 @@ for band = 1:50 %bandwidth
             new_ave_DPF_LED(g) = ave_DPF_BB(ave_ext_wav_LED(g)-wl(1));
         end
         
+        %!!!!!!!!!!!!!!!!!!!
+        %Overwriting this part as Jem says previous lines no good
+        for g = 1:length(x)
+            new_ave_DPF_LED(g) = ave_DPF_BB(x(g)-wl(1));
+        end
+        
+        
         % % Exts from book
         % 
         % for u = 1:length(concs1) 
@@ -1148,7 +1155,11 @@ for band = 1:50 %bandwidth
             for t = 1:length(x)
                 perc_diff_I_LED(t) = 100 - ((calc_I_LED(t)/change_I_LED(t))*100);
             end
-        
+            
+        % !!!!!!!!!!!!!!
+        % Added this term remove for future runs
+            change_I_LED_SNR50 = change_I_LED;
+            
             % This is the value to pay attention to!! From diffusion
             conc_LED =  E_prime_invert_LED * (-change_I_LED ./ (SD*ave_DPF_LED))'; % From diffusion
         
@@ -1419,7 +1430,8 @@ for band = 1:50 %bandwidth
                 perc_accum_errors_DPFE_LEDSNR50 = abs(perc_accum_errors_DPFE_LEDSNR50);
     
                 perc_accum_errors_DPFE_LEDSNR50_saved{l} = perc_accum_errors_DPFE_LEDSNR50(:,:); %Save each iteration to cell array
-        
+                
+                R1_iteration(:,l) = R1_LED_SNR50(1);
                 % FigH = figure('Position', get(0, 'Screensize'));
                 % F = getframe(FigH);
                 % imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient and DPF percentage changes for broadband system 1 SNR 50.png', 'png')
@@ -1448,13 +1460,16 @@ for band = 1:50 %bandwidth
                 ave_vector_error_LEDSNR50(u,j) = mean(vector_error_LEDSNR50(:,j));
                 high_bar_vector_error_LEDSNR50(u,j) = max(vector_error_LEDSNR50(:,j));
                 low_bar_vector_error_LEDSNR50(u,j) = min(vector_error_LEDSNR50(:,j));
+                stand_dev_LEDSNR50(u,j) = std(vector_error_LEDSNR50(:,j));
             end
         end
         
         pert_ave_error_LED{pert_number} = ave_vector_error_LEDSNR50(:,:);
         pert_high_bar_error_LED{pert_number} = high_bar_vector_error_LEDSNR50;
         pert_low_bar_error_LED{pert_number} = low_bar_vector_error_LEDSNR50;
+        pert_stand_dev_LED{pert_number} = stand_dev_LEDSNR50;
         
+        pert_R1{pert_number} = R1_iteration;
         %%
     %     FigH = figure('Position', get(0, 'Screensize'));
     %     F = getframe(FigH);
@@ -1475,6 +1490,7 @@ for band = 1:50 %bandwidth
     
     end
     
+    % hist(cell2mat(cellfun(@(x)x(:),pert_R1(:),'un',0)))
     %%
     % Average LED
     for u = 1:4
@@ -1483,19 +1499,22 @@ for band = 1:50 %bandwidth
                 total_pert_error_LEDSNR50(k,j) = pert_ave_error_LED{1,k}(u,j);
                 high_bar_vector_error_LEDSNR50(k,j) = pert_high_bar_error_LED{1,k}(u,j);
                 low_bar_vector_error_LEDSNR50(k,j) = pert_low_bar_error_LED{1,k}(u,j);
+                standard_dev_LEDSNR50(k,j) = pert_stand_dev_LED{1,k}(u,j);
             end
             val_to_ave_error = total_pert_error_LEDSNR50(:,j);
             high_to_ave_error = high_bar_vector_error_LEDSNR50(:,j);
             low_to_ave_error = low_bar_vector_error_LEDSNR50(:,j);
+            stdtoave = standard_dev_LEDSNR50(:,j);
             ave_pert_error_LEDSNR50(u,j) = mean(val_to_ave_error(val_to_ave_error<Inf));
             high_bar_pert_error_LEDSNR50(u,j) = mean(high_to_ave_error(high_to_ave_error<Inf));
             low_bar_pert_error_LEDSNR50(u,j) = mean(low_to_ave_error(low_to_ave_error<Inf));
+            final_std_val_LEDSNR50(u,j) = mean(stdtoave(stdtoave<Inf));
         end
     end
     
     
-    save(['ave_error_',num2str(band),'_bandwidth_5wav'],'ave_pert_error_LEDSNR50')
-    
+    save(['ave_error_',num2str(band),'_bandwidth_5wav_1-200band_noiseless_originalDPF'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
+%     
     clear all;
 
 end

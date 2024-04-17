@@ -37,7 +37,7 @@
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
 % for xstep = 1:40
-for nwavs = 5:200
+for nwavs = 3:200
     
     %load('cond_array_3-50wav.mat')
     
@@ -950,6 +950,12 @@ for nwavs = 5:200
         for g = 1:length(ave_ext_wav_LED)
             new_ave_DPF_LED(g) = ave_DPF_BB(ave_ext_wav_LED(g)-wl(1));
         end
+        
+        %!!!!!!!!!!!!!!!!!!!
+        %Overwriting this part as Jem says previous lines no good
+        for g = 1:length(x)
+            new_ave_DPF_LED(g) = ave_DPF_BB(x(g)-wl(1));
+        end
 
         % % Exts from book
         % 
@@ -1142,11 +1148,40 @@ for nwavs = 5:200
 
         %% Task 2
 
-        change_I_LED = log(R2_LED) - log(R1_LED);
+        %change_I_LED = log(R2_LED) - log(R1_LED);
 
         SNR_vector = [20; 30; 40; 50; 60];
 
         for l = 1:50
+            
+%             sinusoid_to_one = sin(0:0.1:24.2-0.1);
+%             
+%             for h = 1:length(R1_LED)
+%                 R1_LED_sin(h) = R1_LED(h) + R1_LED(h)*sinusoid_to_one(randi(length(sinusoid_to_one)))*0.085;
+%             end
+% 
+%             for h = 1:length(R2_LED)
+%                 R2_LED_sin(h) = R2_LED(h) + R2_LED(h)*sinusoid_to_one(randi(length(sinusoid_to_one)))*0.085;
+%             end
+
+            %%Compare 20dB noise methods. 20dB watts = 1% noise
+            noiseLevel = 20; %dB watts
+            
+            %Now Use wavelength-specific approach
+            %Create matrix of 2 rows, nWav columns of random draws from standard normal
+            %distribution (which has an std of 1)
+            normDraws = randn(2,length(R1_LED));
+            %Multiply by propotion of baseline values per wavelength to create scaled gaussian noise
+            %vector across wavelengths
+            noiseVecBase = normDraws(1,:).*sqrt((1/(db2pow(noiseLevel))).*(R1_LED.^2));
+            noiseVecPert = normDraws(2,:).*sqrt((1/(db2pow(noiseLevel))).*(R2_LED.^2));
+            %Add noise
+            NEWnoiseBase = R1_LED + noiseVecBase;
+            NEWnoisePert = R2_LED + noiseVecPert;
+            
+            % Have changed this value to change_I_LED instead of previous
+            % (log(R2_LED) - log(R1_LED);) line 1145 !!!!
+            change_I_LED = log(NEWnoisePert) - log(NEWnoiseBase);
 
             R1_LED_SNR20 = awgn(R1_LED,20,'measured');
             R2_LED_SNR20 = awgn(R2_LED,20,'measured');
@@ -1343,119 +1378,120 @@ for nwavs = 5:200
                 %% Again for SNR 50
 
                 %
-                conc_DPFadd5_Eadd5_SNR50_LED = pinv(LED_E_add5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add5))';
+                conc_DPFadd5_Eadd5_newSNR_LED = pinv(LED_E_add5) * (-change_I_LED ./ (SD*LED_DPF_add5))';
 
-                conc_DPFadd10_Eadd5_SNR50_LED = pinv(LED_E_add5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add10))';
+                conc_DPFadd10_Eadd5_newSNR_LED = pinv(LED_E_add5) * (-change_I_LED ./ (SD*LED_DPF_add10))';
 
-                conc_DPFadd15_Eadd5_SNR50_LED = pinv(LED_E_add5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add15))';
+                conc_DPFadd15_Eadd5_newSNR_LED = pinv(LED_E_add5) * (-change_I_LED ./ (SD*LED_DPF_add15))';
 
                 %
-                conc_DPFadd10_Eadd10_SNR50_LED = pinv(LED_E_add10) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add10))';
+                conc_DPFadd10_Eadd10_newSNR_LED = pinv(LED_E_add10) * (-change_I_LED ./ (SD*LED_DPF_add10))';
 
-                conc_DPFadd15_Eadd15_SNR50_LED = pinv(LED_E_add15) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add15))';
+                conc_DPFadd15_Eadd15_newSNR_LED = pinv(LED_E_add15) * (-change_I_LED ./ (SD*LED_DPF_add15))';
 
                 %
                 %------------------------------------------------------------
                 %
-                conc_DPFtake5_Etake5_SNR50_LED = pinv(LED_E_take5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take5))';
+                conc_DPFtake5_Etake5_newSNR_LED = pinv(LED_E_take5) * (-change_I_LED ./ (SD*LED_DPF_take5))';
 
-                conc_DPFtake10_Etake5_SNR50_LED = pinv(LED_E_take5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take10))';
+                conc_DPFtake10_Etake5_newSNR_LED = pinv(LED_E_take5) * (-change_I_LED ./ (SD*LED_DPF_take10))';
 
-                conc_DPFtake15_Etake5_SNR50_LED = pinv(LED_E_take5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take15))';
+                conc_DPFtake15_Etake5_newSNR_LED = pinv(LED_E_take5) * (-change_I_LED ./ (SD*LED_DPF_take15))';
 
                 %
-                conc_DPFtake10_Etake10_SNR50_LED = pinv(LED_E_take10) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take10))';
+                conc_DPFtake10_Etake10_newSNR_LED = pinv(LED_E_take10) * (-change_I_LED ./ (SD*LED_DPF_take10))';
 
-                conc_DPFtake15_Etake15_SNR50_LED = pinv(LED_E_take15) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take15))';
+                conc_DPFtake15_Etake15_newSNR_LED = pinv(LED_E_take15) * (-change_I_LED ./ (SD*LED_DPF_take15))';
 
                 %
                 %--------------------------------------------------------------------
                 %
-                conc_DPFadd5_Etake5_SNR50_LED = pinv(LED_E_take5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add5))';
+                conc_DPFadd5_Etake5_newSNR_LED = pinv(LED_E_take5) * (-change_I_LED ./ (SD*LED_DPF_add5))';
 
-                conc_DPFadd10_Etake5_SNR50_LED = pinv(LED_E_take5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add10))';
+                conc_DPFadd10_Etake5_newSNR_LED = pinv(LED_E_take5) * (-change_I_LED ./ (SD*LED_DPF_add10))';
 
-                conc_DPFadd15_Etake5_SNR50_LED = pinv(LED_E_take5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add15))';
+                conc_DPFadd15_Etake5_newSNR_LED = pinv(LED_E_take5) * (-change_I_LED ./ (SD*LED_DPF_add15))';
 
                 %
-                conc_DPFadd10_Etake10_SNR50_LED = pinv(LED_E_take10) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add10))';
+                conc_DPFadd10_Etake10_newSNR_LED = pinv(LED_E_take10) * (-change_I_LED ./ (SD*LED_DPF_add10))';
 
-                conc_DPFadd15_Etake15_SNR50_LED = pinv(LED_E_take15) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add15))';
+                conc_DPFadd15_Etake15_newSNR_LED = pinv(LED_E_take15) * (-change_I_LED ./ (SD*LED_DPF_add15))';
 
                 %-------------------------------------------------------------
                 %
-                conc_DPFtake5_Eadd5_SNR50_LED = pinv(LED_E_add5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take5))';
+                conc_DPFtake5_Eadd5_newSNR_LED = pinv(LED_E_add5) * (-change_I_LED ./ (SD*LED_DPF_take5))';
 
-                conc_DPFtake10_Eadd5_SNR50_LED = pinv(LED_E_add5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take10))';
+                conc_DPFtake10_Eadd5_newSNR_LED = pinv(LED_E_add5) * (-change_I_LED ./ (SD*LED_DPF_take10))';
 
-                conc_DPFtake15_Eadd5_SNR50_LED = pinv(LED_E_add5) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take15))';
+                conc_DPFtake15_Eadd5_newSNR_LED = pinv(LED_E_add5) * (-change_I_LED ./ (SD*LED_DPF_take15))';
 
                 %
-                conc_DPFtake10_Eadd10_SNR50_LED = pinv(LED_E_add10) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take10))';
+                conc_DPFtake10_Eadd10_newSNR_LED = pinv(LED_E_add10) * (-change_I_LED ./ (SD*LED_DPF_take10))';
 
-                conc_DPFtake15_Eadd15_SNR50_LED = pinv(LED_E_add15) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take15))';
+                conc_DPFtake15_Eadd15_newSNR_LED = pinv(LED_E_add15) * (-change_I_LED ./ (SD*LED_DPF_take15))';
 
-                conc_DPFtake15_Eadd10_SNR50_LED = pinv(LED_E_add10) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take15))';
+                conc_DPFtake15_Eadd10_newSNR_LED = pinv(LED_E_add10) * (-change_I_LED ./ (SD*LED_DPF_take15))';
 
-                conc_DPFtake10_Eadd15_SNR50_LED = pinv(LED_E_add15) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take10))';
+                conc_DPFtake10_Eadd15_newSNR_LED = pinv(LED_E_add15) * (-change_I_LED ./ (SD*LED_DPF_take10))';
 
-                conc_DPFadd5_Etake15_SNR50_LED = pinv(LED_E_take15) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add5))';
+                conc_DPFadd5_Etake15_newSNR_LED = pinv(LED_E_take15) * (-change_I_LED ./ (SD*LED_DPF_add5))';
 
-                conc_DPFadd5_Etake10_SNR50_LED = pinv(LED_E_take10) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add5))';
+                conc_DPFadd5_Etake10_newSNR_LED = pinv(LED_E_take10) * (-change_I_LED ./ (SD*LED_DPF_add5))';
 
-                conc_DPFtake5_Eadd15_SNR50_LED = pinv(LED_E_add15) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take5))';
+                conc_DPFtake5_Eadd15_newSNR_LED = pinv(LED_E_add15) * (-change_I_LED ./ (SD*LED_DPF_take5))';
 
-                conc_DPFtake5_Eadd10_SNR50_LED = pinv(LED_E_add10) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take5))';
+                conc_DPFtake5_Eadd10_newSNR_LED = pinv(LED_E_add10) * (-change_I_LED ./ (SD*LED_DPF_take5))';
 
-                conc_DPFadd10_Etake15_SNR50_LED = pinv(LED_E_take15) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add10))';
+                conc_DPFadd10_Etake15_newSNR_LED = pinv(LED_E_take15) * (-change_I_LED ./ (SD*LED_DPF_add10))';
 
-                conc_DPFadd15_Etake10_SNR50_LED = pinv(LED_E_take10) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add15))';
+                conc_DPFadd15_Etake10_newSNR_LED = pinv(LED_E_take10) * (-change_I_LED ./ (SD*LED_DPF_add15))';
 
                 for t = 1:length(ac_conc_change)
-                    perc_error_LED_DPFtake15_Eadd15_SNR50(t) = ((conc_DPFtake15_Eadd15_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFtake10_Eadd10_SNR50(t) = ((conc_DPFtake10_Eadd10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFtake5_Eadd5_SNR50(t) = ((conc_DPFtake5_Eadd5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake15_Eadd15_newSNR(t) = ((conc_DPFtake15_Eadd15_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake10_Eadd10_newSNR(t) = ((conc_DPFtake10_Eadd10_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake5_Eadd5_newSNR(t) = ((conc_DPFtake5_Eadd5_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 
-                    perc_error_LED_DPFadd15_Etake15_SNR50(t) = ((conc_DPFadd15_Etake15_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFadd10_Etake10_SNR50(t) = ((conc_DPFadd10_Etake10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFadd5_Etake5_SNR50(t) = ((conc_DPFadd5_Etake5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd15_Etake15_newSNR(t) = ((conc_DPFadd15_Etake15_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd10_Etake10_newSNR(t) = ((conc_DPFadd10_Etake10_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd5_Etake5_newSNR(t) = ((conc_DPFadd5_Etake5_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 
-                    perc_error_LED_DPFadd15_Eadd15_SNR50(t) = ((conc_DPFadd15_Eadd15_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFadd10_Eadd10_SNR50(t) = ((conc_DPFadd10_Eadd10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFadd5_Eadd5_SNR50(t) = ((conc_DPFadd5_Eadd5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd15_Eadd15_newSNR(t) = ((conc_DPFadd15_Eadd15_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd10_Eadd10_newSNR(t) = ((conc_DPFadd10_Eadd10_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd5_Eadd5_newSNR(t) = ((conc_DPFadd5_Eadd5_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 
-                    perc_error_LED_DPFtake15_Etake15_SNR50(t) = ((conc_DPFtake15_Etake15_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFtake10_Etake10_SNR50(t) = ((conc_DPFtake10_Etake10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFtake5_Etake5_SNR50(t) = ((conc_DPFtake5_Etake5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake15_Etake15_newSNR(t) = ((conc_DPFtake15_Etake15_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake10_Etake10_newSNR(t) = ((conc_DPFtake10_Etake10_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake5_Etake5_newSNR(t) = ((conc_DPFtake5_Etake5_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 
-                    perc_error_LED_DPFtake15_Eadd10_SNR50(t) = ((conc_DPFtake15_Eadd10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFtake15_Eadd5_SNR50(t) = ((conc_DPFtake15_Eadd5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake15_Eadd10_newSNR(t) = ((conc_DPFtake15_Eadd10_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake15_Eadd5_newSNR(t) = ((conc_DPFtake15_Eadd5_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 
-                    perc_error_LED_DPFtake10_Eadd15_SNR50(t) = ((conc_DPFtake10_Eadd15_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFtake10_Eadd5_SNR50(t) = ((conc_DPFtake10_Eadd5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake10_Eadd15_newSNR(t) = ((conc_DPFtake10_Eadd15_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake10_Eadd5_newSNR(t) = ((conc_DPFtake10_Eadd5_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 
-                    perc_error_LED_DPFadd5_Etake15_SNR50(t) = ((conc_DPFadd5_Etake15_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFadd5_Etake10_SNR50(t) = ((conc_DPFadd5_Etake10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd5_Etake15_newSNR(t) = ((conc_DPFadd5_Etake15_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd5_Etake10_newSNR(t) = ((conc_DPFadd5_Etake10_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 
-                    perc_error_LED_DPFtake5_Eadd15_SNR50(t) = ((conc_DPFtake5_Eadd15_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFtake5_Eadd10_SNR50(t) = ((conc_DPFtake5_Eadd10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake5_Eadd15_newSNR(t) = ((conc_DPFtake5_Eadd15_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake5_Eadd10_newSNR(t) = ((conc_DPFtake5_Eadd10_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 
-                    perc_error_LED_DPFadd10_Etake15_SNR50(t) = ((conc_DPFadd10_Etake15_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFadd10_Etake5_SNR50(t) = ((conc_DPFadd10_Etake5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd10_Etake15_newSNR(t) = ((conc_DPFadd10_Etake15_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd10_Etake5_newSNR(t) = ((conc_DPFadd10_Etake5_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 
-                    perc_error_LED_DPFadd15_Etake10_SNR50(t) = ((conc_DPFadd15_Etake10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFadd15_Etake5_SNR50(t) = ((conc_DPFadd15_Etake5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd15_Etake10_newSNR(t) = ((conc_DPFadd15_Etake10_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd15_Etake5_newSNR(t) = ((conc_DPFadd15_Etake5_newSNR_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
 
-                    perc_error_LED_5s_SNR50(t) = max(abs([perc_error_LED_DPFtake5_Etake5_SNR50(t), perc_error_LED_DPFadd5_Eadd5_SNR50(t), perc_error_LED_DPFadd5_Etake5_SNR50(t), perc_error_LED_DPFtake5_Eadd5_SNR50(t)]));
-                    perc_error_LED_10s_SNR50(t) = max(abs([perc_error_LED_DPFtake10_Etake10_SNR50(t), perc_error_LED_DPFadd10_Eadd10_SNR50(t), perc_error_LED_DPFadd10_Etake10_SNR50(t), perc_error_LED_DPFtake10_Eadd10_SNR50(t)]));
-                    perc_error_LED_15s_SNR50(t) = max(abs([perc_error_LED_DPFtake15_Etake15_SNR50(t), perc_error_LED_DPFadd15_Eadd15_SNR50(t), perc_error_LED_DPFadd15_Etake15_SNR50(t), perc_error_LED_DPFtake15_Eadd15_SNR50(t)]));
+                    perc_error_LED_5s_newSNR(t) = max(abs([perc_error_LED_DPFtake5_Etake5_newSNR(t), perc_error_LED_DPFadd5_Eadd5_newSNR(t), perc_error_LED_DPFadd5_Etake5_newSNR(t), perc_error_LED_DPFtake5_Eadd5_newSNR(t)]));
+                    perc_error_LED_10s_newSNR(t) = max(abs([perc_error_LED_DPFtake10_Etake10_newSNR(t), perc_error_LED_DPFadd10_Eadd10_newSNR(t), perc_error_LED_DPFadd10_Etake10_newSNR(t), perc_error_LED_DPFtake10_Eadd10_newSNR(t)]));
+                    perc_error_LED_15s_newSNR(t) = max(abs([perc_error_LED_DPFtake15_Etake15_newSNR(t), perc_error_LED_DPFadd15_Eadd15_newSNR(t), perc_error_LED_DPFadd15_Etake15_newSNR(t), perc_error_LED_DPFtake15_Eadd15_newSNR(t)]));
                 end
                 %%
-                perc_accum_errors_DPFE_LEDSNR50 = [perc_diff_LED; perc_error_LED_5s_SNR50; perc_error_LED_10s_SNR50; perc_error_LED_15s_SNR50];
-                perc_accum_errors_DPFE_LEDSNR50 = abs(perc_accum_errors_DPFE_LEDSNR50);
+                perc_accum_errors_DPFE_LEDnewSNR = [perc_diff_LED; perc_error_LED_5s_newSNR; perc_error_LED_10s_newSNR; perc_error_LED_15s_newSNR];
+                perc_accum_errors_DPFE_LEDnewSNR = abs(perc_accum_errors_DPFE_LEDnewSNR);
 
-                perc_accum_errors_DPFE_LEDSNR50_saved{l} = perc_accum_errors_DPFE_LEDSNR50(:,:); %Save each iteration to cell array
+                perc_accum_errors_DPFE_LEDSNR50_saved{l} = perc_accum_errors_DPFE_LEDnewSNR(:,:); %Save each iteration to cell array
 
+                R1_iteration(:,l) = NEWnoiseBase(1);
                 % FigH = figure('Position', get(0, 'Screensize'));
                 % F = getframe(FigH);
                 % imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient and DPF percentage changes for broadband system 1 SNR 50.png', 'png')
@@ -1494,6 +1530,7 @@ for nwavs = 5:200
         pert_low_bar_error_LED{pert_number} = low_bar_vector_error_LEDSNR50;
         pert_stand_dev_LED{pert_number} = stand_dev_LEDSNR50;
 
+        pert_R1{pert_number} = R1_iteration;
         %%
     %     FigH = figure('Position', get(0, 'Screensize'));
     %     F = getframe(FigH);
@@ -1536,7 +1573,7 @@ for nwavs = 5:200
     end
 
     num_wavs = length(x);
-    save(['ave_error_',num2str(num_wavs),'_wavelengths_std_newSNR'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
+    save(['ave_error_',num2str(num_wavs),'_3to200wavs_RobSNR_origDPF'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
     
     clear all;
     

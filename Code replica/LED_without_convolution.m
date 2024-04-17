@@ -39,7 +39,7 @@
 
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
-for band = 1:50
+for band = 1:10:201
     for pert_number = 1:500
 
         % Enter simulation data
@@ -1494,12 +1494,14 @@ for band = 1:50
                 ave_vector_error_LEDSNR50(u,j) = mean(vector_error_LEDSNR50(:,j));
                 high_bar_vector_error_LEDSNR50(u,j) = max(vector_error_LEDSNR50(:,j));
                 low_bar_vector_error_LEDSNR50(u,j) = min(vector_error_LEDSNR50(:,j));
+                stand_dev_LEDSNR50(u,j) = std(vector_error_LEDSNR50(:,j));
             end
         end
         
         pert_ave_error_LED{pert_number} = ave_vector_error_LEDSNR50(:,:);
         pert_high_bar_error_LED{pert_number} = high_bar_vector_error_LEDSNR50;
         pert_low_bar_error_LED{pert_number} = low_bar_vector_error_LEDSNR50;
+        pert_stand_dev_LED{pert_number} = stand_dev_LEDSNR50;
         
         %%
     %     FigH = figure('Position', get(0, 'Screensize'));
@@ -1529,18 +1531,21 @@ for band = 1:50
                 total_pert_error_LEDSNR50(k,j) = pert_ave_error_LED{1,k}(u,j);
                 high_bar_vector_error_LEDSNR50(k,j) = pert_high_bar_error_LED{1,k}(u,j);
                 low_bar_vector_error_LEDSNR50(k,j) = pert_low_bar_error_LED{1,k}(u,j);
+                standard_dev_LEDSNR50(k,j) = pert_stand_dev_LED{1,k}(u,j);
             end
             val_to_ave_error = total_pert_error_LEDSNR50(:,j);
             high_to_ave_error = high_bar_vector_error_LEDSNR50(:,j);
             low_to_ave_error = low_bar_vector_error_LEDSNR50(:,j);
+            stdtoave = standard_dev_LEDSNR50(:,j);
             ave_pert_error_LEDSNR50(u,j) = mean(val_to_ave_error(val_to_ave_error<Inf));
             high_bar_pert_error_LEDSNR50(u,j) = mean(high_to_ave_error(high_to_ave_error<Inf));
             low_bar_pert_error_LEDSNR50(u,j) = mean(low_to_ave_error(low_to_ave_error<Inf));
+            final_std_val_LEDSNR50(u,j) = mean(stdtoave(stdtoave<Inf));
         end
     end
     
     
-    save(['ave_error_',num2str(band),'_bandwidth_5wav_noconv'],'ave_pert_error_LEDSNR50')
+    save(['ave_error_',num2str(band),'_bandwidth_5wav_noconv_findmin'],'ave_pert_error_LEDSNR50')
     
     clear all;
 

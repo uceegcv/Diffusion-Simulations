@@ -1,7 +1,7 @@
 %% Setup initial values
 
 % theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Cond_errors_3to50_best/*.mat');
-theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/full errors 5-200 wavs/no SNR/*.mat');
+theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Error_5to200wavs_newSNRGINA/*.mat');
 
 percent_vector = [0.01; 5; 10; 15];
 
@@ -21,9 +21,9 @@ theFiles = theFiles(idx);
 for k = 1 : length(theFiles)
     baseFileName = theFiles(k).name;
     newdata = load(baseFileName);
-    data_to_analyse = newdata.ave_pert_error_LEDnoSNR;
-    std_to_analyse = newdata.final_std_val_LEDnoSNR;
-    conc_to_analyse = newdata.concs2_saved;
+    data_to_analyse = newdata.ave_pert_error_LEDSNR50;
+    std_to_analyse = newdata.final_std_val_LEDSNR50;
+    %conc_to_analyse = newdata.concs2_saved;
     
     for d = 1:length(percent_vector)
         change_wavs_HbO_zero_error(k,d) = data_to_analyse(d,1);
@@ -35,38 +35,38 @@ for k = 1 : length(theFiles)
     end
 end
 
-for w = 1:length(conc_to_analyse)
-    HbO_conc(w) = conc_to_analyse{w}(1);
-    HbR_conc(w) = conc_to_analyse{w}(2);
-    CCO_conc(w) = conc_to_analyse{w}(3);
-    HbO_conc_change(w) = HbO_conc(w) - 56;
-    HbR_conc_change(w) = HbR_conc(w) - 24;
-    CCO_conc_change(w) = CCO_conc(w) - 4.9;
-end
+% for w = 1:length(conc_to_analyse)
+%     HbO_conc(w) = conc_to_analyse{w}(1);
+%     HbR_conc(w) = conc_to_analyse{w}(2);
+%     CCO_conc(w) = conc_to_analyse{w}(3);
+%     HbO_conc_change(w) = HbO_conc(w) - 56;
+%     HbR_conc_change(w) = HbR_conc(w) - 24;
+%     CCO_conc_change(w) = CCO_conc(w) - 4.9;
+% end
+
+
+% FigH = figure('Position', get(0, 'Screensize'));
+% F = getframe(FigH);
+% imwrite(F.cdata, 'Comparing best combos 3-50wav systems ten percent parameter error.png', 'png')
+% plot(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
+% hold on
+% errorbar(xvalues,change_wavs_HbR_zero_error(:,3),std_wavs_HbR_zero_error(:,3),std_wavs_HbR_zero_error(:,3),'bx-','MarkerSize',10,'LineWidth',1.8)
+% errorbar(xvalues,change_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),'gx-','MarkerSize',10,'LineWidth',1.8)
+% grid on
+% ax = gca;
+% ax.FontSize = 20;
+% %xlim([20 50]);
+% legend('HbO','HbR','CCO','Location','Best');
+% xlabel('Number of wavelengths');
+% ylabel('Average percentage error in chromophore concentration values');
+% %title({'Comparing 5-wavelength systems with increasing bandwidth and fifteen percent error in DPF and E'});
+% saveas(gcf,'Comparing best combos 3-50wav systems ten percent parameter error.png')
+
 
 
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
-imwrite(F.cdata, 'Comparing best combos 3-50wav systems ten percent parameter error.png', 'png')
-plot(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
-hold on
-errorbar(xvalues,change_wavs_HbR_zero_error(:,3),std_wavs_HbR_zero_error(:,3),std_wavs_HbR_zero_error(:,3),'bx-','MarkerSize',10,'LineWidth',1.8)
-errorbar(xvalues,change_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),'gx-','MarkerSize',10,'LineWidth',1.8)
-grid on
-ax = gca;
-ax.FontSize = 20;
-%xlim([20 50]);
-legend('HbO','HbR','CCO','Location','Best');
-xlabel('Number of wavelengths');
-ylabel('Average percentage error in chromophore concentration values');
-%title({'Comparing 5-wavelength systems with increasing bandwidth and fifteen percent error in DPF and E'});
-saveas(gcf,'Comparing best combos 3-50wav systems ten percent parameter error.png')
-
-
-
-FigH = figure('Position', get(0, 'Screensize'));
-F = getframe(FigH);
-imwrite(F.cdata, 'Comparing 3-200wav systems zero parameter error no SNR shaded.png', 'png')
+imwrite(F.cdata, 'Comparing 5-200wav systems zero parameter error shaded new SNR Gina.png', 'png')
 shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,1),std_wavs_CCO_zero_error(:,1),'lineProps',{'g-o','markerfacecolor','g','markersize',8})
 %shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
 hold on
@@ -80,5 +80,5 @@ legend('oxCCO','HbR','HbO','Location','Best');
 xlabel('Number of wavelengths');
 ylabel('Average percentage error in chromophore concentration values');
 %title({'Comparing 5-wavelength systems with increasing bandwidth and fifteen percent error in DPF and E'});
-saveas(gcf,'Comparing 3-200wav systems zero parameter error no SNR shaded.png')
+saveas(gcf,'Comparing 5-200wav systems zero parameter error shaded new SNR Gina.png')
 

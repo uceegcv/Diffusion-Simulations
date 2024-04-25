@@ -40,7 +40,7 @@
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
 for band = 1:10:201
-    for pert_number = 1:500
+    for pert_number = 1:300
 
         % Enter simulation data
         SD = 30; % Source-detector separation on same surface of slab (mm)
@@ -1545,7 +1545,7 @@ for band = 1:10:201
     end
     
     
-    save(['ave_error_',num2str(band),'_bandwidth_5wav_noconv_findmin'],'ave_pert_error_LEDSNR50')
+    save(['ave_error_',num2str(band),'_bandwidth_5wav_noconv_std'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
     
     clear all;
 

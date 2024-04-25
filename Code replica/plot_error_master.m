@@ -1,11 +1,11 @@
 %% Setup initial values
 
 % theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Cond_errors_3to50_best/*.mat');
-theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Error_5to200wavs_newSNRGINA/*.mat');
+theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Errors 1-200 band no conv/*.mat');
 
 percent_vector = [0.01; 5; 10; 15];
 
-xvalues = 5:200;
+xvalues = 1:10:201;
 
 %% Sort the files in order of ascending number of wavelengths
 
@@ -66,7 +66,7 @@ end
 
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
-imwrite(F.cdata, 'Comparing 5-200wav systems zero parameter error shaded new SNR Gina.png', 'png')
+imwrite(F.cdata, 'Comparing 1-201band systems zero parameter error shaded noiseless zeroed no conv.png', 'png')
 shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,1),std_wavs_CCO_zero_error(:,1),'lineProps',{'g-o','markerfacecolor','g','markersize',8})
 %shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
 hold on
@@ -75,10 +75,34 @@ shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,1),std_wavs_HbO_zero_error(:
 grid on
 ax = gca;
 ax.FontSize = 20;
-%xlim([20 50]);
+%xlim([0 50]);
+ylim([0 11]);
 legend('oxCCO','HbR','HbO','Location','Best');
-xlabel('Number of wavelengths');
+xlabel('Bandwidth');
 ylabel('Average percentage error in chromophore concentration values');
 %title({'Comparing 5-wavelength systems with increasing bandwidth and fifteen percent error in DPF and E'});
-saveas(gcf,'Comparing 5-200wav systems zero parameter error shaded new SNR Gina.png')
+saveas(gcf,'Comparing 1-201band systems zero parameter error shaded noiseless zeroed no conv.png')
+
+%% Correlation plot
+
+for p = 1:length(change_wavs_HbO_zero_error(:,1))
+    correlation(p) = (change_wavs_HbO_zero_error(p,1) + change_wavs_CCO_zero_error(p,1))/2;
+end
+
+FigH = figure('Position', get(0, 'Screensize'));
+F = getframe(FigH);
+imwrite(F.cdata, 'Comparing 3-200 wav systems zero parameter error zeroed correlation.png', 'png')
+plot(xvalues, correlation,'rx-','MarkerSize',10,'LineWidth',1.8)
+grid on
+ax = gca;
+ax.FontSize = 20;
+%xlim([0 50]);
+%ylim([0 10]);
+%legend('oxCCO','HbR','HbO','Location','Best');
+xlabel('Number of wavelengths');
+ylabel('Correlation');
+%title({'Comparing 5-wavelength systems with increasing bandwidth and fifteen percent error in DPF and E'});
+saveas(gcf,'Comparing 3-200 wav systems zero parameter error zeroed correlation.png')
+
+
 

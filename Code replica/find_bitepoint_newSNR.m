@@ -824,7 +824,18 @@ for nwavs = 3:200
         % specific extinction coefficient (defined base 10) times 2.303.
         E = GetExtinctions(x); % (5 wavs)
         E_new = GetExtinctions(wl); % (broadband)
-
+        
+        E_all_data = xlsread('Extinction_datasets.xlsx','Comparisons-2');
+        
+        E_second_datasetprelim = E_all_data(:,6:9);
+        E_second_dataset = E_second_datasetprelim(201:376,:);
+        
+        HbO_second_dataset = interp1(E_second_dataset(:,4),E_second_dataset(:,1),650:1000);
+        HbR_second_dataset = interp1(E_second_dataset(:,4),E_second_dataset(:,2),650:1000);
+        CCO_second_dataset = interp1(E_second_dataset(:,4),E_second_dataset(:,3),650:1000);
+       
+        compiled_E_newdata = [HbO_second_dataset HbR_second_dataset CCO_second_dataset];
+        
         %Yields specific absorption coefficients in units of cm-1 per Molar or 
         %absorption coefficient in cm-1 for water
         %Convert to mm-1 per uM.

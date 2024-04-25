@@ -8,7 +8,7 @@
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
 
-for band = 1:200 %bandwidth
+for band = 1:10:201 %bandwidth
     for pert_number = 1:300 %concentration iterations
 
         % Enter simulation data
@@ -1513,7 +1513,7 @@ for band = 1:200 %bandwidth
     end
     
     
-    save(['ave_error_',num2str(band),'_bandwidth_5wav_1-200band_noiseless_originalDPF'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
+    save(['ave_error_',num2str(band),'_bandwidth_5wav_1-201band_noiseless_originalDPF_withconv'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
 %     
     clear all;
 

@@ -1553,7 +1553,7 @@ for nwavs = 3:200
     end
 
     num_wavs = length(x);
-    save(['ave_error_',num2str(num_wavs),'_3-200wavelengths_noiseless_originalDPF'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
+    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
     
     clear all;
     

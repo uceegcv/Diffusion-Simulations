@@ -8,7 +8,9 @@
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
 
-for band = 1:10:201 %bandwidth
+% for band = 1:10:201 %bandwidth
+for band = 5 %bandwidth
+
     for pert_number = 1:300 %concentration iterations
 
         % Enter simulation data
@@ -1386,6 +1388,10 @@ for band = 1:10:201 %bandwidth
         
                 conc_DPFadd15_Etake10_SNR50_LED = pinv(LED_E_take10) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add15))';
         
+                conc_DPFtake15_Esame_SNR50_LED = pinv(E_prime_LED) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_take15))';
+
+                conc_DPFadd15_Esame_SNR50_LED = pinv(E_prime_LED) * (-change_I_LED_SNR50 ./ (SD*LED_DPF_add15))';
+
                 for t = 1:length(ac_conc_change)
                     perc_error_LED_DPFtake15_Eadd15_SNR50(t) = ((conc_DPFtake15_Eadd15_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
                     perc_error_LED_DPFtake10_Eadd10_SNR50(t) = ((conc_DPFtake10_Eadd10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
@@ -1421,6 +1427,9 @@ for band = 1:10:201 %bandwidth
                     perc_error_LED_DPFadd15_Etake10_SNR50(t) = ((conc_DPFadd15_Etake10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
                     perc_error_LED_DPFadd15_Etake5_SNR50(t) = ((conc_DPFadd15_Etake5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
         
+                    perc_error_LED_DPFtake15_Esame_SNR50(t) = ((conc_DPFtake15_Esame_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd15_Esame_SNR50(t) = ((conc_DPFadd15_Esame_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    
                     perc_error_LED_5s_SNR50(t) = max(abs([perc_error_LED_DPFtake5_Etake5_SNR50(t), perc_error_LED_DPFadd5_Eadd5_SNR50(t), perc_error_LED_DPFadd5_Etake5_SNR50(t), perc_error_LED_DPFtake5_Eadd5_SNR50(t)]));
                     perc_error_LED_10s_SNR50(t) = max(abs([perc_error_LED_DPFtake10_Etake10_SNR50(t), perc_error_LED_DPFadd10_Eadd10_SNR50(t), perc_error_LED_DPFadd10_Etake10_SNR50(t), perc_error_LED_DPFtake10_Eadd10_SNR50(t)]));
                     perc_error_LED_15s_SNR50(t) = max(abs([perc_error_LED_DPFtake15_Etake15_SNR50(t), perc_error_LED_DPFadd15_Eadd15_SNR50(t), perc_error_LED_DPFadd15_Etake15_SNR50(t), perc_error_LED_DPFtake15_Eadd15_SNR50(t)]));

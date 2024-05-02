@@ -1,11 +1,12 @@
 %% Setup initial values
 
 % theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Cond_errors_3to50_best/*.mat');
-theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Errors 3-187 wav perfect E/*.mat');
+theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Errors 3-200 wav perfect E/*.mat');
 
 percent_vector = [0.01; 5; 10; 15];
+% percent_vector = 10;
 
-xvalues = 3:187;
+xvalues = 3:200;
 
 %% Sort the files in order of ascending number of wavelengths
 
@@ -23,6 +24,8 @@ for k = 1 : length(theFiles)
     newdata = load(baseFileName);
     data_to_analyse = newdata.ave_pert_error_LEDSNR50;
     std_to_analyse = newdata.final_std_val_LEDSNR50;
+%     data_to_analyse = newdata.ave_perfectE_error;
+%     std_to_analyse = newdata.std_perfectE;
     %conc_to_analyse = newdata.concs2_saved;
     
     for d = 1:length(percent_vector)
@@ -66,12 +69,12 @@ end
 
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
-imwrite(F.cdata, 'Comparing 3-187 wav ten perc parameter error shaded noiseless zeroed perfect E.png', 'png')
-shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),'lineProps',{'g-o','markerfacecolor','g','markersize',8})
+imwrite(F.cdata, 'Comparing 3-187 wav zero parameter error shaded noiseless zeroed second dataset.png', 'png')
+shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,1),std_wavs_CCO_zero_error(:,1),'lineProps',{'g-o','markerfacecolor','g','markersize',8})
 %shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
 hold on
-shadedErrorBar(xvalues,change_wavs_HbR_zero_error(:,3),std_wavs_HbR_zero_error(:,3),'lineProps',{'b-o','markerfacecolor','b','markersize',8})
-shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'lineProps',{'r-o','markerfacecolor','r','markersize',8})
+shadedErrorBar(xvalues,change_wavs_HbR_zero_error(:,1),std_wavs_HbR_zero_error(:,1),'lineProps',{'b-o','markerfacecolor','b','markersize',8})
+shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,1),std_wavs_HbO_zero_error(:,1),'lineProps',{'r-o','markerfacecolor','r','markersize',8})
 grid on
 ax = gca;
 ax.FontSize = 20;
@@ -81,7 +84,7 @@ legend('oxCCO','HbR','HbO','Location','Best');
 xlabel('Wavelengths');
 ylabel('Average percentage error in chromophore concentration values');
 %title({'Comparing 5-wavelength systems with increasing bandwidth and fifteen percent error in DPF and E'});
-saveas(gcf,'Comparing 3-187 wav ten perc parameter error shaded noiseless zeroed perfect E.png')
+saveas(gcf,'Comparing 3-187 wav zero parameter error shaded noiseless zeroed second dataset.png')
 
 %% Correlation plot
 

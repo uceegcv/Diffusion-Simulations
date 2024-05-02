@@ -1571,7 +1571,8 @@ for nwavs = 3:200
             ave_pert_error_LEDSNR50(u,j) = mean(val_to_ave_error(val_to_ave_error<Inf));
             high_bar_pert_error_LEDSNR50(u,j) = mean(high_to_ave_error(high_to_ave_error<Inf));
             low_bar_pert_error_LEDSNR50(u,j) = mean(low_to_ave_error(low_to_ave_error<Inf));
-            final_std_val_LEDSNR50(u,j) = mean(stdtoave(stdtoave<Inf));
+            %final_std_val_LEDSNR50(u,j) = mean(stdtoave(stdtoave<Inf));
+            final_std_val_LEDSNR50(u,j) = std(val_to_ave_error(val_to_ave_error<Inf));
         end
     end
     
@@ -1583,11 +1584,11 @@ for nwavs = 3:200
             val_to_ave_error_perfectE = total_perfectE_error_LEDSNR50(:,j);
             std_toave_perfectE = standard_dev_perfectE_LEDSNR50(:,j);
             ave_perfectE_error(1,j) = mean(val_to_ave_error_perfectE(val_to_ave_error_perfectE<Inf));
-            std_perfectE(1,j) = mean(std_toave_perfectE(std_toave_perfectE<Inf));
+            std_perfectE(1,j) = std(val_to_ave_error_perfectE(val_to_ave_error_perfectE<Inf));
     end
 
     num_wavs = length(x);
-    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_with_perfectE'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE')
+    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_with_perfectE_correctstd'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE')
     
     clear all;
     

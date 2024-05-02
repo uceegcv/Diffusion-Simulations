@@ -983,7 +983,7 @@ for nwavs = 3:200
     end
 
     num_wavs = length(x);
-    save(['test_ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_with_perfectE_correctstd'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE')
+    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_with_perfectE_correctstd'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE')
     
     clear all;
     

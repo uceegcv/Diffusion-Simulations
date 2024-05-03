@@ -2,7 +2,7 @@
 % x contains all broadband wavelengths
 
 % Define bandwidth iterations
-for band = 1:200
+for band = 58:200
 
     % Define number of concentration changes
     for pert_number = 1:300

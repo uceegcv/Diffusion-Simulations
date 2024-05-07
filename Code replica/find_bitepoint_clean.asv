@@ -10,7 +10,7 @@ for nwavs = 3:200
         slab = 50; % Slab thickness (mm)
 
         x = 680:921;
-
+   
         % Contains broadband wavelengths of interest - the one to edit
         %wl = 680:921; %nm (cannot be a larger range than x)
         wl = 680:921; % de Roever
@@ -87,16 +87,16 @@ for nwavs = 3:200
 %         CCO_change = 0.31 - CCO_pert(randi([1,numel(CCO_pert)]));
 
         % !!! Changed these values to reflect a greater chromophore change
-        % Change HbO between +5 and -5 uM
-        HbO_pert = 0.01:0.01:10.01; % define the numbers
-        HbO_change = 5.01 - HbO_pert(randi([1,numel(HbO_pert)]));
+        % Change HbO between +10 and - uM
+        HbO_pert = 0.01:0.01:20.01; % define the numbers
+        HbO_change = 10.01 - HbO_pert(randi([1,numel(HbO_pert)]));
 
-        % Change HbR between +4 and -4 uM
-        HbR_pert = 0.01:0.01:8.01; % define the numbers
-        HbR_change = 4.01 - HbR_pert(randi([1,numel(HbR_pert)]));
+        % Change HbR between +7 and -7 uM
+        HbR_pert = 0.01:0.01:14.01; % define the numbers
+        HbR_change = 7.01 - HbR_pert(randi([1,numel(HbR_pert)]));
 
-        % Change CCO between +1.5 and -1.5 uM
-        CCO_pert = 0.01:0.01:3.01; % define the numbers
+        % Change CCO between +3 and -3 uM
+        CCO_pert = 0.01:0.01:6.01; % define the numbers
         CCO_change = 3.01 - CCO_pert(randi([1,numel(CCO_pert)]));
 
         W(2) = 0.8;    %Water fraction
@@ -996,7 +996,7 @@ for nwavs = 3:200
     end
 
     num_wavs = length(x);
-    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_with_perfectE_diff_concs '],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE')
+    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_with_perfectE_diff_concs2 '],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE')
     
     clear all;
     

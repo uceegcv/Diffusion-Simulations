@@ -9,7 +9,7 @@
 % x contains all broadband wavelengths
 
 % for band = 1:10:201 %bandwidth
-for band = 5 %bandwidth
+for band = 1:200 %bandwidth
 
     for pert_number = 1:300 %concentration iterations
 
@@ -74,81 +74,6 @@ for band = 5 %bandwidth
         ext_CYRIL(:,4:5) = ext_CYRIL(:,4:5)/(10e5*2*2.3);
         ext_CYRIL(:,3) = ext_CYRIL(:,3);
         
-        % ext_BioBook = tissue_specific_extinction_coefficient_650to1000_OpticsBook;
-        % %%
-        % for i = 1:5
-        %     %ext_BioBook_extend = interp1(ext_BioBook(:,1),ext_BioBook(:,i+1),ext_BioBook(1,1):ext_BioBook(end,1));
-        %     ext_BioBook_extend = interp1(ext_BioBook(:,1),ext_BioBook(:,i+1),680:921);
-        % 
-        %     ext_BioBook_new(:,i) = ext_BioBook_extend.';
-        % end
-        % 
-        % ext_BioBook_new(:,1:2) = ext_BioBook_new(:,1:2)/10e6;
-        % ext_BioBook_new(:,3) = ext_BioBook_new(:,3)/1000;
-        % ext_BioBook_new(:,4) = ext_BioBook_new(:,4)/100;
-        % ext_BioBook_new(:,5) = ext_BioBook_new(:,5)/10e6;
-        
-        %ext_CYRIL = ext_CYRIL/(2*2.3);
-        % %% Chromophore spectra
-        %Plot constituent spectra
-%         if pert_number == 1
-%             FigH = figure('Position', get(0, 'Screensize'));
-%             F = getframe(FigH);
-%             imwrite(F.cdata, 'Constituent spectra (and polynomial fits) from Homer2 for broadband system 1.png', 'png')
-%             plot(x,E(:,1),'ro-');hold on;
-%             plot(x,E(:,2),'bo-');
-%             % plot(x,(E(:,3)/10),'go-'); %Divide by 10 to improve display
-%             % plot(x,(E(:,4)/10),'ko-'); %Divide by 10 to improve display
-%             plot(x,E(:,3),'mo-');
-%             xlim([min(x) max(x)])
-%             legend('HbO','HbR','aa3');
-%             xlabel('Wavelength (nm)');
-%             ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
-%             title('Constituent spectra from Homer2 for broadband system 1 (680-921nm)');
-%             saveas(gcf,'Constituent spectra (and polynomial fits) from Homer2 for broadband system 1.png')
-%         end
-        % 
-        % figure;
-        % plot(x,ext_CYRIL(:,1),'ro-');hold on;
-        % plot(x,ext_CYRIL(:,2),'bo-');
-        % plot(x,(ext_CYRIL(:,3)),'go-'); %Divide by 10 to improve display
-        % plot(x,(ext_CYRIL(:,4)),'ko-'); %Divide by 10 to improve display
-        % plot(x,ext_CYRIL(:,5),'mo-');
-        % xlim([min(x) max(x)])
-        % legend('HbO','HbR','H2O','Lipid','aa3');
-        % xlabel('Wavelength (nm)');
-        % ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
-        % title('Constituent spectra (and polynomial fits) from CYRIL function');
-        % 
-        % figure;
-        % plot(x,ext_CYRIL(:,1),'ro-');hold on;
-        % plot(x,ext_CYRIL(:,2),'bo-');
-        % plot(x,ext_CYRIL(:,5),'mo-');
-        % plot(x,E(:,1),'ro-');
-        % plot(x,E(:,2),'bo-');
-        % plot(x,E(:,5),'mo-');
-        % xlim([min(x) max(x)])
-        % legend('HbO','HbR','aa3','HbO','HbR','aa3');
-        % xlabel('Wavelength (nm)');
-        % ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
-        % title('Constituent spectra comparing Homer2 and CYRIL values');
-        % 
-        % figure;
-        % plot(x,ext_CYRIL(:,1),'ro-');hold on;
-        % plot(x,ext_CYRIL(:,2),'bo-');
-        % plot(x,ext_CYRIL(:,5),'mo-');
-        % plot(x,E(:,1),'rs-');
-        % plot(x,E(:,2),'bs-');
-        % plot(x,E(:,5),'ms-');
-        % plot(x,ext_BioBook_new(:,1),'r*-');
-        % plot(x,ext_BioBook_new(:,2),'b*-');
-        % plot(x,ext_BioBook_new(:,5),'m*-');
-        % xlim([min(x) max(x)])
-        % legend('HbO CYRIL','HbR CYRIL','aa3 CYRIL','HbO Homer2','HbR Homer2','aa3 Homer2','HbO Book','HbR Book','aa3 Book');
-        % xlabel('Wavelength (nm)');
-        % ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
-        % title('Constituent spectra comparing Homer2, CYRIL and Book values');
-        
         %% Code for Broadband System
         
         W(1) = 0.8;    %Water fraction
@@ -168,18 +93,31 @@ for band = 5 %bandwidth
         
         %% Change concentrations
         
-        % Induce random changes
-        % Change HbO between +1.5 and -1.5 uM
-        HbO_pert = 0.01:0.01:3.01; % define the numbers
-        HbO_change = 1.51 - HbO_pert(randi([1,numel(HbO_pert)]));
-        
-        % Change HbR between +1 and -1 uM
-        HbR_pert = 0.01:0.01:2.01; % define the numbers
-        HbR_change = 1.01 - HbR_pert(randi([1,numel(HbR_pert)]));
-        
-        % Change CCO between +0.3 and -0.3 uM
-        CCO_pert = 0.01:0.01:0.61; % define the numbers
-        CCO_change = 0.31 - CCO_pert(randi([1,numel(CCO_pert)]));
+%         % Induce random changes
+%         % Change HbO between +1.5 and -1.5 uM
+%         HbO_pert = 0.01:0.01:3.01; % define the numbers
+%         HbO_change = 1.51 - HbO_pert(randi([1,numel(HbO_pert)]));
+%         
+%         % Change HbR between +1 and -1 uM
+%         HbR_pert = 0.01:0.01:2.01; % define the numbers
+%         HbR_change = 1.01 - HbR_pert(randi([1,numel(HbR_pert)]));
+%         
+%         % Change CCO between +0.3 and -0.3 uM
+%         CCO_pert = 0.01:0.01:0.61; % define the numbers
+%         CCO_change = 0.31 - CCO_pert(randi([1,numel(CCO_pert)]));
+
+        % !!! Changed these values to reflect a greater chromophore change
+        % Change HbO between +10 and - uM
+        HbO_pert = 0.01:0.01:20.01; % define the numbers
+        HbO_change = 10.01 - HbO_pert(randi([1,numel(HbO_pert)]));
+
+        % Change HbR between +7 and -7 uM
+        HbR_pert = 0.01:0.01:14.01; % define the numbers
+        HbR_change = 7.01 - HbR_pert(randi([1,numel(HbR_pert)]));
+
+        % Change CCO between +3 and -3 uM
+        CCO_pert = 0.01:0.01:6.01; % define the numbers
+        CCO_change = 3.01 - CCO_pert(randi([1,numel(CCO_pert)]));
     
         W(2) = 0.8;    %Water fraction
         L1(2) = 0.116;  %Lipid fraction
@@ -198,25 +136,6 @@ for band = 5 %bandwidth
         ac_conc_change = ac_conc_change.';
             
         %% Generate a typical brain spectrum
-        
-            % Typical chromophone concentration
-%         if pert_number == 1
-%             FigH = figure('Position', get(0, 'Screensize'));
-%             F = getframe(FigH);
-%             imwrite(F.cdata, 'Change in absorption coefficient LED.png', 'png')
-%             plot(x,mua1,'ro-');
-%             hold on
-%             plot(x,mua2,'ko-');
-%             ax = gca;
-%             ax.FontSize = 20;
-%             xlim([min(x) max(x)])
-%             xlabel('Wavelength (nm)');
-%             ylabel('Absorption coefficient mm^{-1})');
-%             title('Change in absorption coefficient');
-%             legend('mua1','mua2','Location','Best');
-%             saveas(gcf,'Change in absorption coefficient LED.png')
-%         end 
-        % 
         %     % Define and plot transport scatter coefficient
             power = -1.2;
             musp = 1.0 * (x/800).^power;
@@ -280,28 +199,7 @@ for band = 5 %bandwidth
         
         %     %% Calculate and plot the DPF
             DPF1_BB = L1_BB ./ SD; % Wavelength dependent
-        %     figure
-        %     plot(x,DPF1_BB,'ko-');
-        %     xlim([min(x) max(x)])
-        %     xlabel('Wavelength (nm)');
-        %     ylabel('DPF');
-        %     title('DPF 1');
-        % 
-        %     %% Plot attenuation (-log diffuse reflectance)
-            A1 = -log(R1_BB);
-        %     figure
-        %     subplot(1,2,1);
-        %     plot(x,R1_BB,'bo-');
-        %     xlim([min(x) max(x)]);
-        %     xlabel('Wavelength (nm)');
-        %     ylabel('Diffuse Reflectance');
-        %     title('Diffuse Reflectance 1');
-        %     subplot(1,2,2);
-        %     plot(x,A1,'ko-');
-        %     xlim([min(x) max(x)]);
-        %     xlabel('Wavelength (nm)');
-        %     ylabel('-log_{e}Reflectance');
-        %     title('Attenuation = -ln(Reflectance) 1');
+
         
             %% Slab model from Contini et al. Appl.Opt. 36, 4587 (1997). - 2
             
@@ -355,28 +253,7 @@ for band = 5 %bandwidth
         
         %     %% Calculate and plot the DPF
             DPF2_BB = L2_BB ./ SD; % Wavelength dependent
-        %     figure
-        %     plot(x,DPF2_BB,'ko-');
-        %     xlim([min(x) max(x)])
-        %     xlabel('Wavelength (nm)');
-        %     ylabel('DPF');
-        %     title('DPF 2');
-        % 
-        %     %% Plot attenuation (-log diffuse reflectance)
-            A2 = -log(R2_BB);
-        %     figure
-        %     subplot(1,2,1);
-        %     plot(x,R2_BB,'bo-');
-        %     xlim([min(x) max(x)]);
-        %     xlabel('Wavelength (nm)');
-        %     ylabel('Diffuse Reflectance');
-        %     title('Diffuse Reflectance 2');
-        %     subplot(1,2,2);
-        %     plot(x,A2,'ko-');
-        %     xlim([min(x) max(x)]);
-        %     xlabel('Wavelength (nm)');
-        %     ylabel('-log_{e}Reflectance');
-        %     title('Attenuation = -ln(Reflectance) 2');
+
         
         %% Task 2
         
@@ -463,22 +340,7 @@ for band = 5 %bandwidth
         perc_diff_SNR_vector = [perc_diff_BB_SNR20;perc_diff_BB_SNR30;perc_diff_BB_SNR40;perc_diff_BB_SNR50;perc_diff_BB_SNR60;perc_diff_BB];
         perc_diff_SNR_vector = abs(perc_diff_SNR_vector);
         
-%         if pert_number == 1
-%             FigH = figure('Position', get(0, 'Screensize'));
-%             F = getframe(FigH);
-%             imwrite(F.cdata, 'Comparison of percentage errors for increasing SNR of broadband system 1.png', 'png')
-%             plot(perc_vector_SNR,perc_diff_SNR_vector(:,1),'r*-','MarkerSize',20)
-%             hold on
-%             plot(perc_vector_SNR,perc_diff_SNR_vector(:,2),'bs-','MarkerSize',10)
-%             plot(perc_vector_SNR,perc_diff_SNR_vector(:,3),'go-','MarkerSize',10)
-%             ax = gca;
-%             ax.FontSize = 20;
-%             legend('HbO','HbR','oxCCO','Location','Best');
-%             xlabel('Absolute SNR value');
-%             ylabel('Percentage error in chromophore concentration values');
-%             title({'Comparison of percentage errors for increasing SNR', 'of broadband system 1 (680-921nm)'});
-%             saveas(gcf,'Comparison of percentage errors for increasing SNR of broadband system 1.png')
-%         end 
+
     
         %% Introduce errors in BB measurements due to DPF changes
         
@@ -522,23 +384,7 @@ for band = 5 %bandwidth
         perc_error_DPF_vector = [perc_diff_BB; perc_error_BB_DPF5; perc_error_BB_DPF10; perc_error_BB_DPF15];
         perc_error_DPF_vector = abs(perc_error_DPF_vector);
         
-%         if pert_number == 1
-%             FigH = figure('Position', get(0, 'Screensize'));
-%             F = getframe(FigH);
-%             imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for Broadband System 1.png', 'png')
-%             plot(percent_vector,perc_error_DPF_vector(:,1),'r*-','MarkerSize',20)
-%             hold on
-%             plot(percent_vector,perc_error_DPF_vector(:,2),'bs-','MarkerSize',10)
-%             plot(percent_vector,perc_error_DPF_vector(:,3),'go-','MarkerSize',10)
-%             ax = gca;
-%             ax.FontSize = 20;
-%             ylim([0 35]);
-%             legend('HbO','HbR','oxCCO','Location','Best');
-%             xlabel('Percentage change in DPF value');
-%             ylabel('Percentage error in chromophore concentration values');
-%             title({'Comparison of percentage errors for increasing DPF percentage changes', 'for Broadband System 1 (680-921nm)'});
-%             saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for Broadband System 1.png')
-%         end 
+
     
         for r = 1:length(E)
             for q = 1:length(ac_conc_change)
@@ -579,23 +425,7 @@ for band = 5 %bandwidth
         perc_error_E_vector_BB = [perc_diff_BB; perc_error_BB_E5; perc_error_BB_E10; perc_error_BB_E15];
         perc_error_E_vector_BB = abs(perc_error_E_vector_BB);
         
-%         if pert_number == 1
-%             FigH = figure('Position', get(0, 'Screensize'));
-%             F = getframe(FigH);
-%             imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 1.png', 'png')
-%             plot(percent_vector,perc_error_E_vector_BB(:,1),'r*-','MarkerSize',20)
-%             hold on
-%             plot(percent_vector,perc_error_E_vector_BB(:,2),'bs-','MarkerSize',10)
-%             plot(percent_vector,perc_error_E_vector_BB(:,3),'go-','MarkerSize',10)
-%             ax = gca;
-%             ax.FontSize = 20;
-%             ylim([0 35]);
-%             legend('HbO','HbR','oxCCO','Location','Best');
-%             xlabel('Percentage change in extinction coefficient value');
-%             ylabel('Percentage error in chromophore concentration values');
-%             title({'Comparison of percentage errors for increasing extinction coefficient', 'percentage changes for broadband system 1 (680-921nm)'});
-%             saveas(gcf,'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 1.png')
-%         end 
+
     
         % %% Repeat with previously assumed DPF values instead
         
@@ -745,23 +575,6 @@ for band = 5 %bandwidth
         %%
         perc_accum_errors_DPFE_BB = [perc_diff_BB; perc_error_BB_5s_SNR40; perc_error_BB_10s_SNR40; perc_error_BB_15s_SNR40];
         
-        % FigH = figure('Position', get(0, 'Screensize'));
-        % F = getframe(FigH);
-        % imwrite(F.cdata, 'Comparison of percentage errors for increasing extinction coefficient and DPF percentage changes for broadband system 1.png', 'png')
-        % plot(percent_vector,perc_accum_errors_DPFE_BB(:,1),'r*-','MarkerSize',20)
-        % hold on
-        % plot(percent_vector,perc_accum_errors_DPFE_BB(:,2),'bs-','MarkerSize',10)
-        % plot(percent_vector,perc_accum_errors_DPFE_BB(:,5),'go-','MarkerSize',10)
-        % ax = gca;
-        % ax.FontSize = 20;
-        % %ylim([0 35]);
-        % legend('HbO','HbR','oxCCO','Location','Best');
-        % xlabel('Percentage change in both extinction coefficient and DPF values');
-        % ylabel('Percentage error in chromophore concentration values');
-        % title({'Comparison of percentage errors for increasing extinction coefficient', 'and DPF percentage changes for broadband system 1 (680-921nm)'});
-        % saveas(gcf,'Comparison of percentage errors for increasing extinction coefficient percentage changes for broadband system 1.png')
-        
-        
         
         %
         %
@@ -827,21 +640,7 @@ for band = 5 %bandwidth
                 LED_spec(i,j) = (1/pi)*((w_LED(j)/2)/(((wl(i)-x(j))^2)+(w_LED(j)/2)^2));
             end
         end
-        
-        % %% Chromophore spectra
-        % %Plot constituent spectra
-        % figure;
-        % plot(x,E(:,1),'ro-');hold on;
-        % plot(x,E(:,2),'bo-');
-        % plot(x,(E(:,3)/10),'go-'); %Divide by 10 to improve display
-        % plot(x,(E(:,4)/10),'ko-'); %Divide by 10 to improve display
-        % plot(x,E(:,5),'mo-');
-        % xlim([min(x) max(x)])
-        % legend('HbO','HbR','H2O','Lipid','aa3');
-        % xlabel('Wavelength (nm)');
-        % ylabel('Specific abs. coeff or Abs. coeff/10 (mm^{-1}M^{-1} or mm^{-1})');
-        % title('Constituent spectra (and polynomial fits)');
-        
+
         % Find absorption and intensity for broadband case
         % muabrain_broad_1 = (E_new(:,1)*C_HbO(1)) + (E_new(:,2)*C_HbR(1)) + (E_new(:,3)*W(1)) + (E_new(:,4)*L1(1)) + (E_new(:,5)*C_aa3(1));
         muabrain_broad_1 = (E_new(:,1)*C_HbO(1)) + (E_new(:,2)*C_HbR(1)) + (E_new(:,3)*C_aa3(1));
@@ -881,19 +680,6 @@ for band = 5 %bandwidth
         
         E_prime_invert_LED = pinv(E_prime_LED);
         
-        % % Again for extinction vals from book
-        % for l = 1:length(x) %chromophores 
-        %     for j = 1:length(x) % wavelengths
-        %         for k = 1:length(wl) % broadband
-        %             e_effective_book(k,l) = ext_BioBook_new(k,l)*LED_spec(k,j); % column = chromophore, row = wavelength
-        %         end
-        %         E_prime_LED_book(j,l) = sum(e_effective_book(:,l))/LED_area(l);
-        %     end
-        % end
-        % 
-        % E_prime_invert_LED_book = pinv(E_prime_LED_book);
-        
-
 
         % Find effective wavelengths used when LED shifted by Lorentzian
         % (wavelength value associated with new extinction coefficient)
@@ -925,26 +711,7 @@ for band = 5 %bandwidth
             new_ave_DPF_LED(g) = ave_DPF_BB(x(g)-wl(1));
         end
         
-        
-        % % Exts from book
-        % 
-        % for u = 1:length(concs1) 
-        %     for r = 1:length(x)
-        %         [val, idx] = min(abs(E_new((x(r)-wl(1))-tolerance:(x(r)-wl(1))+tolerance,u) - E_prime_invert_LED_book(r,u)));
-        %         new_ext_wavs_init(r,u) = idx;
-        %         new_ext_wavs_book_LED(r,u) = new_ext_wavs_init(r,u) + (x(r)-tolerance);
-        %     end
-        % end
-        % 
-        % for r = 1:length(x)
-        %     ave_ext_wav_book_LED(:,r) = sum(new_ext_wavs_book_LED(r,:))/length(x);
-        % end
-        % 
-        % ave_ext_wav_book_LED = round(ave_ext_wav_book_LED);
-        % 
-        % for g = 1:length(ave_ext_wav_LED)
-        %     new_ave_DPF_book_LED(g) = ave_DPF_BB(ave_ext_wav_book_LED(g)-wl(1));
-        % end
+   
         
         % Get input mua for diffusion code according to LED spectra
         % mua1_LED = (E_prime_LED(:,1)*C_HbO(1)) + (E_prime_LED(:,2)*C_HbR(1)) + (E_prime_LED(:,3)*W(1)) + (E_prime_LED(:,4)*L1(1)) + (E_prime_LED(:,5)*C_aa3(1));
@@ -1026,19 +793,7 @@ for band = 5 %bandwidth
         % 
         %     %% Plot attenuation (-log diffuse reflectance)
             A1 = -log(R1_LED);
-        %     figure
-        %     subplot(1,2,1);
-        %     plot(x,R1_LED,'bo-');
-        %     xlim([min(x) max(x)]);
-        %     xlabel('Wavelength (nm)');
-        %     ylabel('Diffuse Reflectance');
-        %     title('Diffuse Reflectance 1 LED');
-        %     subplot(1,2,2);
-        %     plot(x,A1,'ko-');
-        %     xlim([min(x) max(x)]);
-        %     xlabel('Wavelength (nm)');
-        %     ylabel('-log_{e}Reflectance');
-        %     title('Attenuation = -ln(Reflectance) 1 LED');
+
         
             %% Slab model from Contini et al. Appl.Opt. 36, 4587 (1997). - 2
             
@@ -1101,19 +856,7 @@ for band = 5 %bandwidth
         % 
         %     %% Plot attenuation (-log diffuse reflectance)
             A2 = -log(R2_LED);
-        %     figure
-        %     subplot(1,2,1);
-        %     plot(x,R2_LED,'bo-');
-        %     xlim([min(x) max(x)]);
-        %     xlabel('Wavelength (nm)');
-        %     ylabel('Diffuse Reflectance');
-        %     title('Diffuse Reflectance 2 LED');
-        %     subplot(1,2,2);
-        %     plot(x,A2,'ko-');
-        %     xlim([min(x) max(x)]);
-        %     xlabel('Wavelength (nm)');
-        %     ylabel('-log_{e}Reflectance');
-        %     title('Attenuation = -ln(Reflectance) 2 LED');
+
         
         %% Task 2
         
@@ -1185,22 +928,7 @@ for band = 5 %bandwidth
             perc_diff_SNR_vector = [perc_diff_LED_SNR20;perc_diff_LED_SNR30;perc_diff_LED_SNR40;perc_diff_LED_SNR50;perc_diff_LED_SNR60;perc_diff_LED];
             perc_diff_SNR_vector = abs(perc_diff_SNR_vector);
             
-            if l == 1 && pert_number == 1
         
-%                 FigH = figure('Position', get(0, 'Screensize'));
-%                 F = getframe(FigH);
-%                 imwrite(F.cdata, 'Comparison of percentage errors for increasing SNR of 5-wavelength LED system.png', 'png')
-%                 plot(perc_vector_SNR,perc_diff_SNR_vector(:,1),'r*-','MarkerSize',20)
-%                 hold on
-%                 plot(perc_vector_SNR,perc_diff_SNR_vector(:,2),'bs-','MarkerSize',10)
-%                 plot(perc_vector_SNR,perc_diff_SNR_vector(:,3),'go-','MarkerSize',10)
-%                 ax = gca;
-%                 ax.FontSize = 20;
-%                 legend('HbO','HbR','oxCCO','Location','Best');
-%                 xlabel('Absolute SNR value');
-%                 ylabel('Percentage error in chromophore concentration values');
-%                 title('Comparison of percentage errors for increasing SNR of 5-wavelength LED system');
-%                 saveas(gcf,'Comparison of percentage errors for increasing SNR of 5-wavelength LED system.png')
                 %% Introduce percentage errors in LED measurements
         
                 % Introduce a 5% error in DPF
@@ -1220,46 +948,11 @@ for band = 5 %bandwidth
                     LED_DPF_take15(r) = ave_DPF_LED(r) - fifteen_perc_LED_DPF(r);
                 end
         
-                conc_LED_add5percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_add5))';
-                conc_LED_add10percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_add10))';
-                conc_LED_add15percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_add15))';
-        
-                conc_LED_take5percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_take5))';
-                conc_LED_take10percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_take10))';
-                conc_LED_take15percDPF =  E_prime_invert_LED * (-change_I_LED ./ (SD*LED_DPF_take15))';
-        
-                for t = 1:length(ac_conc_change)
-                    perc_error_LED_add5DPF(t) = ((conc_LED_add5percDPF(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_add10DPF(t) = ((conc_LED_add10percDPF(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_add15DPF(t) = ((conc_LED_add15percDPF(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_take5DPF(t) = ((conc_LED_take5percDPF(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_take10DPF(t) = ((conc_LED_take10percDPF(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_take15DPF(t) = ((conc_LED_take15percDPF(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    % take largest value
-                    perc_error_LED_DPF5(t) = max(perc_error_LED_add5DPF(t),perc_error_LED_take5DPF(t));
-                    perc_error_LED_DPF10(t) = max(perc_error_LED_add10DPF(t),perc_error_LED_take10DPF(t));
-                    perc_error_LED_DPF15(t) = max(perc_error_LED_add15DPF(t),perc_error_LED_take15DPF(t));
-                end
         
                 perc_error_DPF_vector_LED = [perc_diff_LED; perc_error_LED_DPF5; perc_error_LED_DPF10; perc_error_LED_DPF15];
                 perc_error_DPF_vector_LED = abs(perc_error_DPF_vector_LED);
         
-%                 FigH = figure('Position', get(0, 'Screensize'));
-%                 F = getframe(FigH);
-%                 imwrite(F.cdata, 'Comparison of percentage errors for increasing DPF percentage changes for 5-wavelength LED system.png', 'png')
-%                 plot(percent_vector,perc_error_DPF_vector_LED(:,1),'r*-','MarkerSize',20)
-%                 hold on
-%                 plot(percent_vector,perc_error_DPF_vector_LED(:,2),'bs-','MarkerSize',10)
-%                 plot(percent_vector,perc_error_DPF_vector_LED(:,3),'go-','MarkerSize',10)
-%                 ax = gca;
-%                 ax.FontSize = 20;
-%                 ylim([0 35]);
-%                 legend('HbO','HbR','oxCCO','Location','Best');
-%                 xlabel('Percentage change in DPF value');
-%                 ylabel('Percentage error in chromophore concentration values');
-%                 title({'Comparison of percentage errors for increasing', 'DPF percentage changes for 5-wavelength LED system'});
-%                 saveas(gcf,'Comparison of percentage errors for increasing DPF percentage changes for 5-wavelength LED system.png')
-        
+
                 for r = 1:length(E)
                     for q = 1:length(concs1)
                         five_perc_LED_E(r,q) = (E_prime_LED(r,q)/100) *5;
@@ -1427,8 +1120,8 @@ for band = 5 %bandwidth
                     perc_error_LED_DPFadd15_Etake10_SNR50(t) = ((conc_DPFadd15_Etake10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
                     perc_error_LED_DPFadd15_Etake5_SNR50(t) = ((conc_DPFadd15_Etake5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
         
-                    perc_error_LED_DPFtake15_Etake10_SNR50(t) = ((conc_DPFadd15_Etake10_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
-                    perc_error_LED_DPFadd15_Etake5_SNR50(t) = ((conc_DPFadd15_Etake5_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFtake15_Esame_SNR50(t) = ((conc_DPFtake15_Esame_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
+                    perc_error_LED_DPFadd15_Esame_SNR50(t) = ((conc_DPFadd15_Esame_SNR50_LED(t) - ac_conc_change(t))/ac_conc_change(t)) * 100;
                     
                     perc_error_LED_5s_SNR50(t) = max(abs([perc_error_LED_DPFtake5_Etake5_SNR50(t), perc_error_LED_DPFadd5_Eadd5_SNR50(t), perc_error_LED_DPFadd5_Etake5_SNR50(t), perc_error_LED_DPFtake5_Eadd5_SNR50(t)]));
                     perc_error_LED_10s_SNR50(t) = max(abs([perc_error_LED_DPFtake10_Etake10_SNR50(t), perc_error_LED_DPFadd10_Eadd10_SNR50(t), perc_error_LED_DPFadd10_Etake10_SNR50(t), perc_error_LED_DPFtake10_Eadd10_SNR50(t)]));
@@ -1517,12 +1210,13 @@ for band = 5 %bandwidth
             ave_pert_error_LEDSNR50(u,j) = mean(val_to_ave_error(val_to_ave_error<Inf));
             high_bar_pert_error_LEDSNR50(u,j) = mean(high_to_ave_error(high_to_ave_error<Inf));
             low_bar_pert_error_LEDSNR50(u,j) = mean(low_to_ave_error(low_to_ave_error<Inf));
-            final_std_val_LEDSNR50(u,j) = mean(stdtoave(stdtoave<Inf));
+%             final_std_val_LEDSNR50(u,j) = mean(stdtoave(stdtoave<Inf));
+            final_std_val_LEDSNR50(u,j) = std(val_to_ave_error(val_to_ave_error<Inf));
         end
     end
     
     
-    save(['ave_error_',num2str(band),'_bandwidth_5wav_1-201band_noiseless_originalDPF_withconv'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
+    save(['ave_error_',num2str(band),'_bandwidth_5wav_1-200band_noiseless_originalDPF_withconv_correctstd'],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50')
 %     
     clear all;
 

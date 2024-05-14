@@ -2,7 +2,7 @@
 
 % theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Cond_errors_3to50_best/*.mat');
 % theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Errors 1-200band with conv correct std/*.mat');
- theFiles = dir('\\ifs.eng.cam.ac.uk\users\gcl33\Documents\GitHub\Diffusion-Simulations\Code replica\Errors 1-200 band no conv correct std\*.mat');
+ theFiles = dir('\\ifs.eng.cam.ac.uk\users\gcl33\Documents\GitHub\Diffusion-Simulations\Code replica\Errors 1-200band no conv concs2\*.mat');
 
 percent_vector = [0.01; 5; 10; 15];
 % percent_vector = 10;
@@ -70,7 +70,7 @@ end
 
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
-imwrite(F.cdata, 'Comparing 1-200 band ten perc parameter error shaded no conv for paper.png', 'png')
+imwrite(F.cdata, 'Comparing 1-200 band ten perc parameter error no conv concs2.png', 'png')
 shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),'lineProps',{'g-o','markerfacecolor','g','markersize',10})
 %shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
 hold on
@@ -85,7 +85,7 @@ ylim([0 400]);
 xlabel('Bandwidth');
 ylabel({'Average percentage error in', 'chromophore concentration values'});
 %title({'Comparing 5-wavelength systems with increasing bandwidth and fifteen percent error in DPF and E'});
-saveas(gcf,'Comparing 1-200 band ten perc parameter error shaded no conv for paper.png')
+saveas(gcf,'Comparing 1-200 band ten perc parameter error no conv concs2.png')
 
 %% Correlation plot
 

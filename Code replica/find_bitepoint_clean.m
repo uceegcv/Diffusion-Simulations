@@ -3,7 +3,7 @@
 
 for nwavs = 3:200
    
-    for pert_number = 1:300
+    for pert_number = 1:100
         
         % Enter simulation data
         SD = 30; % Source-detector separation on same surface of slab (mm)
@@ -758,6 +758,7 @@ for nwavs = 3:200
             perc_vector_SNR = [20;30;40;50;60;100];
             perc_diff_SNR_vector = [perc_diff_LED_SNR20;perc_diff_LED_SNR30;perc_diff_LED_SNR40;perc_diff_LED_SNR50;perc_diff_LED_SNR60;perc_diff_LED];
             perc_diff_SNR_vector = abs(perc_diff_SNR_vector);
+            perc_diff_SNR_saved{l} = perc_diff_SNR_vector(:,:);
 
 
                 %% For SNR 50
@@ -915,6 +916,8 @@ for nwavs = 3:200
                 perc_accum_errors_DPFE_LEDSNR50 = [perc_diff_LED; perc_error_LED_5s_SNR50; perc_error_LED_10s_SNR50; perc_error_LED_15s_SNR50];
                 perc_accum_errors_DPFE_LEDSNR50 = abs(perc_accum_errors_DPFE_LEDSNR50);
 
+              
+
                 perc_accum_errors_DPFE_LEDSNR50_saved{l} = perc_accum_errors_DPFE_LEDSNR50(:,:); %Save each iteration to cell array
                 
                 perc_error_perfectE{l} = perc_error_LED_perfectE_DPF10_SNR50;
@@ -923,6 +926,19 @@ for nwavs = 3:200
                 R2_iteration(:,l) = R2_LED_SNR50;
 
         end
+
+        for r = 1:3
+            for p = 1:length(perc_vector_SNR)
+                for w = 1:l
+                    data_to_analyse(w,p) = perc_diff_SNR_saved{1,w}(p,r);
+                end
+                ave_error_SNR(p,r) = mean(data_to_analyse(:,p));
+                stand_dev_error_SNR(p,r) = std(data_to_analyse(:,p));
+            end
+        end
+        
+        ave_error_SNR_pert{pert_number} = ave_error_SNR;
+        stand_dev_error_SNR_pert{pert_number} = stand_dev_error_SNR;
 
         %%
 
@@ -995,8 +1011,19 @@ for nwavs = 3:200
             std_perfectE(1,j) = std(val_to_ave_error_perfectE(val_to_ave_error_perfectE<Inf));
     end
 
-    num_wavs = length(x);
-    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_with_perfectE_diff_concs2 '],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE')
+    for r = 1:3
+        for p = 1:length(perc_vector_SNR)
+            for w = 1:pert_number
+                data_to_analyse(w,p) = ave_error_SNR_pert{1,w}(p,r);
+            end
+            val_to_ave_SNR = data_to_analyse(:,p);
+            ave_error_SNR(p,r) = mean(val_to_ave_SNR(val_to_ave_SNR<Inf));
+            stand_dev_error_SNR(p,r) = std(val_to_ave_SNR(val_to_ave_SNR<Inf));
+        end
+    end
+
+     num_wavs = length(x);
+    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_perfectE_SNRvals_concs2 '],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE','ave_error_SNR','stand_dev_error_SNR')
     
     clear all;
     

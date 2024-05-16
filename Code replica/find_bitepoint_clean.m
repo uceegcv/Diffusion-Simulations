@@ -74,17 +74,17 @@ for nwavs = 3:200
         %% Change concentrations
 
         % Induce random changes
-        % Change HbO between +1.5 and -1.5 uM
-        HbO_pert = 0.01:0.01:3.01; % define the numbers
-        HbO_change = 1.51 - HbO_pert(randi([1,numel(HbO_pert)]));
-
-        % Change HbR between +1 and -1 uM
-        HbR_pert = 0.01:0.01:2.01; % define the numbers
-        HbR_change = 1.01 - HbR_pert(randi([1,numel(HbR_pert)]));
-
-        % Change CCO between +0.3 and -0.3 uM
-        CCO_pert = 0.01:0.01:0.61; % define the numbers
-        CCO_change = 0.31 - CCO_pert(randi([1,numel(CCO_pert)])); 
+%         % Change HbO between +1.5 and -1.5 uM
+%         HbO_pert = 0.01:0.01:3.01; % define the numbers
+%         HbO_change = 1.51 - HbO_pert(randi([1,numel(HbO_pert)]));
+% 
+%         % Change HbR between +1 and -1 uM
+%         HbR_pert = 0.01:0.01:2.01; % define the numbers
+%         HbR_change = 1.01 - HbR_pert(randi([1,numel(HbR_pert)]));
+% 
+%         % Change CCO between +0.3 and -0.3 uM
+%         CCO_pert = 0.01:0.01:0.61; % define the numbers
+%         CCO_change = 0.31 - CCO_pert(randi([1,numel(CCO_pert)])); 
 
 %         % !!! Changed these values to reflect a greater chromophore change
 %         % Change HbO between +10 and - uM
@@ -98,6 +98,19 @@ for nwavs = 3:200
 %         % Change CCO between +3 and -3 uM
 %         CCO_pert = 0.01:0.01:6.01; % define the numbers
 %         CCO_change = 3.01 - CCO_pert(randi([1,numel(CCO_pert)]));
+
+        % !!! Third condition
+        % Change HbO between +6 and -6 uM
+        HbO_pert = 0.01:0.01:12.01; % define the numbers
+        HbO_change = 6.01 - HbO_pert(randi([1,numel(HbO_pert)]));
+
+        % Change HbR between +4 and -4 uM
+        HbR_pert = 0.01:0.01:8.01; % define the numbers
+        HbR_change = 4.01 - HbR_pert(randi([1,numel(HbR_pert)]));
+
+        % Change CCO between +1.5 and -1.5 uM
+        CCO_pert = 0.01:0.01:3.01; % define the numbers
+        CCO_change = 1.51 - CCO_pert(randi([1,numel(CCO_pert)])); 
 
         W(2) = 0.8;    %Water fraction
         L1(2) = 0.116;  %Lipid fraction
@@ -1023,7 +1036,7 @@ for nwavs = 3:200
     end
 
      num_wavs = length(x);
-    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_perfectE_SNRvals_concs1 '],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE','ave_error_SNR','stand_dev_error_SNR')
+    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_perfectE_SNRvals_concs3 '],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE','ave_error_SNR','stand_dev_error_SNR')
     
     clear all;
     

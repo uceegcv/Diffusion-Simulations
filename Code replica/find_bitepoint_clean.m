@@ -74,30 +74,30 @@ for nwavs = 3:200
         %% Change concentrations
 
         % Induce random changes
-%         % Change HbO between +1.5 and -1.5 uM
-%         HbO_pert = 0.01:0.01:3.01; % define the numbers
-%         HbO_change = 1.51 - HbO_pert(randi([1,numel(HbO_pert)]));
+        % Change HbO between +1.5 and -1.5 uM
+        HbO_pert = 0.01:0.01:3.01; % define the numbers
+        HbO_change = 1.51 - HbO_pert(randi([1,numel(HbO_pert)]));
+
+        % Change HbR between +1 and -1 uM
+        HbR_pert = 0.01:0.01:2.01; % define the numbers
+        HbR_change = 1.01 - HbR_pert(randi([1,numel(HbR_pert)]));
+
+        % Change CCO between +0.3 and -0.3 uM
+        CCO_pert = 0.01:0.01:0.61; % define the numbers
+        CCO_change = 0.31 - CCO_pert(randi([1,numel(CCO_pert)])); 
+
+%         % !!! Changed these values to reflect a greater chromophore change
+%         % Change HbO between +10 and - uM
+%         HbO_pert = 0.01:0.01:20.01; % define the numbers
+%         HbO_change = 10.01 - HbO_pert(randi([1,numel(HbO_pert)]));
 % 
-%         % Change HbR between +1 and -1 uM
-%         HbR_pert = 0.01:0.01:2.01; % define the numbers
-%         HbR_change = 1.01 - HbR_pert(randi([1,numel(HbR_pert)]));
+%         % Change HbR between +7 and -7 uM
+%         HbR_pert = 0.01:0.01:14.01; % define the numbers
+%         HbR_change = 7.01 - HbR_pert(randi([1,numel(HbR_pert)]));
 % 
-%         % Change CCO between +0.3 and -0.3 uM
-%         CCO_pert = 0.01:0.01:0.61; % define the numbers
-%         CCO_change = 0.31 - CCO_pert(randi([1,numel(CCO_pert)]));
-
-        % !!! Changed these values to reflect a greater chromophore change
-        % Change HbO between +10 and - uM
-        HbO_pert = 0.01:0.01:20.01; % define the numbers
-        HbO_change = 10.01 - HbO_pert(randi([1,numel(HbO_pert)]));
-
-        % Change HbR between +7 and -7 uM
-        HbR_pert = 0.01:0.01:14.01; % define the numbers
-        HbR_change = 7.01 - HbR_pert(randi([1,numel(HbR_pert)]));
-
-        % Change CCO between +3 and -3 uM
-        CCO_pert = 0.01:0.01:6.01; % define the numbers
-        CCO_change = 3.01 - CCO_pert(randi([1,numel(CCO_pert)]));
+%         % Change CCO between +3 and -3 uM
+%         CCO_pert = 0.01:0.01:6.01; % define the numbers
+%         CCO_change = 3.01 - CCO_pert(randi([1,numel(CCO_pert)]));
 
         W(2) = 0.8;    %Water fraction
         L1(2) = 0.116;  %Lipid fraction
@@ -1023,7 +1023,7 @@ for nwavs = 3:200
     end
 
      num_wavs = length(x);
-    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_perfectE_SNRvals_concs2 '],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE','ave_error_SNR','stand_dev_error_SNR')
+    save(['ave_error_',num2str(num_wavs),'_3to200wavelengths_SNR50_origDPF_perfectE_SNRvals_concs1 '],'ave_pert_error_LEDSNR50','final_std_val_LEDSNR50','ave_perfectE_error','std_perfectE','ave_error_SNR','stand_dev_error_SNR')
     
     clear all;
     

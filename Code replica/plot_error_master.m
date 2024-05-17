@@ -1,7 +1,7 @@
 %% Setup initial values
 
 % theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Cond_errors_3to50_best/*.mat');
-theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Errors SNR concs1/*.mat');
+theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Errors concs3/*.mat');
 %  theFiles = dir('\\ifs.eng.cam.ac.uk\users\gcl33\Documents\GitHub\Diffusion-Simulations\Code replica\Errors 1-200band no conv concs2\*.mat');
 
 percent_vector = [0.01; 5; 10; 15];
@@ -23,29 +23,29 @@ theFiles = theFiles(idx);
 for k = 1 : length(theFiles)
     baseFileName = theFiles(k).name;
     newdata = load(baseFileName);
-%     data_to_analyse = newdata.ave_pert_error_LEDSNR50;
-%     std_to_analyse = newdata.final_std_val_LEDSNR50;
-    data_to_analyse = newdata.ave_perfectE_error;
-    std_to_analyse = newdata.std_perfectE;
+    data_to_analyse = newdata.ave_pert_error_LEDSNR50;
+    std_to_analyse = newdata.final_std_val_LEDSNR50;
+%     data_to_analyse = newdata.ave_perfectE_error;
+%     std_to_analyse = newdata.std_perfectE;
     %conc_to_analyse = newdata.concs2_saved;
     
     % For when there are four values for different % uncertainties
-%     for d = 1:length(percent_vector)
-%         change_wavs_HbO_zero_error(k,d) = data_to_analyse(d,1);
-%         change_wavs_HbR_zero_error(k,d) = data_to_analyse(d,2);
-%         change_wavs_CCO_zero_error(k,d) = data_to_analyse(d,3);
-%         std_wavs_HbO_zero_error(k,d) = std_to_analyse(d,1);
-%         std_wavs_HbR_zero_error(k,d) = std_to_analyse(d,2);
-%         std_wavs_CCO_zero_error(k,d) = std_to_analyse(d,3);
-%     end
+    for d = 1:length(percent_vector)
+        change_wavs_HbO_zero_error(k,d) = data_to_analyse(d,1);
+        change_wavs_HbR_zero_error(k,d) = data_to_analyse(d,2);
+        change_wavs_CCO_zero_error(k,d) = data_to_analyse(d,3);
+        std_wavs_HbO_zero_error(k,d) = std_to_analyse(d,1);
+        std_wavs_HbR_zero_error(k,d) = std_to_analyse(d,2);
+        std_wavs_CCO_zero_error(k,d) = std_to_analyse(d,3);
+    end
 
-        % For perfect E dataset
-        change_wavs_HbO_zero_error(k,1) = data_to_analyse(1,1);
-        change_wavs_HbR_zero_error(k,1) = data_to_analyse(1,2);
-        change_wavs_CCO_zero_error(k,1) = data_to_analyse(1,3);
-        std_wavs_HbO_zero_error(k,1) = std_to_analyse(1,1);
-        std_wavs_HbR_zero_error(k,1) = std_to_analyse(1,2);
-        std_wavs_CCO_zero_error(k,1) = std_to_analyse(1,3);
+%         % For perfect E dataset
+%         change_wavs_HbO_zero_error(k,1) = data_to_analyse(1,1);
+%         change_wavs_HbR_zero_error(k,1) = data_to_analyse(1,2);
+%         change_wavs_CCO_zero_error(k,1) = data_to_analyse(1,3);
+%         std_wavs_HbO_zero_error(k,1) = std_to_analyse(1,1);
+%         std_wavs_HbR_zero_error(k,1) = std_to_analyse(1,2);
+%         std_wavs_CCO_zero_error(k,1) = std_to_analyse(1,3);
 end
 
 % for w = 1:length(conc_to_analyse)
@@ -78,22 +78,24 @@ end
 % For perfect E
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
-imwrite(F.cdata, 'Comparing 3-200 wavs perfect E.png', 'png')
-shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,1),std_wavs_CCO_zero_error(:,1),'lineProps',{'g-o','markerfacecolor','g','markersize',10})
+imwrite(F.cdata, 'Comparing 3-200 wavs ten perc error concs3.png', 'png')
+shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),'lineProps',{'g-o','markerfacecolor','g','markersize',10})
 %shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
 hold on
-shadedErrorBar(xvalues,change_wavs_HbR_zero_error(:,1),std_wavs_HbR_zero_error(:,1),'lineProps',{'b-o','markerfacecolor','b','markersize',10})
-shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,1),std_wavs_HbO_zero_error(:,1),'lineProps',{'r-o','markerfacecolor','r','markersize',10})
+shadedErrorBar(xvalues,change_wavs_HbR_zero_error(:,3),std_wavs_HbR_zero_error(:,3),'lineProps',{'b-o','markerfacecolor','b','markersize',10})
+shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'lineProps',{'r-o','markerfacecolor','r','markersize',10})
 grid on
 ax = gca;
-ax.FontSize = 38;
+ax.FontSize = 20;
 %xlim([0 200]);
-ylim([0 40]);
+ylim([0 300]);
 legend('oxCCO','HbR','HbO','Location','Best');
 xlabel('Number of Wavelengths');
-ylabel({'Average percentage error in', 'chromophore concentration values'});
+% ylabel({'Average percentage error in', 'chromophore concentration values'});
+ylabel({'Average percentage error in chromophore concentration values'});
+
 %title({'Comparing 5-wavelength systems with increasing bandwidth and fifteen percent error in DPF and E'});
-saveas(gcf,'Comparing 3-200 wavs perfect E.png')
+saveas(gcf,'Comparing 3-200 wavs ten perc error concs3.png')
 
 
 

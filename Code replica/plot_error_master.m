@@ -1,8 +1,8 @@
 %% Setup initial values
 
 % theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Cond_errors_3to50_best/*.mat');
-theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Errors concs3/*.mat');
-%  theFiles = dir('\\ifs.eng.cam.ac.uk\users\gcl33\Documents\GitHub\Diffusion-Simulations\Code replica\Errors 1-200band no conv concs2\*.mat');
+% theFiles = dir('/Users/georginaleadley/Documents/GitHub/Diffusion-Simulations/Code replica/Errors concs3/*.mat');
+ theFiles = dir('\\ifs.eng.cam.ac.uk\users\gcl33\Documents\GitHub\Diffusion-Simulations\Code replica\Errors 3-200wav correct std\*.mat');
 
 percent_vector = [0.01; 5; 10; 15];
 % percent_vector = 10;
@@ -78,24 +78,24 @@ end
 % For perfect E
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
-imwrite(F.cdata, 'Comparing 3-200 wavs ten perc error concs3.png', 'png')
-shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),'lineProps',{'g-o','markerfacecolor','g','markersize',10})
+imwrite(F.cdata, 'Comparing 3-200 wavs zero error concs1.png', 'png')
+shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,1),std_wavs_CCO_zero_error(:,1),'lineProps',{'g-o','markerfacecolor','g','markersize',10})
 %shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
 hold on
-shadedErrorBar(xvalues,change_wavs_HbR_zero_error(:,3),std_wavs_HbR_zero_error(:,3),'lineProps',{'b-o','markerfacecolor','b','markersize',10})
-shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'lineProps',{'r-o','markerfacecolor','r','markersize',10})
+shadedErrorBar(xvalues,change_wavs_HbR_zero_error(:,1),std_wavs_HbR_zero_error(:,1),'lineProps',{'b-o','markerfacecolor','b','markersize',10})
+shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,1),std_wavs_HbO_zero_error(:,1),'lineProps',{'r-o','markerfacecolor','r','markersize',10})
 grid on
 ax = gca;
 ax.FontSize = 20;
 %xlim([0 200]);
-ylim([0 300]);
+ylim([0 35]);
 legend('oxCCO','HbR','HbO','Location','Best');
 xlabel('Number of Wavelengths');
 % ylabel({'Average percentage error in', 'chromophore concentration values'});
 ylabel({'Average percentage error in chromophore concentration values'});
 
 %title({'Comparing 5-wavelength systems with increasing bandwidth and fifteen percent error in DPF and E'});
-saveas(gcf,'Comparing 3-200 wavs ten perc error concs3.png')
+saveas(gcf,'Comparing 3-200 wavs zero error concs1.png')
 
 
 

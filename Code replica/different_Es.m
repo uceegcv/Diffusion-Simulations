@@ -37,7 +37,7 @@
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
 % for xstep = 1:40
-for nwavs = 6:200
+for nwavs = 3:200
     
     %load('cond_array_3-50wav.mat')
     
@@ -1566,7 +1566,7 @@ for nwavs = 6:200
             ave_pert_error_LEDSNR50(u,j) = mean(val_to_ave_error(val_to_ave_error<Inf));
             high_bar_pert_error_LEDSNR50(u,j) = mean(high_to_ave_error(high_to_ave_error<Inf));
             low_bar_pert_error_LEDSNR50(u,j) = mean(low_to_ave_error(low_to_ave_error<Inf));
-            final_std_val_LEDSNR50(u,j) = mean(stdtoave(stdtoave<Inf));
+            final_std_val_LEDSNR50(u,j) = mean(val_to_ave_error(val_to_ave_error<Inf));
         end
     end
 

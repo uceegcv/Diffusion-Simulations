@@ -37,11 +37,11 @@
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
 % for xstep = 1:40
-for nwavs = 3:200
+for nwavs = 81:200
     
     %load('cond_array_3-50wav.mat')
     
-    for pert_number = 1:300
+    for pert_number = 1:150
         
         % Enter simulation data
         SD = 30; % Source-detector separation on same surface of slab (mm)

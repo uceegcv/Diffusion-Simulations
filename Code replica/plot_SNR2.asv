@@ -40,34 +40,33 @@ for k = 1 : length(theFiles)
     end
 end
 
-%%
+
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
 imwrite(F.cdata, 'Comparing 3-200 wavs different SNRs concs1 CCO colours.png', 'png')
 %shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,1),std_wavs_CCO_zero_error(:,1),'lineProps',{'r-o','markerfacecolor','r','markersize',10})
 %shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'rx-','MarkerSize',10,'LineWidth',1.8)
 
-%shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,2),std_wavs_CCO_zero_error(:,2),'lineProps',{'m-o','markerfacecolor','m','markersize',10})
-
-shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),'lineProps',{'k-o','markerfacecolor','k','markersize',10})
+shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,2),std_wavs_CCO_zero_error(:,2),'lineProps',{'m-o','markerfacecolor','m','markersize',10})
 hold on
-shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,4),std_wavs_CCO_zero_error(:,4),'lineProps',{'m-o','markerfacecolor','m','markersize',10})
-shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,5),std_wavs_CCO_zero_error(:,5),'lineProps',{'b-o','markerfacecolor','b','markersize',10})
-shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,6),std_wavs_CCO_zero_error(:,6),'lineProps',{'y-o','markerfacecolor',[0.8500 0.3250 0.0980],'markersize',10})
+shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,3),std_wavs_CCO_zero_error(:,3),'lineProps',{'c-o','markerfacecolor','c','markersize',10})
+shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,4),std_wavs_CCO_zero_error(:,4),'lineProps',{'g-o','markerfacecolor','g','markersize',10})
+shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,5),std_wavs_CCO_zero_error(:,5),'lineProps',{'y-o','markerfacecolor',[0.8500 0.3250 0.0980],'markersize',10})
+shadedErrorBar(xvalues,change_wavs_CCO_zero_error(:,6),std_wavs_CCO_zero_error(:,6),'lineProps',{'b-o','markerfacecolor','b','markersize',10})
 
 %shadedErrorBar(xvalues,change_wavs_HbO_zero_error(:,3),std_wavs_HbO_zero_error(:,3),'lineProps',{'r-o','markerfacecolor','r','markersize',10})
 grid on
 ax = gca;
-ax.FontSize = 35;
+ax.FontSize = 38;
 %xlim([0 200]);
-ylim([0 1000]);
+ylim([0 7000]);
 %legend('SNR 20','SNR 30','SNR 40','SNR 50','SNR 60','SNR 100','Location','Best');
 xlabel('Number of Wavelengths');
 ylabel({'Average percentage error in', 'chromophore concentration values'});
 title({'oxCCO'});
 saveas(gcf,'Comparing 3-200 wavs different SNRs concs1 CCO colours.png')
 
-%%
+
 FigH = figure('Position', get(0, 'Screensize'));
 F = getframe(FigH);
 imwrite(F.cdata, 'Comparing 3-200 wavs different SNRs concs1 HbO colours.png', 'png')
@@ -87,7 +86,7 @@ grid on
 ax = gca;
 ax.FontSize = 35;
 %xlim([0 200]);
-ylim([0 500]);
+ylim([0 5000]);
 legend('SNR 40','SNR 50','SNR 60','SNR 100','Location','Best');
 xlabel('Number of Wavelengths');
 ylabel({'Average percentage error in', 'chromophore concentration values'});

@@ -37,7 +37,7 @@
 %% Code for Broadband System 1
 % x contains all broadband wavelengths
 % for xstep = 1:40
-for nwavs = 81:200
+for nwavs = 163:200
     
     %load('cond_array_3-50wav.mat')
     
